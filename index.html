@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
     <meta charset="utf-8" />
-    <title>WebGL Demo</title>
+    <title>WebGL: text, recording</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
     <script src="textureBackgroundImage.js"></script>
     <script src="text-renderer.js"></script>
     <script src="gl-matrix.js"></script>
@@ -13,11 +26,16 @@
 </head>
 
   <body>
-      <canvas id="glcanvas" width="640" height="480"></canvas>
-      <div>
-          <button id="startRecord">Start Recording</button>
-          <button id="stopRecord" disabled>Stop Recording</button>
+      <div class="container">
+          <canvas id="glcanvas" width="640" height="480"></canvas>
+          <div>
+              <button id="startRecord">Start Recording</button>
+              <button id="stopRecord" disabled>Stop Recording</button>
+          </div>
+          <div id="status">Ready to record</div>
+          <div style="font-size: 150%">
+              <a href="https://github.com/vasilich-tregub/animation-recording">Webpage source</a>
+          </div>
       </div>
-      <div id="status" class="status ready">Ready to record</div>
   </body>
 </html>
