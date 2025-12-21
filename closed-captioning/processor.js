@@ -13,7 +13,7 @@ let processor = {
     doLoad: function() {
       this.video = document.getElementById("idVideo");
       this.canvas = document.getElementById("idCanvas");
-      this.ctx = this.canvas.getContext("2d");
+      this.ctx = this.canvas.getContext("2d", { willReadFrequently: true });
       let self = this;
       this.video.addEventListener("play", function() {
           self.width = self.video.videoWidth;
