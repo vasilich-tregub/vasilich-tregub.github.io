@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>WebGL: text, recording</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <script src="textureBackgroundImage.js"></script>
+    <script src="text-renderer.js"></script>
+    <script src="gl-matrix.js"></script>
+    <script src="init-buffers.js"></script>
+    <script src="draw-scene.js"></script>
+    <script src="webgl-demo.js"></script>
+    <script src="record-animation.js"></script>
+</head>
+
+  <body>
+      <div class="container">
+          <canvas id="glcanvas" width="640" height="480"></canvas>
+          <div>
+              <button id="startRecord">Start Recording</button>
+              <button id="stopRecord" disabled>Stop Recording</button>
+          </div>
+          <div id="status">Ready to record</div>
+          <div style="font-size: 150%">
+              <a href="https://github.com/vasilich-tregub/animation-recording">Webpage source</a>
+          </div>
+          <div>
+              While you can launch this animation recording in your browser from an http server, <br/>
+              you can also download the files from my repo and launch the application directly <br/>
+              from your filesystem -- for example, double clicking the file index.html.
+          </div>
+      </div>
+  </body>
+</html>

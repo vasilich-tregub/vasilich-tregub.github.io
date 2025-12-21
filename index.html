@@ -10,32 +10,20 @@
         }
 
         .container {
-            text-align: center;
+            font-size: 150%;
         }
     </style>
     <meta charset="utf-8" />
-    <title>WebGL: text, recording</title>
+    <title>Vasilich Tregub Web API examples</title>
     <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
-    <script src="textureBackgroundImage.js"></script>
-    <script src="text-renderer.js"></script>
-    <script src="gl-matrix.js"></script>
-    <script src="init-buffers.js"></script>
-    <script src="draw-scene.js"></script>
-    <script src="webgl-demo.js"></script>
-    <script src="record-animation.js"></script>
 </head>
 
-  <body>
-      <div class="container">
-          <canvas id="glcanvas" width="640" height="480"></canvas>
-          <div>
-              <button id="startRecord">Start Recording</button>
-              <button id="stopRecord" disabled>Stop Recording</button>
-          </div>
-          <div id="status">Ready to record</div>
-          <div style="font-size: 150%">
-              <a href="https://github.com/vasilich-tregub/animation-recording">Webpage source</a>
-          </div>
-      </div>
-  </body>
+<body>
+    <div class="container">
+        <ul>
+            <li><a href="./record-animation/index.html">Streaming WebGL animations, Part 1: text rendering, recording</a></li>
+            <li><a href="./closed-captioning/index.html">Closed-captioned video example</a></li>
+        </ul>
+    </div>
+</body>
 </html>
