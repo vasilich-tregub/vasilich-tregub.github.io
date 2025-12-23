@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <meta charset="utf-8" />
+    <title>Embedding captions to video</title>
+</head>
+<body>
+    <div style="font-size: 150%">
+        <div>Start playback in this video preview to watch a demo</div>
+        <video id="idVideo" src="starwars.mkv" width="384" height="163" controls></video>
+    </div>
+    <div>
+        <div style="display: none;">
+            <button id="startRecord">Start Recording</button>
+            <button id="stopRecord" disabled>Stop Recording</button>
+        </div>
+        <div id="status" class="status ready" style="font-size: 150%">Ready to record</div>
+        <canvas id="glCanvas" width="1920" height="816"></canvas>
+    </div>
+    <script src="processor.js"></script>
+    <script src="canvas-recording.js"></script>
+</body>
+</html>
