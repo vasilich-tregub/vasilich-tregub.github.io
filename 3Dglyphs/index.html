@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>WebGL 3D </title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <script src="gl-matrix.js"></script>
+    <script src="webgl-demo.js" type="module"></script>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="glcanvas" width="640" height="480"></canvas>
+        <div style="font-size: 150%">
+            This page is a placeholder for now. <br />
+            The GL arrays for 3D glyphs displayed here are generated with <br />
+            the help of an amazing tool <a href="https://github.com/codetiger/Font23D">Font23D</a> by Harishankar (codetiger).<br />
+            I embedded the text strings from the tool's OBJ file output into <br />
+            array definitions of init-buffers.js with the intention to implement <br />
+            later the webassembly solution also found in the Font23D repo.
+        </div>
+    </div>
+</body>
+</html>
