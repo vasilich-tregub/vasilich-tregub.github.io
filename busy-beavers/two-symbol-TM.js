@@ -48,7 +48,17 @@ function instruction(state0, state1) {
 }
 
 function runTM() {
+    MIN_POS = 0;
+    MAX_POS = TAPE_LEN - 1;
     XX = 0;
+    AA = 0;
+    BB = 0;
+    CC = 0;
+    DD = 0;
+    EE = 0;
+    FF = 0;
+    XX = 0;
+    TAPE.splice(0);
     for (let i = 0; i < TAPE_LEN; ++i)
         TAPE.push('0');
 
@@ -85,5 +95,7 @@ function runTM() {
                 break;
         }
     }
-    alert(XX);
+    //alert(XX);
+    const tapeToShow = TAPE.slice(TAPE_LEN / 2 - 50, TAPE_LEN / 2 + 50);
+    idTapeDisplay.innerHTML = tapeToShow;
 }
