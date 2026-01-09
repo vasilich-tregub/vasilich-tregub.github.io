@@ -8,7 +8,8 @@ window.onload = () => {
         radio.addEventListener('change', event => {
             allStateCodes.forEach(stateCode => {
                 stateCode.value = '   ';
-            })
+            });
+            tmstate = STATE_A;
             switch (event.target.value) { 
                 case '1':
                     state0A.value = '1RH';

@@ -8,7 +8,7 @@ const STATE_E = 'E';
 const STATE_F = 'F';
 const STATE_H = 'H';
 
-var tmstate = STATE_A;
+var tmstate = 0;
 var XX = 0;
 var AA = 0;
 var BB = 0;
@@ -48,6 +48,10 @@ function instruction(state0, state1) {
 }
 
 function runTM() {
+    if (tmstate == 0) {
+        alert("Use radio buttons at A/B/C/D/E to select number of states");
+        return;
+    }
     MIN_POS = 0;
     MAX_POS = TAPE_LEN - 1;
     XX = 0;
