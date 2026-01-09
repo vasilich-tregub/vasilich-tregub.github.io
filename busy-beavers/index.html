@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            font-size: 150%;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>Busy Beavers in javascript</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <script src="busybeavers.js"></script>
+    <script src="two-symbol-TM.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <table>
+            <tr>
+                <th> </th>
+                <th>A <input type="radio" name="lastState" value="1" /></th>
+                <th>B <input type="radio" name="lastState" value="2" /></th>
+                <th>C <input type="radio" name="lastState" value="3" /></th>
+                <th>D <input type="radio" name="lastState" value="4" /></th>
+                <th>E <input type="radio" name="lastState" value="5" /></th>
+                <th>F <input type="radio" name="lastState" value="6" /></th>
+            </tr>
+            <tr>
+                <th>0 </th>
+                <td><input name="stateCodes" id="state0A" maxlength="3" size="3" value="1RB" /></td>
+                <td><input name="stateCodes" id="state0B" maxlength="3" size="3" value="1RC" /></td>
+                <td><input name="stateCodes" id="state0C" maxlength="3" size="3" value="1LC" /></td>
+                <td><input name="stateCodes" id="state0D" maxlength="3" size="3" value="0LE" /></td>
+                <td><input name="stateCodes" id="state0E" maxlength="3" size="3" value="1LF" /></td>
+                <td><input name="stateCodes" id="state0F" maxlength="3" size="3" value="0RC" /></td>
+            </tr>
+            <tr>
+                <th>1 </th>
+                <td><input name="stateCodes" id="state1A" maxlength="3" size="3" value="0LD" /></td>
+                <td><input name="stateCodes" id="state1B" maxlength="3" size="3" value="0RF" /></td>
+                <td><input name="stateCodes" id="state1C" maxlength="3" size="3" value="1LA" /></td>
+                <td><input name="stateCodes" id="state1D" maxlength="3" size="3" value="1RH" /></td>
+                <td><input name="stateCodes" id="state1E" maxlength="3" size="3" value="0RB" /></td>
+                <td><input name="stateCodes" id="state1F" maxlength="3" size="3" value="0RE" /></td>
+            </tr>
+        </table>
+    </div>
+    <button onclick="runTM()">Start TM</button>
+</body>
+</html>
