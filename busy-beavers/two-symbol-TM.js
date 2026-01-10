@@ -9,11 +9,13 @@ const STATE_F = 'F';
 const STATE_H = 'H';
 
 var tmstate = 0;
-var sigma = 0; // score function, noncomputable
+var shifts = 0; // max shifts function S, noncomputable
 
 var ZEROPOS = 0;
 var POS = 0;
 var TAPE = [];
+var maxShifts = 0;
+var loop = false;
 
 function action(state) {
     TAPE[POS] = state[0];
@@ -33,7 +35,11 @@ function action(state) {
     tmstate = state[2];
 }
 function instruction(state0, state1) {
-    sigma++;
+    if (shifts >= maxShifts) {
+        loop = false;
+        return;
+    }
+    shifts++;
     if (TAPE[POS] == '0')
         action(state0);
     else
@@ -41,16 +47,17 @@ function instruction(state0, state1) {
 }
 
 function runTM() {
+    maxShifts = idMaxShifts.value; // max shifts, both left/right
     if (tmstate == 0) {
         alert("Use radio buttons at A/B/C/D/E to select number of states");
         return;
     }
-    sigma = 0;
+    shifts = 0;
     TAPE = ['0'];
     ZEROPOS = POS = 0;
 
     tmstate = STATE_A;
-    let loop = true;
+    loop = true;
     while (loop) {
         switch (tmstate) {
             case STATE_A:
@@ -76,7 +83,7 @@ function runTM() {
                 break;
         }
     }
-    idScore.innerHTML = sigma.toString();
+    idShifts.innerHTML = shifts.toString();
     if (ZEROPOS <= POS)
         idTapeDisplay.innerHTML = TAPE.toSpliced(ZEROPOS, 0, '^').toSpliced(POS + 2, 0, '.').join('');
     else

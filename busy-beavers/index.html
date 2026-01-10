@@ -31,7 +31,7 @@
                 <th>C <input type="radio" name="lastState" value="3" /></th>
                 <th>D <input type="radio" name="lastState" value="4" /></th>
                 <th>E <input type="radio" name="lastState" value="5" /></th>
-                <th>F <input type="radio" name="lastState" value="6" disabled /></th>
+                <th>F <input type="radio" name="lastState" value="6" /></th>
             </tr>
             <tr>
                 <th>0 </th>
@@ -53,8 +53,8 @@
             </tr>
         </table>
     </div>
-    <div><button onclick="runTM()">Start TM</button></div>
-    <div id="idScore"></div>
+    <div><button onclick="runTM()">Start TM</button> Max shifts: <input type="number" id="idMaxShifts" min="1" value="47176870"/></div>
+    <div id="idShifts"></div>
     <textarea id="idTapeDisplay"></textarea>
 </body>
 </html>
