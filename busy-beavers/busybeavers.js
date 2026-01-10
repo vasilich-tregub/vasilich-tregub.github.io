@@ -9,6 +9,8 @@ window.onload = () => {
             allStateCodes.forEach(stateCode => {
                 stateCode.value = '   ';
             });
+            idScore.innerHTML = "Score:"
+            idTapeDisplay.innerHTML = "Tape content:"
             tmstate = STATE_A;
             switch (event.target.value) { 
                 case '1':
