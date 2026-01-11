@@ -66,7 +66,37 @@ window.onload = () => {
                     state0F.value = '0RC';
                     state1F.value = '0RE';
                     break;
+                case '6BB':
+                    state0A.value = '1RB';
+                    state1A.value = '0LD';
+                    state0B.value = '0RC';
+                    state1B.value = '1RB';
+                    state0C.value = '1RD';
+                    state1C.value = '1RF';
+                    state0D.value = '0LE';
+                    state1D.value = '1LD';
+                    state0E.value = '1LA';
+                    state1E.value = '1LE';
+                    state0F.value = '1RH';
+                    state1F.value = '0RB';
+                    break;
             }
         })
     })
+}
+
+function textareaSize(checkbox) {
+    if (checkbox.checked) {
+        var viewportWidth = document.documentElement.clientWidth - 20;
+        var viewportHeight = document.documentElement.clientHeight - 200;
+        idTapeDisplay.style.width = viewportWidth + 'px';
+        idTapeDisplay.style.height = viewportHeight + 'px';
+    }
+    else {
+        idTapeDisplay.style.width = null;
+        idTapeDisplay.style.height = null;
+        let cssStyle = document.defaultView.getComputedStyle(idTapeDisplay, null);
+        idTapeDisplay.style.width = cssStyle.getPropertyValue(width);
+        idTapeDisplay.style.height = cssStyle.getPropertyValue(height);
+    }
 }

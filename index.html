@@ -12,6 +12,15 @@
         .container {
             font-size: 150%;
         }
+
+        li:not(:first-of-type) {
+            margin-top: 0.5em;
+        }
+
+        li:not(:last-of-type) {
+            margin-bottom: 0.5em;
+        }
+
     </style>
     <meta charset="utf-8" />
     <title>Vasilich Tregub Web API examples</title>
@@ -22,41 +31,38 @@
     <div class="container">
         <ul>
             <li><a href="./record-animation/index.html">Streaming WebGL animations. Part 1: text rendering, animation recording</a></li>
-            <p />
             <li>
                 <a href="./open-captioning/index.html">Embedding captions in video (open captioning)</a>
-                The demo starts when you <br />
-                click Play in the preview window. The application replays the clip <br />
+                The demo starts when <br />
+                you click Play in the preview window. The application replays the clip <br />
                 and embeds subtitles in the frames. When the playback ends, the browser <br />
                 writes the clip with embedded subtitles to your downloads folder or asks <br />
-                where the clip should be written.
+                where  the clip should be written.
                 <a href="https://github.com/vasilich-tregub/open-captioning">The demo source</a><br />
             </li>
-            <p />
             <li><a href="./3Dglyphs/index.html">WebGL rendering of 3D glyphs</a></li>
-            <p />
             <li>
                 <a href="./busy-beavers/index.html">Busy Beavers simulation</a><br />
                 This is a demo of the two-symbol TM Busy Beaver challenge champions. <br />
                 Select the number of states with radio buttons at state markers A/B/C/D/E. <br />
-                For now, BB(2,5) runs over a minute or even longer. The page may warn you <br />
-                "The page isn't reponding". Click the Wait button to continue. <br />
+                For now, BB(2,5) runs over a minute or even longer. The page may warn <br />
+                you "The page isn't reponding". If you want to continue, you can ignore <br />
+                the warning or click the Wait button. <br />
                 The results are printed into the textarea control. The hat ('^') character <br />
-                inserted before the symbol on a tape cell marks the starting position. The <br />
-                halt position is marked with the dot inserted after the tape cell accessed <br />
-                last. <br />
+                is not the symbol on the tape; it marks the starting position. The halt <br />
+                position is marked with the dot inserted after the tape cell accessed last. <br />
                 Max shifts number is preset to the 47,176,870 which is the maximum shift <br />
                 number of the BB(2,5) champion. You can decrease this number to, say, <br />
                 47,176,000 and examine the behaviour of the tape before the halt state. <br />
                 It is unrealistic to examine with this script the behaviour of the current <br />
                 champion <a href="https://wiki.bbchallenge.org/wiki/1RB3RB5RA1LB5LA2LB_2LA2RA4RB1RZ3LB2LA">1RB3RB5RA1LB5LA2LB_2LA2RA4RB1RZ3LB2LA</a>,
-                but you <br />
-                can watch 'A Start in Life' drama while selecting the radio button near state F<br />
-                and setting the max shifts number to any number you like.<br />
-                Please note that you can resize the textarea control, dragging it with the <br />
-                lower buttom corner. You can also improve the program so that it will be <br />
-                able to continue  from the state which it enters when reaching the current <br />
-                max shifts parameter.
+                but <br />
+                you can watch 'A Start in Life' drama while selecting the radio button near <br />
+                state F and setting the max shifts number to any number you like. You can <br />
+                use preset rules for either of two BB(2,6) machines on the page or enter <br />
+                your own data for rules. You can also improve the program so that it will be <br />
+                able to continue starting from the state which it enters when reaching the <br />
+                current max shifts parameter.
             </li>
            
         </ul>

@@ -5,7 +5,7 @@
         body {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
         }
@@ -26,12 +26,21 @@
         <table>
             <tr>
                 <th> </th>
+                <th>  </th>
+                <th>  </th>
+                <th>  </th>
+                <th>  </th>
+                <th>  </th>
+                <th title="From https://bbchallenge.org/1RB0LD_0RC1RB_1RD1RF_0LE1LD_1LA1LE_---0RB" >F(BB)<input type="radio" name="lastState" value="6BB" /></th>
+            </tr>
+            <tr>
+                <th> </th>
                 <th>A <input type="radio" name="lastState" value="1" /></th>
                 <th>B <input type="radio" name="lastState" value="2" /></th>
                 <th>C <input type="radio" name="lastState" value="3" /></th>
                 <th>D <input type="radio" name="lastState" value="4" /></th>
                 <th>E <input type="radio" name="lastState" value="5" /></th>
-                <th>F <input type="radio" name="lastState" value="6" /></th>
+                <th>F <input type="radio" name="lastState" value="6" title="Wikipedia, Busy_Beavers" /></th>
             </tr>
             <tr>
                 <th>0 </th>
@@ -55,6 +64,7 @@
     </div>
     <div><button onclick="runTM()">Start TM</button> Max shifts: <input type="number" id="idMaxShifts" min="1" value="47176870"/></div>
     <div id="idShifts"></div>
+    <div>Expand textarea:<input type="checkbox" onclick="textareaSize(this)" /></div>
     <textarea id="idTapeDisplay"></textarea>
 </body>
 </html>
