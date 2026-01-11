@@ -18,6 +18,11 @@ var maxShifts = 0;
 var loop = false;
 
 function action(state) {
+    if (state == '') {
+        loop = false;
+        alert("NO RULE GIVEN, STOP");
+        return;
+    }
     TAPE[POS] = state[0];
     if (state[1] == 'R') {
         if (POS == TAPE.length - 1)
@@ -48,10 +53,6 @@ function instruction(state0, state1) {
 
 function runTM() {
     maxShifts = idMaxShifts.value; // max shifts, both left/right
-    if (tmstate == 0) {
-        alert("Use radio buttons at A/B/C/D/E to select number of states");
-        return;
-    }
     shifts = 0;
     TAPE = ['0'];
     ZEROPOS = POS = 0;
