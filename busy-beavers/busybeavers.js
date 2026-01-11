@@ -7,7 +7,7 @@ window.onload = () => {
     radios.forEach(radio => {
         radio.addEventListener('change', event => {
             allStateCodes.forEach(stateCode => {
-                stateCode.value = '   ';
+                stateCode.value = '';
             });
             idShifts.innerHTML = "Shifts:"
             idTapeDisplay.innerHTML = "Tape content:"
@@ -99,4 +99,14 @@ function textareaSize(checkbox) {
         idTapeDisplay.style.width = cssStyle.getPropertyValue(width);
         idTapeDisplay.style.height = cssStyle.getPropertyValue(height);
     }
+}
+
+function ruleChanged(rulestr) {
+    var rule = rulestr.value;
+    if (!(rule[0] == '0' || rule[0] == '1') &&
+        !(rule[1] == 'L' || rule[1] == 'R') &&
+        !(rule[2] == 'A' || rule[2] == 'B' || rule[2] == 'C' || rule[2] == 'D' || rule[2] == 'E' || rule[2] == 'F' || rule[2] == 'H'))
+        {
+            rulestr.value = '0LH';
+        }
 }
