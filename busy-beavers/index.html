@@ -44,25 +44,29 @@
             </tr>
             <tr>
                 <th>0 </th>
-                <td><input name="stateCodes" id="state0A" maxlength="3" size="3" value="1RB" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state0B" maxlength="3" size="3" value="1RC" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state0C" maxlength="3" size="3" value="1LC" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state0D" maxlength="3" size="3" value="0LE" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state0E" maxlength="3" size="3" value="1LF" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state0F" maxlength="3" size="3" value="0RC" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0A" maxlength="3" size="3" value="1RB" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0B" maxlength="3" size="3" value="1RC" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0C" maxlength="3" size="3" value="1LC" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0D" maxlength="3" size="3" value="0LE" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0E" maxlength="3" size="3" value="1LF" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState0F" maxlength="3" size="3" value="0RC" onchange="ruleChanged(this)" /></td>
             </tr>
             <tr>
                 <th>1 </th>
-                <td><input name="stateCodes" id="state1A" maxlength="3" size="3" value="0LD" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state1B" maxlength="3" size="3" value="0RF" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state1C" maxlength="3" size="3" value="1LA" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state1D" maxlength="3" size="3" value="1RH" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state1E" maxlength="3" size="3" value="0RB" onchange="ruleChanged(this)" /></td>
-                <td><input name="stateCodes" id="state1F" maxlength="3" size="3" value="0RE" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1A" maxlength="3" size="3" value="0LD" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1B" maxlength="3" size="3" value="0RF" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1C" maxlength="3" size="3" value="1LA" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1D" maxlength="3" size="3" value="1RH" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1E" maxlength="3" size="3" value="0RB" onchange="ruleChanged(this)" /></td>
+                <td><input name="stateCodes" id="idState1F" maxlength="3" size="3" value="0RE" onchange="ruleChanged(this)" /></td>
             </tr>
         </table>
     </div>
-    <div><button onclick="runTM()">Start TM</button> Max shifts: <input type="number" id="idMaxShifts" min="1" value="65536"/></div>
+    <div>
+      <button onclick="runTM()">Start TM</button>
+      Max shifts: <input type="number" id="idMaxShifts" min="1" value="65536"/>
+      Performance (ms): <input id="idPerf"/>
+    </div>
     <div id="idShifts"></div>
     <div>Expand textarea:<input type="checkbox" onclick="textareaSize(this)" /></div>
     <textarea id="idTapeDisplay"></textarea>

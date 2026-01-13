@@ -52,6 +52,18 @@ function instruction(state0, state1) {
 }
 
 function runTM() {
+    let state0A = idState0A.value;
+    let state1A = idState1A.value;
+    let state0B = idState0B.value;
+    let state1B = idState1B.value;
+    let state0C = idState0C.value;
+    let state1C = idState1C.value;
+    let state0D = idState0D.value;
+    let state1D = idState1D.value;
+    let state0E = idState0E.value;
+    let state1E = idState1E.value;
+    let state0F = idState0F.value;
+    let state1F = idState1F.value;
     maxShifts = idMaxShifts.value; // max shifts, both left/right
     shifts = 0;
     TAPE = ['0'];
@@ -59,31 +71,34 @@ function runTM() {
 
     tmstate = STATE_A;
     loop = true;
+    const startTime = performance.now();
     while (loop) {
         switch (tmstate) {
             case STATE_A:
-                instruction(state0A.value, state1A.value);
+                instruction(state0A, state1A);
                 break;
             case STATE_B:
-                instruction(state0B.value, state1B.value);
+                instruction(state0B, state1B);
                 break;
             case STATE_C:
-                instruction(state0C.value, state1C.value);
+                instruction(state0C, state1C);
                 break;
             case STATE_D:
-                instruction(state0D.value, state1D.value);
+                instruction(state0D, state1D);
                 break;
             case STATE_E:
-                instruction(state0E.value, state1E.value);
+                instruction(state0E, state1E);
                 break;
             case STATE_F:
-                instruction(state0F.value, state1F.value);
+                instruction(state0F, state1F);
                 break;
             case STATE_H:
                 loop = false;
                 break;
         }
     }
+    const endTime = performance.now();
+    idPerf.value = endTime - startTime;
     idShifts.innerHTML = shifts.toString();
     if (ZEROPOS <= POS)
         idTapeDisplay.innerHTML = TAPE.toSpliced(ZEROPOS, 0, '^').toSpliced(POS + 2, 0, '.').join('');
