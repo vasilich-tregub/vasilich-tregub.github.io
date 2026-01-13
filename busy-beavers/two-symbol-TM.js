@@ -1,5 +1,4 @@
 // 2 symbol Turing Machine
-var tmstates;
 const STATE_A = 'A';
 const STATE_B = 'B';
 const STATE_C = 'C';
