@@ -63,9 +63,10 @@
         </table>
     </div>
     <div>
-      <button onclick="runTM()">Start TM</button>
-      Max shifts: <input type="number" id="idMaxShifts" min="1" value="65536"/>
-      Performance (ms): <input id="idPerf"/>
+        <button id="idStartTM" onclick="runTM()">Start TM</button>
+        Max shifts: <input type="number" id="idMaxShifts" min="1" value="1048576" />
+        <button onclick="stopTM()">Stop TM</button>
+        Performance (ms): <input id="idPerf" />
     </div>
     <div id="idShifts"></div>
     <div>Expand textarea:<input type="checkbox" onclick="textareaSize(this)" /></div>

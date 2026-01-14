@@ -34,10 +34,6 @@ function action(state) {
     tmstate = state[2];
 }
 function instruction(state0, state1) {
-    if (shifts >= maxShifts) {
-        loop = false;
-        return;
-    }
     shifts++;
     if (TAPE[POS] == '0')
         action(state0);
@@ -45,7 +41,8 @@ function instruction(state0, state1) {
         action(state1);
 }
 
-function runTM() {
+async function runTM() {
+    idStartTM.disabled = true;
     let state0A = idState0A.value;
     let state1A = idState1A.value;
     let state0B = idState0B.value;
@@ -93,6 +90,12 @@ function runTM() {
                 loop = false;
                 alert("unknown or empty state, exit");
         }
+        if (shifts >= maxShifts) {
+            loop = false;
+            break;
+        }
+        if (shifts % 1048576 == 0)
+            await scheduler.yield();
     }
     const endTime = performance.now();
     idPerf.value = endTime - startTime;
@@ -101,4 +104,10 @@ function runTM() {
         idTapeDisplay.innerHTML = TAPE.toSpliced(ZEROPOS, 0, '^').toSpliced(POS + 2, 0, '.').join('');
     else
         idTapeDisplay.innerHTML = TAPE.toSpliced(POS + 1, 0, '.').toSpliced(ZEROPOS + 2, 0, '^').join('');
+
+    idStartTM.disabled = false;
+}
+
+function stopTM() {
+    loop = false;
 }
