@@ -108,10 +108,10 @@ function textareaSize(checkbox) {
 
 function ruleChanged(rulestr) {
     var rule = rulestr.value;
-    if (!(rule[0] == '0' || rule[0] == '1') &&
-        !(rule[1] == 'L' || rule[1] == 'R') &&
+    if (!(rule[0] == '0' || rule[0] == '1') ||
+        !(rule[1] == 'L' || rule[1] == 'R') ||
         !(rule[2] == 'A' || rule[2] == 'B' || rule[2] == 'C' || rule[2] == 'D' || rule[2] == 'E' || rule[2] == 'F' || rule[2] == 'H'))
         {
-            rulestr.value = '0LH';
+            rulestr.value = '';
         }
 }

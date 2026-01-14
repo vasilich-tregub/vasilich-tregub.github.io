@@ -17,18 +17,13 @@ var maxShifts = 0;
 var loop = false;
 
 function action(state) {
-    if (state == '') {
-        loop = false;
-        alert("NO RULE GIVEN, STOP");
-        return;
-    }
     TAPE[POS] = state[0];
     if (state[1] == 'R') {
         if (POS == TAPE.length - 1)
             TAPE.push('0');
         POS++;
     }
-    else {
+    else if (state[1] == 'L') {
         if (POS == 0) {
             TAPE.unshift('0');
             ZEROPOS++;
@@ -94,6 +89,9 @@ function runTM() {
             case STATE_H:
                 loop = false;
                 break;
+            default:
+                loop = false;
+                alert("unknown or empty state, exit");
         }
     }
     const endTime = performance.now();
