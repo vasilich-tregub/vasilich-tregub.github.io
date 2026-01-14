@@ -46,23 +46,23 @@
                 This is a demo of the two-symbol TM Busy Beaver challenge champions. <br />
                 Select the number of states with radio buttons at state markers A/B/C/D/E. <br />
                 For now, BB(2,5) runs about four seconds. If the TM run is longer, the <br />
-                page may warn you "The page isn't reponding". If you want to continue, <br />
-                you can ignore the warning or click the Wait button. <br />
-                You can enter TM instructions manually. The validity check is only <br />
-                rudimentary: if you enter an invalid 3-char rule, it is silently replaced <br />
-                with an empty string, and it is the only message you've got from the page. <br />
-                Run diagnostic is also nearly absent: this is a demo, not a debugger. <br />
-                After TM halts or exits, the js script writes the final tape to the textarea <br />
-                control. The hat ('^') character is not a symbol the program places on the <br />
-                tape; it marks the starting position. The halt position is marked with the <br />
-                dot inserted after the tape cell accessed last. A default limit on the <br />
-                number of shifts is preset to an arbitrary value of 65,536. When an BB(2,N) <br />
-                champion is selected, the limit on S value is set to the champion's S value <br />
-                plus one. It is unrealistic to examine the behaviour of BB(2,6) contenders <br />
-                like <a href="https://bbchallenge.org/1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE">1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE</a> <br />
+                page may warn you "The page isn't reponding". To continue, you can <br />
+                ignore the warning or click the Wait button. You can enter TM instructions <br />
+                manually. The validity check is only rudimentary: if you enter an invalid <br />
+                3-char rule, it is silently replaced with an empty string, and it is the <br />
+                only message you've got from the page. Run diagnostic is also nearly <br />
+                absent: this is a demo, not a debugger. After TM halts or exits, the js <br />
+                script  writes the completed tape to the textarea control. The hat ('^') <br />
+                character is not a symbol the program places on the tape; it marks the <br />
+                starting position. The halt position is marked with the dot inserted after <br />
+                the tape cell accessed last. A default limit on the number of shifts is <br />
+                preset to an arbitrary value of 4,194,304. When an BB(2,N) champion is <br />
+                selected, the limit on S value is set to the champion's S value + 1.<br />
+                It is unrealistic to examine the behaviour of BB(2,6) contenders like <br />
+                <a href="https://bbchallenge.org/1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE">1RB1RA_1RC1RZ_1LD0RF_1RA0LE_0LD1RC_1RA0RE</a> <br />
                 with this script, but you can watch 'A Start in Life' drama while selecting <br />
                 the radio button near state F and setting the max shifts number to any <br />
-                number you like. You can use preset rules for either of two BB(2,6) <br />
+                value you like. You can use preset rules for either of two BB(2,6) <br />
                 machines on the page or enter your own data for rules. You can also <br />
                 improve the program so that it will be able to continue starting from the <br />
                 state which it enters when reaching the current max shifts parameter.

@@ -43,6 +43,7 @@ function instruction(state0, state1) {
 
 async function runTM() {
     idStartTM.disabled = true;
+    await scheduler.yield();
     let state0A = idState0A.value;
     let state1A = idState1A.value;
     let state0B = idState0B.value;
@@ -94,7 +95,7 @@ async function runTM() {
             loop = false;
             break;
         }
-        if (shifts % 1048576 == 0)
+        if (shifts % 0x400000 == 0)
             await scheduler.yield();
     }
     const endTime = performance.now();
