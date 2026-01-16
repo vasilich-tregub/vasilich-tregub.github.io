@@ -41,9 +41,11 @@ function instruction(state0, state1) {
         action(state1);
 }
 
+
 async function runTM() {
+let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     idStartTM.disabled = true;
-    await scheduler.yield();
+    if (!isSafari) { await scheduler.yield(); }
     let state0A = idState0A.value;
     let state1A = idState1A.value;
     let state0B = idState0B.value;
@@ -95,8 +97,10 @@ async function runTM() {
             loop = false;
             break;
         }
-        if (shifts % 0x400000 == 0)
-            await scheduler.yield();
+        if (!isSafari) {
+            if (shifts % 0x400000 == 0)
+                await scheduler.yield();
+        }
     }
     const endTime = performance.now();
     idPerf.value = endTime - startTime;
