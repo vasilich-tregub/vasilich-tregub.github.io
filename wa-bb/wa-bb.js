@@ -115,3 +115,79 @@ function ruleChanged(rulestr) {
             rulestr.value = '';
         }
 }
+
+const importObject = {
+};
+
+var waobj;
+var waTMruleArr;
+var waTMruleArrDV;
+var waTMruleScrArr;
+var waTMruleScrArrDV;
+var waTMruleBidirArr;
+var waTMruleBidirArrDV;
+var waTMruleStateArr;
+var waTMruleStateDV;
+
+WebAssembly.instantiateStreaming(
+    fetch("bb.wasm"),
+    importObject
+).then((obj) => {
+    // Get exported memory
+    waobj = obj;
+    waTMruleArr = obj.instance.exports.waTMruleArr;
+    waTMruleArrDV = new DataView(waTMruleArr.buffer);
+    waTMruleScrArr = obj.instance.exports.waTMruleScrArr;
+    waTMruleScrArrDV = new DataView(waTMruleScrArr.buffer);
+    waTMruleBidirArr = obj.instance.exports.waTMruleBidirArr;
+    waTMruleBidirArrDV = new DataView(waTMruleBidirArr.buffer);
+    waTMruleStateArr = obj.instance.exports.waTMruleStateArr;
+    waTMruleStateArrDV = new DataView(waTMruleStateArr.buffer);
+    // Log memory
+    //obj.instance.exports.logAllMemory();
+});
+function runWasmTM(ruleix) {
+    let jsTMruleArr = new Int32Array(48);
+    var jsTMruleScrArr = new Int32Array(48);
+    var jsTMruleBidirArr = new Int32Array(48);
+    var jsTMruleStateArr = new Int32Array(48);
+    let domRuleArr = [idState0A, idState1A, idState0B, idState1B, idState0C, idState1C, idState0D, idState1D, idState0E, idState1E, idState0F, idState1F];
+    for (let i = 0; i < 12; ++i) {
+        let rule = domRuleArr[i].value;
+        jsTMruleArr[i] = rule[0] * 0x10000 + ((rule[1] == 'R') ? 0 : 1) * 0x100 + (rule.charCodeAt(2) - 0x41);
+        jsTMruleScrArr[i] = rule[0];
+        jsTMruleBidirArr[i] = ((rule[1] == 'R') ? 1 : -1);
+        jsTMruleStateArr[i] = (rule.charCodeAt(2) - 0x41);
+    }
+    for (let i = 0; i < 12; ++i) {
+        waTMruleArrDV.setInt32(4 * i, jsTMruleArr[i], true);
+        waTMruleScrArrDV.setInt32(4 * i, jsTMruleScrArr[i], true);
+        waTMruleBidirArrDV.setInt32(4 * i, jsTMruleBidirArr[i], true);
+        waTMruleStateArrDV.setInt32(4 * i, jsTMruleStateArr[i], true);
+    }
+
+    waobj.instance.exports.startWaTM(ruleix);
+}
+function viewWasmTMrules() {
+    let jsTMruleArr = new Int32Array(48);
+    for (let i = 0; i < 12; ++i)
+        jsTMruleArr[i] = waTMruleArrDV.getInt32(4 * i, true);
+
+    let str = '';
+    for (let i = 0; i < 12; ++i)
+        str += jsTMruleArr[i].toString(16) + "; ";
+    idWasmRulesDisplay.value = str;
+}
+function viewWasmTape() {
+    let tapeCells = new Int32Array(48);
+    let waTapeDV = new DataView(waobj.instance.exports.tapepos.buffer);
+    for (let i = 32768 - 20; i < 32768 + 20; ++i)
+        tapeCells[i - 32768 + 20] = waTapeDV.getUint8(i, true);
+
+    let str = '';
+    for (let i = 32768 - 20; i < 32768 + 20; ++i)
+        str += tapeCells[i - 32768 + 20].toString(16) + "; ";
+    //const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 12);
+    //const string = new TextDecoder("utf-8").decode(bytes);
+    idWasmRulesDisplay.value = str;
+}
