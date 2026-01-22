@@ -149,6 +149,8 @@ WebAssembly.instantiateStreaming(
     waTMruleStateArrDV = new DataView(waTMruleStateArr.buffer);
 });
 function runWasmTM() {
+    idStartWasmTM.disabled = true;
+
     let jsTMruleArr = new Int32Array(48);
     var jsTMruleScrArr = new Int32Array(48);
     var jsTMruleBidirArr = new Int32Array(48);
@@ -175,9 +177,7 @@ function runWasmTM() {
     let shifts_i64 = waTMreturned >> 32n;
     idShifts.innerHTML = shifts_i64.toString();
     waPOS = Number(BigInt.asUintN(16, waTMreturned));
-    viewWasmTape();
-}
-function viewWasmTape() {
+
     const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 65536);
     const nzbytes = [];
     if (waPOS < 32768) {
@@ -207,7 +207,8 @@ function viewWasmTape() {
                 nzbytes.push(bytes[i]);
         }
     }
-    const nzbytesArr  = new Uint8Array(nzbytes);
-    const string = new TextDecoder("utf-8").decode(nzbytesArr);
-    idTapeDisplay.value = string;
+    const nzbytesArr  = new Uint8Array(nzbytes);   
+    idTapeDisplay.value= new TextDecoder("utf-8").decode(nzbytesArr);
+
+    idStartWasmTM.disabled = false;
 }
