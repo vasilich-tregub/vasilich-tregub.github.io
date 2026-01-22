@@ -1,4 +1,11 @@
-// JavaScript source code
+// 2 symbol Turing Machine
+const STATE_A = 'A';
+const STATE_B = 'B';
+const STATE_C = 'C';
+const STATE_D = 'D';
+const STATE_E = 'E';
+const STATE_F = 'F';
+const STATE_H = 'H';
 
 window.onload = () => {
     const radios = document.querySelectorAll('input[name="lastState"]');
@@ -15,14 +22,12 @@ window.onload = () => {
             switch (event.target.value) { 
                 case '1':
                     idState0A.value = '1RH';
-                    idMaxShifts.value = 2;
                     break;
                 case '2':
                     idState0A.value = '1RB';
                     idState1A.value = '1LB';
                     idState0B.value = '1LA';
                     idState1B.value = '1RH';
-                    idMaxShifts.value = 7;
                     break;
                 case '3':
                     idState0A.value = '1RB';
@@ -31,7 +36,6 @@ window.onload = () => {
                     idState1B.value = '1RB';
                     idState0C.value = '1LC';
                     idState1C.value = '1LA';
-                    idMaxShifts.value = 15;
                     break;
                 case '4':
                     idState0A.value = '1RB';
@@ -42,7 +46,6 @@ window.onload = () => {
                     idState1C.value = '1LD';
                     idState0D.value = '1RD';
                     idState1D.value = '0RA';
-                    idMaxShifts.value = 108;
                     break;
                 case '5':
                     idState0A.value = '1RB';
@@ -55,7 +58,6 @@ window.onload = () => {
                     idState1D.value = '1LD';
                     idState0E.value = '1RH';
                     idState1E.value = '0LA';
-                    idMaxShifts.value = 47176871;
                     break;
                 case '6':
                     idState0A.value = '1RB';
@@ -128,6 +130,8 @@ var waTMruleBidirArr;
 var waTMruleBidirArrDV;
 var waTMruleStateArr;
 var waTMruleStateDV;
+var waTMreturned;
+var waPOS;
 
 WebAssembly.instantiateStreaming(
     fetch("bb.wasm"),
@@ -143,10 +147,8 @@ WebAssembly.instantiateStreaming(
     waTMruleBidirArrDV = new DataView(waTMruleBidirArr.buffer);
     waTMruleStateArr = obj.instance.exports.waTMruleStateArr;
     waTMruleStateArrDV = new DataView(waTMruleStateArr.buffer);
-    // Log memory
-    //obj.instance.exports.logAllMemory();
 });
-function runWasmTM(ruleix) {
+function runWasmTM() {
     let jsTMruleArr = new Int32Array(48);
     var jsTMruleScrArr = new Int32Array(48);
     var jsTMruleBidirArr = new Int32Array(48);
@@ -166,28 +168,46 @@ function runWasmTM(ruleix) {
         waTMruleStateArrDV.setInt32(4 * i, jsTMruleStateArr[i], true);
     }
 
-    waobj.instance.exports.startWaTM(ruleix);
-}
-function viewWasmTMrules() {
-    let jsTMruleArr = new Int32Array(48);
-    for (let i = 0; i < 12; ++i)
-        jsTMruleArr[i] = waTMruleArrDV.getInt32(4 * i, true);
-
-    let str = '';
-    for (let i = 0; i < 12; ++i)
-        str += jsTMruleArr[i].toString(16) + "; ";
-    idWasmRulesDisplay.value = str;
+    const startTime = performance.now();
+    waTMreturned = waobj.instance.exports.startWaTM();
+    const endTime = performance.now();
+    idPerf.value = endTime - startTime;
+    let shifts_i64 = waTMreturned >> 32n;
+    idShifts.innerHTML = shifts_i64.toString();
+    waPOS = Number(BigInt.asUintN(16, waTMreturned));
+    viewWasmTape();
 }
 function viewWasmTape() {
-    let tapeCells = new Int32Array(48);
-    let waTapeDV = new DataView(waobj.instance.exports.tapepos.buffer);
-    for (let i = 32768 - 20; i < 32768 + 20; ++i)
-        tapeCells[i - 32768 + 20] = waTapeDV.getUint8(i, true);
-
-    let str = '';
-    for (let i = 32768 - 20; i < 32768 + 20; ++i)
-        str += tapeCells[i - 32768 + 20].toString(16) + "; ";
-    //const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 12);
-    //const string = new TextDecoder("utf-8").decode(bytes);
-    idWasmRulesDisplay.value = str;
+    const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 65536);
+    const nzbytes = [];
+    if (waPOS < 32768) {
+        for (let i = 0; i <= waPOS; ++i) {
+            if (bytes[i] != 0) nzbytes.push(bytes[i]);
+        }
+        nzbytes.push(0x2E);
+        for (let i = waPOS + 1; i < 32768; ++i) {
+            if (bytes[i] != 0) nzbytes.push(bytes[i]);
+        }
+        nzbytes.push(0x5E);
+        for (let i = 32768; i < 65536; ++i) {
+            if (bytes[i] != 0) nzbytes.push(bytes[i]);
+        }
+    }
+    else {
+        for (let i = 0; i < 32768; ++i) {
+            if (bytes[i] != 0) nzbytes.push(bytes[i]);
+        }
+        nzbytes.push(0x5E);
+        for (let i = 32768; i <= waPOS; ++i) {
+            if (bytes[i] != 0) nzbytes.push(bytes[i]);
+        }
+        nzbytes.push(0x2E);
+        for (let i = waPOS + 1; i < 65536; ++i) {
+            if (bytes[i] != 0)
+                nzbytes.push(bytes[i]);
+        }
+    }
+    const nzbytesArr  = new Uint8Array(nzbytes);
+    const string = new TextDecoder("utf-8").decode(nzbytesArr);
+    idTapeDisplay.value = string;
 }

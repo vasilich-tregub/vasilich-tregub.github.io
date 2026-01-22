@@ -22,10 +22,9 @@
         }
     </style>
     <meta charset="utf-8" />
-    <title>Busy Beavers in javascript</title>
+    <title>Busy Beavers in Web assembler</title>
     <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
     <script src="wa-bb.js"></script>
-    <script src="wa-bb-TM.js"></script>
 </head>
 
 <body>
@@ -70,21 +69,15 @@
         </table>
     </div>
     <div>
-        <button id="idStartTM" onclick="runTM()">Start TM</button>
-        Max shifts: <input type="number" id="idMaxShifts" min="1" value="4194304" />
-        <button onclick="stopTM()">Stop TM</button>
+        <button id="idStartWasmTM" onclick="runWasmTM()">Start WASM TM</button>
+        <!--button onclick="stopTM()">Stop TM</!button-->
         Performance (ms): <input id="idPerf" />
     </div>
     <div id="idShifts"></div>
     <div>Expand textarea:<input type="checkbox" onclick="textareaSize(this)" /></div>
     <textarea id="idTapeDisplay"></textarea>
     <div>
-        <button id="idStartWasmTM" onclick="runWasmTM(idStartTMParam.value)">Start WASM TM</button>
-        <input type="number" id="idStartTMParam" value="0"/>
-        <button id="idViewWasmTMrules" onclick="viewWasmTMrules()">View WASM TM rules</button>
         <button id="idViewWasmTape" onclick="viewWasmTape()">View WASM Tape</button>
     </div>
-    <textarea id="idWasmRulesDisplay"></textarea>
-    <div>var1: $POS; var2: $tm(next)rule; var3: rule(current)ix in bytes; var0: in 32bit words</div>
 </body>
 </html>

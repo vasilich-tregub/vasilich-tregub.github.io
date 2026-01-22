@@ -105,10 +105,18 @@ let isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const endTime = performance.now();
     idPerf.value = endTime - startTime;
     idShifts.innerHTML = shifts.toString();
-    if (ZEROPOS <= POS)
-        idTapeDisplay.innerHTML = TAPE.toSpliced(ZEROPOS, 0, '^').toSpliced(POS + 2, 0, '.').join('');
-    else
-        idTapeDisplay.innerHTML = TAPE.toSpliced(POS + 1, 0, '.').toSpliced(ZEROPOS + 2, 0, '^').join('');
+    if (ZEROPOS < POS) {
+        idTapeDisplay.innerHTML = TAPE.slice(0, ZEROPOS).join('') + '^' + TAPE[ZEROPOS].toString() +
+            TAPE.slice(ZEROPOS + 1, POS).join('') + TAPE[POS].toString() + '.' + TAPE.slice(POS + 1).join('');
+
+    }
+    else if (ZEROPOS == POS) {
+        idTapeDisplay.innerHTML = TAPE.slice(0, ZEROPOS).join('') + '^' + TAPE[ZEROPOS].toString() + '.' + TAPE.slice(POS + 1).join('');
+    }
+    else {
+        idTapeDisplay.innerHTML = TAPE.slice(0, POS).join('') + TAPE[POS].toString() + '.' +
+            TAPE.slice(POS + 1, ZEROPOS).join('') + '^' + TAPE[ZEROPOS].toString() + TAPE.slice(ZEROPOS + 1).join('');
+    }
 
     idStartTM.disabled = false;
 }
