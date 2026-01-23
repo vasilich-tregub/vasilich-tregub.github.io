@@ -1,3 +1,6 @@
+;; TERMS OF USE
+;; This source code is subject to the terms of the MIT License. 
+;; Copyright(c) 2026 Vladimir Vasilich Tregub
 (module
 	;; Create and export an wasm memory
 	(memory $tapepos 1)

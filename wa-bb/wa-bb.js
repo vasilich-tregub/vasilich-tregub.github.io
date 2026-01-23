@@ -1,3 +1,8 @@
+/* TERMS OF USE
+ * This source code is subject to the terms of the MIT License. 
+ * Copyright(c) 2026 Vladimir Vasilich Tregub
+*/
+
 // 2 symbol Turing Machine
 const STATE_A = 'A';
 const STATE_B = 'B';
