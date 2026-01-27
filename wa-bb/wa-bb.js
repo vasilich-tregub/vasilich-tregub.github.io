@@ -181,11 +181,11 @@ function runWasmTM() {
     idPerf.value = endTime - startTime;
     let shifts_i64 = waTMreturned >> 32n;
     idShifts.innerHTML = shifts_i64.toString();
-    waPOS = Number(BigInt.asUintN(16, waTMreturned));
-
-    const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 65536);
+    waPOS = Number(BigInt.asUintN(17, waTMreturned)); // asUintN(log2(TAPE_LENGTH) + 1, ...) +1 for POS pointing outside tape memory
+    // waobj.instance.exports.tapepos is a WA single-page memory chunk of 64K bytes. POS (bb.wat) is never negative
+    const bytes = new Uint8Array(waobj.instance.exports.tapepos.buffer, 0, 65536); // Uint8Array(..., 0, TAPE_LENGTH)
     const nzbytes = [];
-    if (waPOS < 32768) {
+    if (waPOS < 32768) { // (waPOS < TAPE_LENGTH / 2)
         for (let i = 0; i <= waPOS; ++i) {
             if (bytes[i] != 0) nzbytes.push(bytes[i]);
         }
