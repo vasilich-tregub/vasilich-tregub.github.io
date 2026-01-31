@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            font-size: 150%;
+        }
+
+        #log {
+            height: 100px;
+            overflow: scroll;
+            padding: 0.5rem;
+            border: 1px solid black;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>Wavelets in WebAssembly</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <script src="wavelet.js"></script>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <div>
+        <button id="idForward" onclick="forward_transform()">Forward Transform</button>
+        <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
+    </div>
+    <div id="idShifts"></div>
+    <div style="height: 240px"><img id="idImgSrc" style="max-width: 100%; max-height: 100%" src="NGC2207.jpg" /></div>
+    <canvas id="idCanvas"></canvas>
+</body>
+</html>
