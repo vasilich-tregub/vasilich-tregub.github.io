@@ -69,6 +69,8 @@ function forward_transform() {
     idImage.innerHTML = string;
 
     waobj.instance.exports.dwt_forward(8, 0);
+    waobj.instance.exports.dwt_forward(8, 1);
+    waobj.instance.exports.dwt_forward(8, 2);
 
     string = '';
     for (let i = 0; i < len; ++i) {
@@ -79,6 +81,8 @@ function forward_transform() {
 function inverse_transform() {
     const image = new DataView(immemory.buffer);
 
+    waobj.instance.exports.dwt_inverse(8, 2);
+    waobj.instance.exports.dwt_inverse(8, 1);
     waobj.instance.exports.dwt_inverse(8, 0);
 
     string = '';
@@ -99,8 +103,8 @@ function forward_transform_js() {
     idImage.innerHTML = string;
 
     dwt_forward(0);
-    //dwt_forward(1);
-    //dwt_forward(2);
+    dwt_forward(1);
+    dwt_forward(2);
 
     string = '';
     for (let i = 0; i < len; ++i) {
@@ -109,8 +113,8 @@ function forward_transform_js() {
     idXform.innerHTML = string;
 }
 function inverse_transform_js() {
-    //dwt_inverse(2);
-    //dwt_inverse(1);
+    dwt_inverse(2);
+    dwt_inverse(1);
     dwt_inverse(0);
 
     string = '';

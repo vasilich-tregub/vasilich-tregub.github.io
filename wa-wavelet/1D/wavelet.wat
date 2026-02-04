@@ -139,10 +139,8 @@
         )
         (if (i32.lt_u (local.get $ptr) (local.get $end))
             (then 
-                (local.get $ptr)
-                (i32.shr_s (i32.add (i32.load (local.get $ptrpred))) (i32.const 1) (i32.const 1) )
-                (i32.load (local.get $ptr))
-                (i32.add  )
+                (local.get $ptr)                
+                (i32.add (i32.load (local.get $ptrpred)) (i32.load (local.get $ptr)))
                 (i32.store)
             )
         )
