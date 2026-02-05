@@ -1,20 +1,19 @@
+;; TERMS OF USE
+;; This source code is subject to the terms of the MIT License. 
+;; Copyright(c) 2026 Vladimir Vasilich Tregub
+;;
 (module
     (memory (import "js" "mem") 1)
-	;; Create and export an wasm memory
-	(memory $image 100)
-	(export "image" (memory $image))
-	(memory $xform 100)
-	(export "xform" (memory $xform))
 
-	(func (export "dwt_forward")  (param $len i32) (param $level i32)
-        (local $end i32)
+	(func (export "dwt_forward") (param $origin i32) (param $stride i32) (param $end i32) (param $level i32)
         (local $ptrsucc i32)
         (local $ptr i32)
         (local $ptrpred i32)
         (local $inc i32)
-        (local.set $end (i32.mul (local.get $len) (i32.const 4) ) )
-		(local.set $inc (i32.rotl (i32.rotl (i32.const 1) (local.get $level)) (i32.const 2)) )
-        (local.set $ptrpred (i32.const 0))
+        (local.set $origin (i32.rotl (local.get $origin) (i32.const 2)))
+		(local.set $inc (i32.rotl (i32.rotl (local.get $stride) (local.get $level)) (i32.const 2)) )
+        (local.set $end (i32.add (local.get $origin) (i32.rotl (local.get $end) (i32.const 2)) ) )
+        (local.set $ptrpred (local.get $origin))
         (local.set $ptr (i32.add (local.get $ptrpred) (local.get $inc)))
         (block $breakhigh
             (loop $top
@@ -37,7 +36,7 @@
                 (i32.store)
             )
         )
-        (local.set $ptr (i32.const 0) )
+        (local.set $ptr (local.get $origin) )
         (local.set $ptrsucc (i32.add (local.get $ptr) (local.get $inc)) )
         (local.get $ptr)
         (i32.load (local.get $ptr))
@@ -74,16 +73,15 @@
             )
         )
 	)
-	(func (export "dwt_inverse")  (param $len i32) (param $level i32)
-        (local $end i32)
+	(func (export "dwt_inverse") (param $origin i32) (param $stride i32) (param $end i32) (param $level i32)
         (local $ptrsucc i32)
         (local $ptr i32)
         (local $ptrpred i32)
         (local $inc i32)
-        (local.set $end (i32.mul (local.get $len) (i32.const 4) ) )
-		(local.set $inc (i32.rotl (i32.rotl (i32.const 1) (local.get $level)) (i32.const 2)) )
-        (local.set $ptrpred (i32.const 0))
-        (local.set $ptr (i32.const 0) )
+        (local.set $origin (i32.rotl (local.get $origin) (i32.const 2)))
+		(local.set $inc (i32.rotl (i32.rotl (local.get $stride) (local.get $level)) (i32.const 2)) )
+        (local.set $end (i32.add (local.get $origin) (i32.rotl (local.get $end) (i32.const 2)) ) )
+        (local.set $ptr (local.get $origin))
         (local.set $ptrsucc (i32.add (local.get $ptr) (local.get $inc)) )
         (local.get $ptr)
         (i32.load (local.get $ptr))
@@ -121,7 +119,7 @@
                 (i32.store)
             )
         )
-        (local.set $ptrpred (i32.const 0))
+        (local.set $ptrpred (local.get $origin))
         (local.set $ptr (i32.add (local.get $ptrpred) (local.get $inc)))
         (block $breaklow
             (loop $top

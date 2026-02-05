@@ -31,14 +31,14 @@
     <div class="container">
     </div>
     <div>
+        Performance (ms): <input id="idPerf" />
+        Hor Levels: <input type="number" id="idHorizontalLevels" min="1" max="5" value="2" />
+        Vert Levels: <input type="number" id="idVerticalLevels" min="0" max="2" value="2" />
         <button id="idForward" onclick="forward_transform()">Forward Transform</button>
-        <button id="idForward" onclick="forward_transform_js()">Forward Transform in JS</button>
-        <button id="idInverse" onclick="inverse_transform_js()">Inverse Transform in JS</button>
         <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
     </div>
     <div id="idShifts"></div>
-    <div>Expand textarea:<input type="checkbox" onclick="textareaSize(this)" /></div>
-    <textarea id="idImage"></textarea>
-    <textarea id="idXform"></textarea>
+    <div style="height: 240px"><img id="idImgSrc" style="max-width: 100%; max-height: 100%" src="NGC2207.jpg" /></div>
+    <canvas id="idCanvas"></canvas>
 </body>
 </html>
