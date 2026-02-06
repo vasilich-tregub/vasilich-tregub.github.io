@@ -8,12 +8,14 @@ var imB;
 var imageData;
 var width;
 var height;
+var imgsize;
 var horLevels;
 var vertLevels;
 function forward_transform() {
     const img = document.getElementById("idImgSrc");
     width = img.naturalWidth;
     height = img.naturalHeight;
+    imgsize = width * height;
     document.getElementById("idCanvas").width = width;
     document.getElementById("idCanvas").height = height;
     const ctx = document.getElementById("idCanvas").getContext("2d", { willReadFrequently: true });
@@ -30,23 +32,14 @@ function forward_transform() {
             imB[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 2] << 12;
         }
     }
-    if (idHorizontalLevels.value == 'undefined' || idHorizontalLevels.value < 0 || idHorizontalLevels.value > 5) {
-        idHorizontalLevels.value = 0;
-    }
-    if (idVerticalLevels.value == 'undefined' || idVerticalLevels.value < 0 || idVerticalLevels.value > 2) {
-        idVerticalLevels.value = 0;
-    }
-    if (idHorizontalLevels.value < idVerticalLevels.value) {
-        idVerticalLevels.value = idHorizontalLevels.value;
-    }
+
     horLevels = idHorizontalLevels.value;
     vertLevels = idVerticalLevels.value;
     let startTime = performance.now();
     for (let level = 0; level < vertLevels; ++level) {
         forward_transform_vertical(level);
-        forward_transform_horizontal(level);
     }
-    for (let level = vertLevels; level < horLevels; ++level) {
+    for (let level = 0; level < horLevels; ++level) {
         forward_transform_horizontal(level);
     }
     let finishTime = performance.now();
@@ -69,21 +62,20 @@ function forward_transform_horizontal(level) {
 }
 function forward_transform_vertical(level) {
     for (let iw = 0; iw < width; ++iw) {
-        dwt_forward(imR, iw, height, width, level);
-        dwt_forward(imG, iw, height, width, level);
-        dwt_forward(imB, iw, height, width, level);
+        dwt_forward(imR, iw, imgsize, width, level);
+        dwt_forward(imG, iw, imgsize, width, level);
+        dwt_forward(imB, iw, imgsize, width, level);
     }
 }
 function inverse_transform() {
     const ctx = document.getElementById("idCanvas").getContext("2d", { willReadFrequently: true });
 
     let startTime = performance.now();
-    for (let level = horLevels - 1; level >= vertLevels; --level) {
+    for (let level = horLevels - 1; level >= 0; --level) {
         inverse_transform_horizontal(level);
     }
     for (let level = vertLevels - 1; level >= 0; --level) {
         inverse_transform_vertical(level);
-        inverse_transform_horizontal(level);
     }
     let finishTime = performance.now();
     for (let ih = 0; ih < height; ++ih) {
@@ -105,14 +97,14 @@ function inverse_transform_horizontal(level) {
 }
 function inverse_transform_vertical(level) {
     for (let iw = 0; iw < idCanvas.width; ++iw) {
-        dwt_inverse(imR, iw, height, width, level);
-        dwt_inverse(imG, iw, height, width, level);
-        dwt_inverse(imB, iw, height, width, level);
+        dwt_inverse(imR, iw, imgsize, width, level);
+        dwt_inverse(imG, iw, imgsize, width, level);
+        dwt_inverse(imB, iw, imgsize, width, level);
     }
 }
-function dwt_forward(im, beg, len, indexdiff, level) { // indexdiff = (hor dwt vs. vert dwt) ? 1 : bitmap_stride
+function dwt_forward(im, beg, maxindexval, indexdiff, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
     const inc = indexdiff << level;
-    const end = beg + len * indexdiff;
+    const end = beg + maxindexval;
     //assert(inc < end && "stepping outside source image");
 
     let i = beg + inc;
@@ -139,9 +131,9 @@ function dwt_forward(im, beg, len, indexdiff, level) { // indexdiff = (hor dwt v
         im[i] += (im[i - inc] + 1) >> 1;
     }
 }
-function dwt_inverse(im, beg, len, indexdiff, level) { // indexdiff = (hor dwt vs. vert dwt) ? 1 : bitmap_stride
+function dwt_inverse(im, beg, maxindexval, indexdiff, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
     const inc = indexdiff << level;
-    const end = beg + len * indexdiff;
+    const end = beg + maxindexval;
     //assert(inc < end && "stepping outside source image");
 
     // low pass filter, {-1./4, 1./4, -1./4}

@@ -50,23 +50,13 @@ function forward_transform() {
             imagedecomp.setUint32((memB + ih * width + iw) * 4, imageData.data[(ih * width + iw) * 4 + 2] << 12, true);
         }
     }
-    if (idHorizontalLevels.value == 'undefined' || idHorizontalLevels.value < 0 || idHorizontalLevels.value > 5) {
-        idHorizontalLevels.value = 0;
-    }
-    if (idVerticalLevels.value == 'undefined' || idVerticalLevels.value < 0 || idVerticalLevels.value > 2) {
-        idVerticalLevels.value = 0;
-    }
-    if (idHorizontalLevels.value < idVerticalLevels.value) {
-        idVerticalLevels.value = idHorizontalLevels.value;
-    }
     horLevels = idHorizontalLevels.value;
     vertLevels = idVerticalLevels.value;
     let startTime = performance.now();
     for (let level = 0; level < vertLevels; ++level) {
         forward_transform_vertical(level);
-        forward_transform_horizontal(level);
     }
-    for (let level = vertLevels; level < horLevels; ++level) {
+    for (let level = 0; level < horLevels; ++level) {
         forward_transform_horizontal(level);
     }
     let finishTime = performance.now();
@@ -100,12 +90,11 @@ function inverse_transform() {
     const imagedecomp = new DataView(decompmem.buffer);
 
     let startTime = performance.now();
-    for (let level = horLevels - 1; level >= vertLevels; --level) {
+    for (let level = horLevels - 1; level >= 0; --level) {
         inverse_transform_horizontal(level);
     }
     for (let level = vertLevels - 1; level >= 0; --level) {
         inverse_transform_vertical(level);
-        inverse_transform_horizontal(level);
     }
     let finishTime = performance.now();
     // planar to packed

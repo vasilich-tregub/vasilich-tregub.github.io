@@ -22,7 +22,7 @@
         }
     </style>
     <meta charset="utf-8" />
-    <title>Wavelets in WebAssembly</title>
+    <title>Wavelets in Javascript</title>
     <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
     <script src="wavelet.js"></script>
 </head>
@@ -31,9 +31,9 @@
     <div class="container">
     </div>
     <div>
-        Performance (ms): <input id="idPerf" />
-        Hor Levels: <input type="number" id="idHorizontalLevels" min="1" max="5" value="2" />
-        Vert Levels: <input type="number" id="idVerticalLevels" min="0" max="2" value="2" />
+        JS Performance (ms): <input id="idPerf" />
+        Hor Levels: <input type="number" id="idHorizontalLevels" min="0" max="5" value="1" />
+        Vert Levels: <input type="number" id="idVerticalLevels" min="0" max="5" value="0" />
         <button id="idForward" onclick="forward_transform()">Forward Transform</button>
         <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
     </div>

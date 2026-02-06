@@ -55,13 +55,17 @@
                 <a href="https://github.com/vasilich-tregub/BB-TM-in-C">Turing machines of BB(2, N) champions implemented in C</a>.
             </li>
             <li>
-                <a href="./wa-wavelet/index.html">LeGall 5/3 wavelet transform of images</a>. The button `Forward Transform` <br />
-                computes in-place an interleaved wavelet transform of the image on this page  <br />
-                and draws the result; `Inverse Transform` computes an inverse tranform (also <br />
-                in place), recovering the source image. You can set levels of decomposition in <br />
-                both directions, horizontal and vertical. Max number-of-decomp-level values <br />
-                (5 and 2) are the values prescribed by the JPEG XS ISO 21122 standard. <br />
-                DWT implemented in the WebAssembler module.
+                <a href="./wa-wavelet/index.html">LeGall 5/3 wavelet transform of images</a>. DWT is implemented in the <br />
+                WebAssembler module. The button `Forward Transform` computes in-place <br />
+                an interleaved wavelet transform of the image on this page and draws <br />
+                the result; `Inverse Transform` computes an inverse tranform (also in place), <br />
+                recovering the source image. You can set levels of decomposition in both <br />
+                directions, horizontal and vertical. <br />
+                For comparison, this is <a href="./js-wavelet/index.html">a page with DWT implemented in pure JS</a>. <br />
+                Both pages are defaulted to a single-level decomposition in the horizontal <br />
+                direction where the performance gain given by WASM is pronounced the <br />
+                most; with higher levels and especially for the vertical direction, this gain <br />
+                is tending to disappear because of strided memory access in loops. <br />
             </li>
 
         </ul>
