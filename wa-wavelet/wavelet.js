@@ -28,9 +28,8 @@ var imgsize;
 var imageData;
 var horLevels;
 var vertLevels;
-function forward_transform() {
+function forward_transform(img) {
     const imagedecomp = new DataView(decompmem.buffer);
-    const img = document.getElementById("idImgSrc");
     width = img.naturalWidth;
     height = img.naturalHeight;
     document.getElementById("idCanvas").width = width;

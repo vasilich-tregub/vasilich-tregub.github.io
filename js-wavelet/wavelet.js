@@ -11,8 +11,7 @@ var height;
 var imgsize;
 var horLevels;
 var vertLevels;
-function forward_transform() {
-    const img = document.getElementById("idImgSrc");
+function forward_transform(img) {
     width = img.naturalWidth;
     height = img.naturalHeight;
     imgsize = width * height;
