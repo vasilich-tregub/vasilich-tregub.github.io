@@ -1,18 +1,11 @@
-/* TERMS OF USE
- * This source code is subject to the terms of the MIT License. 
- * Copyright(c) 2026 Vladimir Vasilich Tregub
-*/
-const decompmem = new WebAssembly.Memory({
-    initial: 3000,
-    maximum: 10000,
-});
-
 var waobj;
+var decompmem;
 WebAssembly.instantiateStreaming(
     fetch("wavelet.wasm"), {
-    js: { mem: decompmem },
+    //js: { mem: decompmem },
 }).then((obj) => {
     waobj = obj;
+    decompmem = obj.instance.exports.memory;
 });
 
 var im;
@@ -30,6 +23,7 @@ var horLevels;
 var vertLevels;
 function forward_transform(img) {
     const imagedecomp = new DataView(decompmem.buffer);
+    //const img = document.getElementById("idImgSrc");
     width = img.naturalWidth;
     height = img.naturalHeight;
     document.getElementById("idCanvas").width = width;
@@ -71,17 +65,17 @@ function forward_transform(img) {
     idPerf.value = (finishTime - startTime).toString();
 }
 function forward_transform_horizontal(level) {
-    for (let ih = 0; ih < height; ++ih) {
-        waobj.instance.exports.dwt_forward(memR + ih * width, 1, width, level);
-        waobj.instance.exports.dwt_forward(memG + ih * width, 1, width, level);
-        waobj.instance.exports.dwt_forward(memB + ih * width, 1, width, level);
-    }
+    //for (let ih = 0; ih < height; ++ih) {
+        waobj.instance.exports.dwt_forward(memR, width, height, level);
+        waobj.instance.exports.dwt_forward(memG, width, height, level);
+        waobj.instance.exports.dwt_forward(memB, width, height, level);
+    //}
 }
 function forward_transform_vertical(level) {
     for (let iw = 0; iw < width; ++iw) {
-        waobj.instance.exports.dwt_forward(memR + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_forward(memG + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_forward(memB + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_forward_vert(memR + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_forward_vert(memG + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_forward_vert(memB + iw, width, imgsize, level);
     }
 }
 function inverse_transform() {
