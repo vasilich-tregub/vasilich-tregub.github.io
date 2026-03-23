@@ -80,10 +80,25 @@ function forward_transform_horizontal(level) {
 }
 function forward_transform_vertical(level) {
     const inc = width8 << level;
-    for (let ih = 3 * inc; ih < imgsize8 - inc; ih += 2 * inc) {
+    let ih = inc;
+    waobj.instance.exports.dwt_forward_vert_first(inc, memR + ih - inc, memR + ih, memR + ih + inc, width8);
+    waobj.instance.exports.dwt_forward_vert_first(inc, memG + ih - inc, memG + ih, memG + ih + inc, width8);
+    waobj.instance.exports.dwt_forward_vert_first(inc, memB + ih - inc, memB + ih, memB + ih + inc, width8);
+    ih += 2 * inc;
+    for (; ih < imgsize8 - inc; ih += 2 * inc) {
         waobj.instance.exports.dwt_forward_vert(memR + ih - (inc << 1), memR + ih - inc, memR + ih, memR + ih + inc, width8);
         waobj.instance.exports.dwt_forward_vert(memG + ih - (inc << 1), memG + ih - inc, memG + ih, memG + ih + inc, width8);
         waobj.instance.exports.dwt_forward_vert(memB + ih - (inc << 1), memB + ih - inc, memB + ih, memB + ih + inc, width8);
+    }
+    if (ih < imgsize8) {
+        waobj.instance.exports.dwt_forward_vert_last(memR + ih - (inc << 1), memR + ih - inc, memR + ih, width8);
+        waobj.instance.exports.dwt_forward_vert_last(memG + ih - (inc << 1), memG + ih - inc, memG + ih, width8);
+        waobj.instance.exports.dwt_forward_vert_last(memB + ih - (inc << 1), memB + ih - inc, memB + ih, width8);
+    }
+    else if (ih - inc < imgsize8) {
+        waobj.instance.exports.dwt_forward_vert_lastelse(memR + ih - (inc << 1), memR + ih - inc, width8);
+        waobj.instance.exports.dwt_forward_vert_lastelse(memG + ih - (inc << 1), memG + ih - inc, width8);
+        waobj.instance.exports.dwt_forward_vert_lastelse(memB + ih - (inc << 1), memB + ih - inc, width8);
     }
 }
 function inverse_transform() {
