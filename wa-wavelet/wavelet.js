@@ -17,7 +17,10 @@ var memG;
 var memB;
 var width;
 var height;
+var width8;
+var height8;
 var imgsize;
+var imgsize8;
 var imageData;
 var horLevels;
 var vertLevels;
@@ -26,21 +29,24 @@ function forward_transform(img) {
     //const img = document.getElementById("idImgSrc");
     width = img.naturalWidth;
     height = img.naturalHeight;
+    imgsize = width * height;
+    width8 = width << 2;
+    height8 = height << 2;
+    imgsize8 = imgsize << 2;
     document.getElementById("idCanvas").width = width;
     document.getElementById("idCanvas").height = height;
     const ctx = document.getElementById("idCanvas").getContext("2d", { willReadFrequently: true });
     ctx.drawImage(img, 0, 0);
     imageData = ctx.getImageData(0, 0, width, height);
     // packed to planar color representation, and dwt for each bitplane
-    imgsize = width * height;
     memR = 0;
-    memG = memR + imgsize;
-    memB = memG + imgsize;
-    for (let ih = 0; ih < height; ++ih) {
-        for (let iw = 0; iw < width; ++iw) {
-            imagedecomp.setUint32((memR + ih * width + iw) * 4, imageData.data[(ih * width + iw) * 4 + 0] << 12, true);
-            imagedecomp.setUint32((memG + ih * width + iw) * 4, imageData.data[(ih * width + iw) * 4 + 1] << 12, true);
-            imagedecomp.setUint32((memB + ih * width + iw) * 4, imageData.data[(ih * width + iw) * 4 + 2] << 12, true);
+    memG = memR + imgsize8;
+    memB = memG + imgsize8;
+    for (let ih = 0; ih < imgsize8; ih += width8) {
+        for (let iw = 0; iw < width8; iw += 4) {
+            imagedecomp.setUint32((memR + ih + iw), imageData.data[(ih + iw) + 0] << 12, true);
+            imagedecomp.setUint32((memG + ih + iw), imageData.data[(ih + iw) + 1] << 12, true);
+            imagedecomp.setUint32((memB + ih + iw), imageData.data[(ih + iw) + 2] << 12, true);
         }
     }
     horLevels = idHorizontalLevels.value;
@@ -54,28 +60,30 @@ function forward_transform(img) {
     }
     let finishTime = performance.now();
     // planar to packed
-    for (let ih = 0; ih < height; ++ih) {
-        for (let iw = 0; iw < width; ++iw) {
-            imageData.data[(ih * width + iw) * 4 + 0] = (imagedecomp.getUint32((memR + ih * width + iw) * 4, true) >> 12);
-            imageData.data[(ih * width + iw) * 4 + 1] = (imagedecomp.getUint32((memG + ih * width + iw) * 4, true) >> 12);
-            imageData.data[(ih * width + iw) * 4 + 2] = (imagedecomp.getUint32((memB + ih * width + iw) * 4, true) >> 12);
+    for (let ih = 0; ih < imgsize8; ih += width8) {
+        for (let iw = 0; iw < width8; iw += 4) {
+            imageData.data[(ih + iw) + 0] = (imagedecomp.getUint32((memR + ih + iw), true) >> 12);
+            imageData.data[(ih + iw) + 1] = (imagedecomp.getUint32((memG + ih + iw), true) >> 12);
+            imageData.data[(ih + iw) + 2] = (imagedecomp.getUint32((memB + ih + iw), true) >> 12);
         }
     }
     ctx.putImageData(imageData, 0, 0);
     idPerf.value = (finishTime - startTime).toString();
 }
 function forward_transform_horizontal(level) {
-    //for (let ih = 0; ih < height; ++ih) {
-        waobj.instance.exports.dwt_forward(memR, width, height, level);
-        waobj.instance.exports.dwt_forward(memG, width, height, level);
-        waobj.instance.exports.dwt_forward(memB, width, height, level);
-    //}
+    let inc = (1 << level) << 2;
+    for (let ih = 0; ih < imgsize8; ih += width8) {
+        waobj.instance.exports.dwt_forward_hor(memR + ih, width8, inc);
+        waobj.instance.exports.dwt_forward_hor(memG + ih, width8, inc);
+        waobj.instance.exports.dwt_forward_hor(memB + ih, width8, inc);
+    }
 }
 function forward_transform_vertical(level) {
-    for (let iw = 0; iw < width; ++iw) {
-        waobj.instance.exports.dwt_forward_vert(memR + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_forward_vert(memG + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_forward_vert(memB + iw, width, imgsize, level);
+    const inc = width8 << level;
+    for (let ih = 3 * inc; ih < imgsize8 - inc; ih += 2 * inc) {
+        waobj.instance.exports.dwt_forward_vert(memR + ih - (inc << 1), memR + ih - inc, memR + ih, memR + ih + inc, width8);
+        waobj.instance.exports.dwt_forward_vert(memG + ih - (inc << 1), memG + ih - inc, memG + ih, memG + ih + inc, width8);
+        waobj.instance.exports.dwt_forward_vert(memB + ih - (inc << 1), memB + ih - inc, memB + ih, memB + ih + inc, width8);
     }
 }
 function inverse_transform() {
@@ -91,27 +99,27 @@ function inverse_transform() {
     }
     let finishTime = performance.now();
     // planar to packed
-    for (let ih = 0; ih < height; ++ih) {
-        for (let iw = 0; iw < width; ++iw) {
-            imageData.data[(ih * width + iw) * 4 + 0] = (imagedecomp.getUint32((memR + ih * width + iw) * 4, true) >> 12);
-            imageData.data[(ih * width + iw) * 4 + 1] = (imagedecomp.getUint32((memG + ih * width + iw) * 4, true) >> 12);
-            imageData.data[(ih * width + iw) * 4 + 2] = (imagedecomp.getUint32((memB + ih * width + iw) * 4, true) >> 12);
+    for (let ih = 0; ih < imgsize8; ih += width8) {
+        for (let iw = 0; iw < width8; iw += 4) {
+            imageData.data[(ih + iw) + 0] = (imagedecomp.getUint32((memR + ih + iw), true) >> 12);
+            imageData.data[(ih + iw) + 1] = (imagedecomp.getUint32((memG + ih + iw), true) >> 12);
+            imageData.data[(ih + iw) + 2] = (imagedecomp.getUint32((memB + ih + iw), true) >> 12);
         }
     }
     ctx.putImageData(imageData, 0, 0);
     idPerf.value = (finishTime - startTime).toString();
 }
 function inverse_transform_horizontal(level) {
-    for (let ih = 0; ih < height; ++ih) {
-        waobj.instance.exports.dwt_inverse(memR + ih * width, 1, width, level);
-        waobj.instance.exports.dwt_inverse(memG + ih * width, 1, width, level);
-        waobj.instance.exports.dwt_inverse(memB + ih * width, 1, width, level);
+    for (let ih = 0; ih < imgsize; ih += width) {
+        waobj.instance.exports.dwt_inverse((memR >> 2) + ih, 1, width, level);
+        waobj.instance.exports.dwt_inverse((memG >> 2) + ih, 1, width, level);
+        waobj.instance.exports.dwt_inverse((memB >> 2) + ih, 1, width, level);
     }
 }
 function inverse_transform_vertical(level) {
     for (let iw = 0; iw < width; ++iw) {
-        waobj.instance.exports.dwt_inverse(memR + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_inverse(memG + iw, width, imgsize, level);
-        waobj.instance.exports.dwt_inverse(memB + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_inverse((memR >> 2) + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_inverse((memG >> 2) + iw, width, imgsize, level);
+        waobj.instance.exports.dwt_inverse((memB >> 2) + iw, width, imgsize, level);
     }
 }
