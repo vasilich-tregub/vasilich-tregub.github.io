@@ -10,6 +10,12 @@ function histogram() {
     }
     idHistogram.width = histowidth = 256;
     idHistogram.height = histoheight = 256;
+    let histozoomin = idHistoZoomIn.value
+    for (let i = 0; i < histoarrR.length; i++) {
+        histoarrR[i] *= histozoomin * histowidth * histoheight / width / height;
+        histoarrG[i] *= histozoomin * histowidth * histoheight / width / height;
+        histoarrB[i] *= histozoomin * histowidth * histoheight / width / height;
+    }
     const ctx = idHistogram.getContext("2d", { willReadFrequently: true });
     const histoData = ctx.createImageData(histowidth, histoheight);
     for (let ih = 0; ih < histoheight; ++ih) {
