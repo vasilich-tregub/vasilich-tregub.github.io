@@ -38,28 +38,8 @@ function histogram() {
         }
         if (histoarrB[i] != 0) {
             let ix = (Math.trunc(i * histowidth / histoarrB.length) + (histoheight - histoarrB[i]) * histowidth) * 4; 
-            histoData.data[ix + 2] = 225;
+            histoData.data[ix + 2] = 255;
         }
     }
     ctx.putImageData(histoData, 0, 0);
-
-    /*let bitposarr = new Uint32Array(new ArrayBuffer(32 * 4));
-    let absbitposarr = new Uint32Array(new ArrayBuffer(32 * 4));
-    for (let i = 0; i < comparr.length; i++) {
-        for (let j = 0; j < 32; ++j) {
-            if (comparr[i] & (1 << j)) {
-                bitposarr[j]++;
-            }
-            if (Math.abs(comparr[i]) & (1 << j)) {
-                absbitposarr[j]++;
-            }
-        }
-    }
-    let salertstr = '';
-    let ualertstr = '';
-    for (let i = 0; i < 32; i++) {
-        salertstr += i + ':' + bitposarr[i] + '; ';
-        ualertstr += i + ':' + absbitposarr[i] + '; ';
-    }
-    alert(salertstr + '\n\n' + ualertstr);*/
 }
