@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>Decompositions 1D</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <script src="main.js"></script>
+    <script src="plotting.js"></script>
+    <script src="histogram.js"></script>
+</head>
+
+<body>
+    <div class="container">
+    </div>
+    <div>
+        Levels: <input type="number" id="idLevels" min="0" max="10" value="4" />
+        <button onclick="buildinput()">Build input function</button>
+        <button id="idForward" onclick="forward_transform()">Forward Transform</button>
+        <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
+        <button onclick="histogram(1)">Histogram</button>
+        <button disabled onclick="save(new Uint8Array([0x6f, 0x63, 0x74, 0x65, 0x74, 0x2d, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d]), 'test.bin')">Test Save</button>
+        <input disabled id="fileItem" type="file">
+    </div>
+    <div><canvas id="idInput"></canvas></div>
+    <div><canvas id="idTransform"></canvas></div>
+    <div>
+        <canvas id="idHistogram"></canvas>
+    </div>
+</body>
+</html>
