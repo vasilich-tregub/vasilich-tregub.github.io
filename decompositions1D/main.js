@@ -23,12 +23,13 @@ async function save(fileName, ...arr) {
     URL.revokeObjectURL(url); // Clean up
     const compressedstream = blob.stream().pipeThrough(new CompressionStream("gzip"));
     const compressedblob = await new Response(compressedstream).blob()
+    idInputSize.innerText = 'Size = ' + blob.size + '; Compressed size = ' + compressedblob.size;
     const compressedurl = URL.createObjectURL(compressedblob);
     const compresseda = document.createElement('a');
     compresseda.href = compressedurl;
     compresseda.download = fileName + '.zip';
     document.body.appendChild(compresseda);
-    compresseda.click();
+    //compresseda.click();
     document.body.removeChild(compresseda);
     URL.revokeObjectURL(compressedurl); // Clean up
 }
@@ -58,6 +59,7 @@ function inverse_transform() {
     for (let i = idLevels.value - 1; i >= 0; --i) {
         dwt_inverse(inputfunc, 1 << i);
     }
+    save('inputfunc.bin', inputfunc);
     plot();
 }
 function dwt_forward(im, inc) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
