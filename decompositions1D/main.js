@@ -2,10 +2,16 @@ const width = 2048;
 const height = 256;
 var inputfunc;
 function buildinput() {
-    inputfunc = new Int16Array(width * 2);
-    for (let i = 0; i < width; ++i) {
-        //inputfunc[i] = Math.floor(i * i / 4153 + height / 2 * Math.random() / 11) % 237;
-        inputfunc[i] = (height / 2 * (1 - Math.cos(7 * i * Math.PI * Math.sin(2 * i / width * Math.PI) / width + Math.random() / 11))) % 256;
+    inputfunc = new Int16Array(width);
+    if (idInputWave.checked) {
+        for (let i = 0; i < width; ++i) {
+            inputfunc[i] = Math.floor(i * i / 4153 + height / 2 * Math.random() / 11) % 237;
+        }
+    }
+    else {
+        for (let i = 0; i < width; ++i) {
+            inputfunc[i] = (height / 2 * (1 - Math.cos(7 * i * Math.PI * Math.sin(2 * i / width * Math.PI) / width + Math.random() / 11))) % 256;
+        }
     }
     save('inputfunc.bin', inputfunc);
     plot();
@@ -59,13 +65,16 @@ function inverse_transform() {
     for (let i = idLevels.value - 1; i >= 0; --i) {
         dwt_inverse(inputfunc, 1 << i);
     }
-    save('inputfunc.bin', inputfunc);
+    save('idwt-inputfunc.bin', inputfunc);
     plot();
 }
 function dwt_forward(im, inc) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
     //assert(inc < end && "stepping outside source image");
-
     let end = width;
+    if (inc >= end) {
+        return;
+    }
+
     let i = inc;
     // high pass filter, {-1./2, 1., -1./2}
     // and low pass filter,
@@ -96,6 +105,9 @@ function dwt_forward(im, inc) { // indexdiff = (hor vs. vert) ? 1 : bitmap_strid
 function dwt_inverse(im, inc) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
     const end = width;
     //assert(inc < end && "stepping outside source image");
+    if (inc >= end) {
+        return;
+    }
 
     // low pass filter, {-1./4, 1., -1./4}
     let i = 0;

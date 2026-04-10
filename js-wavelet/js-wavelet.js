@@ -103,7 +103,9 @@ function dwt_forward(im, beg, maxindexval, indexdiff, level) { // indexdiff = (h
     const inc = indexdiff << level;
     const end = beg + maxindexval;
     //assert(inc < end && "stepping outside source image");
-
+    if (inc >= maxindexval) {
+        return;
+    }
     let i = beg + inc;
     // high pass filter, {-1./2, 1., -1./2}
     // and low pass filter,
@@ -135,6 +137,9 @@ function dwt_inverse(im, beg, maxindexval, indexdiff, level) { // indexdiff = (h
     const inc = indexdiff << level;
     const end = beg + maxindexval;
     //assert(inc < end && "stepping outside source image");
+    if (inc >= maxindexval) {
+        return;
+    }
 
     // low pass filter, {-1./4, 1., -1./4}
     let i = beg;
@@ -161,6 +166,9 @@ function dwt_inverse(im, beg, maxindexval, indexdiff, level) { // indexdiff = (h
 }
 function forward_transform_vertical_comp(im, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
     const inc = width << level;
+    if (inc >= width * height) {
+        return;
+    }
     let ih = inc;
     for (let iw = 0; iw < width; ++iw) {
         if (ih <= inc) {
