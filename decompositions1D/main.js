@@ -5,7 +5,7 @@ function buildinput() {
     inputfunc = new Int16Array(width);
     if (idInputWave.checked) {
         for (let i = 0; i < width; ++i) {
-            inputfunc[i] = Math.floor(i * i / 4153 + height / 2 * Math.random() / 11) % 237;
+            inputfunc[i] = Math.floor(i * i / 4153 + height / 2 * Math.random() / 1100) % 237;
         }
     }
     else {
