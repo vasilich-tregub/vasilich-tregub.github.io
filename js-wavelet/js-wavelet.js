@@ -95,11 +95,9 @@ function inverse_transform_horizontal(level) {
     }
 }
 function inverse_transform_vertical(level) {
-    for (let iw = 0; iw < idCanvas.width; ++iw) {
-        dwt_inverse_vert(imR, iw, imgsize, width, level);
-        dwt_inverse_vert(imG, iw, imgsize, width, level);
-        dwt_inverse_vert(imB, iw, imgsize, width, level);
-    }
+    inverse_transform_vertical_comp(imR, level);
+    inverse_transform_vertical_comp(imG, level);
+    inverse_transform_vertical_comp(imB, level);
 }
 function dwt_forward_hor(im, ih, inc) { 
     //assert(inc < end && "stepping outside source image");
@@ -134,7 +132,7 @@ function dwt_forward_hor(im, ih, inc) {
         im[i - inc] += (im[i - 2 * inc] + 1) >> 1;
     }
 }
-function dwt_inverse_hor(im, ih, inc) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
+function dwt_inverse_hor(im, ih, inc) { 
     const end = ih + width;
     //assert(inc < end && "stepping outside source image");
     if (inc >= width) {
@@ -163,22 +161,20 @@ function dwt_inverse_hor(im, ih, inc) { // indexdiff = (hor vs. vert) ? 1 : bitm
     // for im[n] result is -im[n-2]/8 + im[n-1]/8 + 6*im[n]/8 + im[n+1]/8 - im[n+2]/8
     // i.e. {-1./8, 1./8, 6./8, 1./8 -1./8}
 }
-function forward_transform_vertical_comp(im, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
+function forward_transform_vertical_comp(im, level) { 
     const inc = width << level;
     if (inc >= width * height) {
         return;
     }
     let ih = inc;
     for (let iw = 0; iw < width; ++iw) {
-        if (ih <= inc) {
-            if (2 * inc >= height * width) {
-                im[iw + inc] -= im[iw];
-                im[iw] += (im[iw + inc] + 1) >> 1;
-                return;
-            }
-            im[iw + inc] -= (im[iw] + im[iw + 2 * inc]) >> 1;
+        if (2 * inc >= height * width) {
+            im[iw + inc] -= im[iw];
             im[iw] += (im[iw + inc] + 1) >> 1;
+            return;
         }
+        im[iw + inc] -= (im[iw] + im[iw + 2 * inc]) >> 1;
+        im[iw] += (im[iw + inc] + 1) >> 1;
     }
     ih += 2 * inc;
     for (; ih < width * height - inc; ih += 2 * inc) {
@@ -199,33 +195,31 @@ function forward_transform_vertical_comp(im, level) { // indexdiff = (hor vs. ve
         }
     }
 }
-function dwt_inverse_vert(im, beg, maxindexval, indexdiff, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
-    const inc = indexdiff << level;
-    const end = beg + maxindexval;
-    //assert(inc < end && "stepping outside source image");
-    if (inc >= maxindexval) {
+function inverse_transform_vertical_comp(im, level) { // indexdiff = (hor vs. vert) ? 1 : bitmap_stride;
+    const inc = width << level;
+    if (inc >= width * height) {
         return;
     }
-
-    // low pass filter, {-1./4, 1., -1./4}
-    let i = beg;
-    im[i] -= (im[i + inc] + 1) >> 1;
-    i += 2 * inc;
-    for (; i < end - inc; i += 2 * inc) {
-        im[i] -= (im[i - inc] + im[i + inc] + 2) >> 2;
-        im[i - inc] += (im[i - 2 * inc] + im[i]) >> 1;
+    let ih = 0;
+    for (let iw = 0; iw < width; ++iw) {
+        im[iw] -= (im[iw + inc] + 1) >> 1;
     }
-    if (i < end) {
-        im[i] -= (im[i - inc] + 1) >> 1;
-        im[i - inc] += (im[i - 2 * inc] + im[i]) >> 1;
+    ih += 2 * inc;
+    for (; ih < width * height - inc; ih += 2 * inc) {
+        for (let iw = 0; iw < width; ++iw) {
+            //const end = iw + width * height;
+            //assert(inc < end && "stepping outside source image");
+            im[iw + ih] -= (im[iw + ih - inc] + im[iw + ih + inc] + 2) >> 2;
+            im[iw + ih - inc] += (im[iw + ih - 2 * inc] + im[iw + ih]) >> 1;
+        }
     }
-    else if (i - inc < end) {
-        im[i - inc] += im[i - 2 * inc];
+    for (let iw = 0; iw < width; ++iw) {
+        if (ih < width * height) {
+            im[iw + ih] -= (im[iw + ih - inc] + 1) >> 1;
+            im[iw + ih - inc] += (im[iw + ih - 2 * inc] + im[iw + ih]) >> 1;
+        }
+        else if (ih - inc < width * height) {
+            im[iw + ih - inc] += im[iw + ih - 2 * inc];
+        }
     }
-
-    // high pass filter is included in the loop above (i - inc: lag-lead/lead-lag?),
-    // successive convolutions with {-1./4, 1., -1./4} for even pixels
-    // and {1./2, 1., 1./2} for odd pixels
-    // for im[n] result is -im[n-2]/8 + im[n-1]/8 + 6*im[n]/8 + im[n+1]/8 - im[n+2]/8
-    // i.e. {-1./8, 1./8, 6./8, 1./8 -1./8}
 }
