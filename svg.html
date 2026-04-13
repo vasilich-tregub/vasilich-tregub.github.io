@@ -6,12 +6,42 @@
     <title></title>
 </head>
 <body>
-    <svg width="800" viewBox="0 0 800 500">
-        <foreignObject x="0" y="0" width="800" height="500" style="font-size:48px;inline-size:800px">
-            Lorem ipsum dolor sit amet, 
-            <span style="letter-spacing:3px; font-weight:650"><span style="color:darkmagenta; font-size:72px;">consectetur </span>adipiscing elit,</span> 
+    <p>HTML rendered in SVG:</p>
+    <svg width="800" viewBox="0 0 800 300">
+        <foreignObject x="0" y="0" width="800" height="300" style="font-size:48px;inline-size:800px">
+            Lorem ipsum dolor sit amet,
+            <span style="letter-spacing:3px; font-weight:650"><span style="color:darkmagenta; font-size:72px;">consectetur </span>adipiscing elit,</span>
             sed do eiusmod tempor <span style="font-style:oblique;">incididunt ut labore </span>et dolore magna aliqua.
         </foreignObject>
     </svg>
+    <p>Below is this SVG rendered as image in canvas:</p>
+    <canvas id="canvas" style="border:2px solid black;" width="800" height="300"></canvas>
+    <script>
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        var data = '<svg xmlns="http://www.w3.org/2000/svg" width="800" viewBox="0 0 800 300">' +
+            '<foreignObject x="0" y="0" width="800" height="300" style="font-size:48px;inline-size:800px">' +
+            '<div xmlns="http://www.w3.org/1999/xhtml">' +
+            'Lorem ipsum dolor sit amet, ' +
+            '<span style="letter-spacing:3px; font-weight:650"><span style="color:darkmagenta; font-size:72px;">consectetur </span>adipiscing elit,</span> ' +
+            'sed do eiusmod tempor <span style="font-style:oblique;"> incididunt ut labore </span> et dolore magna aliqua.' +
+            '</div>' +
+            '</foreignObject>' +
+            '</svg> ';
+
+        var DOMURL = window.URL || window.webkitURL || window;
+
+        var img = new Image();
+        var svg = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+        var url = DOMURL.createObjectURL(svg);
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+            DOMURL.revokeObjectURL(url);
+        }
+
+        img.src = url;
+    </script>
 </body>
 </html>
