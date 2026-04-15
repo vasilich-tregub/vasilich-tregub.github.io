@@ -24,13 +24,17 @@
     <div>
         Levels: <input type="number" id="idLevels" min="0" max="100" value="11" />
         Wave/Sawtooth: <input id="idInputWave" type="checkbox" />
+        <select id="idBw" title="Bit presision of wavelet"><option value="8">Bit depth (8)</option><option value="16">Fq=8:Bw=16</option></select>
         <button onclick="buildinput()">Build input function</button>
         <button id="idForward" onclick="forward_transform()">Forward Transform</button>
         <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
         <button onclick="histogram(1)">Histogram</button>
-        <button disabled onclick="save(new Uint8Array([0x6f, 0x63, 0x74, 0x65, 0x74, 0x2d, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d]), 'test.bin')">Test Save</button>
-        <input disabled id="fileItem" type="file">
+        <!--<button disabled onclick="save(new Uint8Array([0x6f, 0x63, 0x74, 0x65, 0x74, 0x2d, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d]), 'test.bin')">Test Save</button>
+        <input disabled id="fileItem" type="file">-->
+        <a target="_blank" href="https://github.com/pnggroup/libpng/blob/libpng18/manuals/libpng-manual.txt">png uses zlib (line #102)</a>
+        <a target="_blank" href="https://zlib.net/zlib_faq.html#faq39">zlib's algo is deflate</a>
     </div>
+
     <div><canvas id="idInput"></canvas></div>
     <div id="idInputSize"></div>
     <div><canvas id="idTransform"></canvas></div>

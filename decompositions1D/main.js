@@ -2,7 +2,7 @@ const width = 2048;
 const height = 256;
 var inputfunc;
 function buildinput() {
-    inputfunc = new Int16Array(width);
+    inputfunc = new Int32Array(width);
     if (idInputWave.checked) {
         for (let i = 0; i < width; ++i) {
             inputfunc[i] = Math.floor(i * i / 4153 + height / 2 * Math.random() / 1100) % 237;
@@ -11,6 +11,11 @@ function buildinput() {
     else {
         for (let i = 0; i < width; ++i) {
             inputfunc[i] = (height / 2 * (1 - Math.cos(7 * i * Math.PI * Math.sin(2 * i / width * Math.PI) / width + Math.random() / 11))) % 256;
+        }
+    }
+    if (idBw.value == 16) {
+        for (let i = 0; i < width; ++i) {
+            inputfunc[i] = inputfunc[i] << 8; // << (wavelet_bit_precision - image_bit_depth)
         }
     }
     save('inputfunc.bin', inputfunc);
