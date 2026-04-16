@@ -21,14 +21,17 @@ function forward_transform(img) {
     ctx.drawImage(img, 0, 0);
     imageData = ctx.getImageData(0, 0, width, height);
     // packed to planar color representation, and dwt for each bitplane
-    imR = new Int32Array(new ArrayBuffer(width * height * 4));
-    imG = new Int32Array(new ArrayBuffer(width * height * 4));
-    imB = new Int32Array(new ArrayBuffer(width * height * 4));
+    //imR = new Int32Array(new ArrayBuffer(width * height * 4));
+    //imG = new Int32Array(new ArrayBuffer(width * height * 4));
+    //imB = new Int32Array(new ArrayBuffer(width * height * 4));
+    imR = new Int16Array(width * height);
+    imG = new Int16Array(width * height);
+    imB = new Int16Array(width * height);
     for (let ih = 0; ih < height; ++ih) {
         for (let iw = 0; iw < width; ++iw) {
-            imR[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 0] << 12;
-            imG[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 1] << 12;
-            imB[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 2] << 12;
+            imR[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 0]/* << 12*/;
+            imG[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 1]/* << 12*/;
+            imB[ih * width + iw] = imageData.data[(ih * width + iw) * 4 + 2]/* << 12*/;
         }
     }
 
@@ -44,9 +47,9 @@ function forward_transform(img) {
     let finishTime = performance.now();
     for (let ih = 0; ih < height; ++ih) {
         for (let iw = 0; iw < width; ++iw) {
-            imageData.data[(ih * width + iw) * 4 + 0] = (imR[ih * width + iw] >> 12);
-            imageData.data[(ih * width + iw) * 4 + 1] = (imG[ih * width + iw] >> 12);
-            imageData.data[(ih * width + iw) * 4 + 2] = (imB[ih * width + iw] >> 12);
+            imageData.data[(ih * width + iw) * 4 + 0] = (imR[ih * width + iw]/* >> 12*/);
+            imageData.data[(ih * width + iw) * 4 + 1] = (imG[ih * width + iw]/* >> 12*/);
+            imageData.data[(ih * width + iw) * 4 + 2] = (imB[ih * width + iw]/* >> 12*/);
         }
     }
     ctx.putImageData(imageData, 0, 0);
@@ -78,9 +81,9 @@ function inverse_transform() {
     let finishTime = performance.now();
     for (let ih = 0; ih < height; ++ih) {
         for (let iw = 0; iw < width; ++iw) {
-            imageData.data[(ih * width + iw) * 4 + 0] = imR[ih * width + iw] >> 12;
-            imageData.data[(ih * width + iw) * 4 + 1] = imG[ih * width + iw] >> 12;
-            imageData.data[(ih * width + iw) * 4 + 2] = imB[ih * width + iw] >> 12;
+            imageData.data[(ih * width + iw) * 4 + 0] = imR[ih * width + iw]/* >> 12*/;
+            imageData.data[(ih * width + iw) * 4 + 1] = imG[ih * width + iw]/* >> 12*/;
+            imageData.data[(ih * width + iw) * 4 + 2] = imB[ih * width + iw]/* >> 12*/;
         }
     }
     ctx.putImageData(imageData, 0, 0);

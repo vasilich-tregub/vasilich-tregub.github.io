@@ -1,12 +1,13 @@
 // JavaScript source code
 function histogram() {
-    let histoarrR = new Uint32Array(new ArrayBuffer(2 * (1 << 20) * 4));
-    let histoarrG = new Uint32Array(new ArrayBuffer(2 * (1 << 20) * 4));
-    let histoarrB = new Uint32Array(new ArrayBuffer(2 * (1 << 20) * 4));
+    let Bw = 8; //Bit precision of wavelet coefficients
+    let histoarrR = new Uint32Array(new ArrayBuffer(2 * (1 << Bw) * 4));
+    let histoarrG = new Uint32Array(new ArrayBuffer(2 * (1 << Bw) * 4));
+    let histoarrB = new Uint32Array(new ArrayBuffer(2 * (1 << Bw) * 4));
     for (let i = 0; i < imR.length; i++) {
-        histoarrR[(1 << 20) + imR[i]]++;
-        histoarrG[(1 << 20) + imG[i]]++;
-        histoarrB[(1 << 20) + imB[i]]++;
+        histoarrR[(1 << Bw) + imR[i]]++;
+        histoarrG[(1 << Bw) + imG[i]]++;
+        histoarrB[(1 << Bw) + imB[i]]++;
     }
     idHistogram.width = histowidth = 256;
     idHistogram.height = histoheight = 256;
