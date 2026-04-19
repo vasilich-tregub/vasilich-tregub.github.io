@@ -25,6 +25,7 @@
     <title>Wavelets in Javascript</title>
     <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
     <script src="js-wavelet.js"></script>
+    <script src="deinterleave.js"></script>
     <script src="histogram.js"></script>
 </head>
 
@@ -33,13 +34,14 @@
     </div>
     <div>
         JS Performance (ms): <input id="idPerf" />
-        Hor Levels: <input type="number" id="idHorizontalLevels" min="0" max="5" value="1" />
-        Vert Levels: <input type="number" id="idVerticalLevels" min="0" max="5" value="1" />
+        Hor Levels: <input type="number" id="idHorizontalLevels" min="0" max="5" value="2" />
+        Vert Levels: <input type="number" id="idVerticalLevels" min="0" max="5" value="2" />
         <button id="idInverse" onclick="inverse_transform()">Inverse Transform</button>
         <button onclick="histogram()">Histogram</button>
+        <button onclick="deinterleave()">De-interleave</button>
         Histo zoom in: <input type="number" id="idHistoZoomIn" min="0.25" max="2.5" step="0.25" value="0.25" />
     </div>
-    <div id="idShifts"></div>
+    <div id="idInputSize"></div>
     <div style="height: 240px">
         <img onclick="forward_transform(this)" style="max-width: 100%; max-height: 100%" src="NGC2207.jpg" />
         <img onclick="forward_transform(this)" style="max-width: 100%; max-height: 100%" src="hubble-ngc4388-potw2550a.jpg" />

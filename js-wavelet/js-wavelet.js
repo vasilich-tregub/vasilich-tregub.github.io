@@ -54,6 +54,7 @@ function forward_transform(img) {
     }
     ctx.putImageData(imageData, 0, 0);
     idPerf.value = (finishTime - startTime).toString();
+    save('forwardtransform.bin', imageData.data)
 }
 function forward_transform_horizontal(level) {
     let inc = 1 << level;
@@ -88,6 +89,7 @@ function inverse_transform() {
     }
     ctx.putImageData(imageData, 0, 0);
     idPerf.value = (finishTime - startTime).toString();
+    save('inversetransform.bin', imageData.data);
 }
 function inverse_transform_horizontal(level) {
     let inc = 1 << level;

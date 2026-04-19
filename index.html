@@ -57,20 +57,19 @@
             <li>
                 <a href="./wa-wavelet/index.html">LeGall 5/3 wavelet transform of images</a>. DWT is implemented in <br />
                 a WebAssembly module. Clicking an image thumbnail computes in-place <br />
-                an interleaved wavelet transform of the clicked image and draws the <br />
-                result underneath; the button `Inverse Transform` computes an inverse <br />
-                transform, recovering the source image (also in place; can take long <br />
-                as the vertical inverse transform is not optimized in code). You can <br />
-                set levels of decomposition in both directions, horizontal and vertical. <br />
-                For comparison, this is <a href="./js-wavelet/index.html">a page with DWT implemented in pure JS</a>. <br />
-                You can compare the WebAssembly and JS code performance with the <br />
-                <a href="https://github.com/vasilich-tregub/cc-wavelet">DWT implemented in C</a>. <br />
-                The <a href="./js-wavelet/index.html">JS-implemented page</a> also features histogram representation that <br />
-                reveals the role of DWT in making image amenable to more effective <br />
-                encoding (button `Histogram`). The histo plot is normalized and can <br />
-                be zoomed. Type in fractional or large values manuall, then press the <br />
-                histo button again. To operate on the source image, restore the image by <br />
-                `Inverse Transform` button before you press `Histogram`. <br />
+                an interleaved wavelet transform of the clicked image and draws the result <br />
+                underneath; the button `Inverse Transform` computes an inverse transform, <br />
+                recovering the source image (also in place; can take long as the vertical <br />
+                inverse transform is not optimized in code). Set levels of decomposition <br />
+                in both directions, horizontal and vertical. For comparison, this is <br />
+                <a href="./js-wavelet/index.html">a page with DWT implemented in pure JS</a>. Compare the WebAssembly <br />
+                performance with the <a href="https://github.com/vasilich-tregub/cc-wavelet">DWT implemented in C</a>. <br />
+                The <a href="./js-wavelet/index.html">JS-implemented page</a> also features histogram representation (button <br />
+                `Histogram`). The histo plot is normalized and can be zoomed. Type in <br />
+                fractional or large values, then press the histo button again. To operate <br />
+                on the source image, restore the image by `Inverse Transform` button <br />
+                before you press `Histogram`. Use the 'De-interlieve' button to see <br />
+                a deinterlieved decomposition. <br />
                 Credit: the images are downloaded from the NASA website and used <br />
                 with the owner permission.
             </li>
