@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Drawing</title>
+</head>
+<body>
+    <div class="toolbar">
+        <button title="Draw Text" onclick="drawText()">Draw text</button>
+        <label for="fontzise">Font Size:</label><input type="number" step="8" min=48 max=144 value="112" id="fontsize" />
+        <label for="margin">Margin:</label><input type="number" step="5" min="5" max="320" value="10" id="margin" />
+        <button onclick="clearCanvas()">Clear Canvas</button>
+        <label for="gAlpha">General alpha:</label><input type="number" step="0.1" min="0" max="1" value="0.9" id="gAlpha" />
+        <label for="strokeLineWidth">Stroke Width:</label><input type="number" step="0.5" min="0" max="12" value="4" id="strokeLineWidth" />
+        <button onclick="imageBackground()">Image Bkg</button>
+        <label for="canvasbkgColor">Canvas Bkg Color:</label>
+        <input type="color" id="canvasbkgColor" value=#6a5acd onchange="colorBackground(this.value)">
+        <button onclick="downloadCanvasContent()">Download</button>
+        <button onclick="animateColumnWidth()">Animation</button>
+        <a href="./index(css).html">css</a> <a href="./index(svg+xml).html">svg</a>
+    </div>
+    <div id="canvasbackground" style="width: 1280px; height: 960px; outline: thin solid blue;">
+        <canvas id="canvas" width="1280" height="960" style="outline: thin solid blue;"></canvas>
+    </div>
+    <script src="canvas.js">
+    </script>
+</body>
+</html>

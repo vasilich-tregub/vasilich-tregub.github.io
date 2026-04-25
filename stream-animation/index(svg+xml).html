@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+    <meta charset="utf-8" />
+    <title>Stream web animation</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <!--script src="stream-animation.js"></!--script-->
+</head>
+<body>
+    <svg width="500" viewBox="0 0 500 500">
+        <style type="text/css">
+            div.container {
+                font-size: 250%;
+                width: 250px;
+                animation: 10s linear 0s infinite alternate dynamic-column-width;
+            }
+            @keyframes dynamic-column-width {
+                from {
+                    width: 500px;
+                }
+                to {
+                    width: 200px;
+                }
+            }
+        </style>
+        <foreignObject x="0" y="0" width="500" height="500" style="inline-size:500px;">
+            <div class="container">
+                <div style="text-align:left;">
+                    Dynamic column-width text layout demo
+                </div>
+                <div style="text-align:right;">
+                    عرض توضيلتخطيط النص بعرض أعمدة ديناميكي
+                </div>
+            </div>
+        </foreignObject>
+    </svg>
+    <canvas id="idCanvas" style="border:2px solid lime;" width="500" height="500"></canvas>
+    <script>
+    function renderText() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var data = '<svg xmlns="http://www.w3.org/2000/svg" width="500" viewBox="0 0 500 500">' + 
+            '<style type="text/css">' + 
+            'div.container {font-size: 250%; width: ' + colWidth + 'px;}' + 
+            '</style>' +
+    '<foreignObject x="0" y="0" width="500" height="500" style="inline-size:500px;">' + 
+        '<div xmlns="http://www.w3.org/1999/xhtml" class="container">' + 
+            '<div style="text-align:left;">' + 
+                'Dynamic column-width text layout demo' + 
+            '</div>' + 
+            '<div style="text-align:right;">' + 
+                'عرض توضيلتخطيط النص بعرض أعمدة ديناميكي' + 
+            '</div>' + 
+        '</div>' + 
+    '</foreignObject>' + 
+    '</svg>';
+
+        var svg = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+        url = DOMURL.createObjectURL(svg);
+
+        img.src = url;
+
+        colWidth += changeSign * deltaW;
+        if (colWidth >= 500) {changeSign = -1};
+        if (colWidth <= 200) {changeSign = +1};
+    }
+    const speed = 30;
+    const deltaW = 0.9;
+    var changeSign = -1;
+    var colWidth = 500;
+    var DOMURL = window.URL || window.webkitURL || window;
+
+    var canvas = document.getElementById('idCanvas');
+    var ctx = canvas.getContext('2d');
+
+    var img = new Image();
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);
+        DOMURL.revokeObjectURL(url);
+    }
+    setInterval(renderText, speed);
+
+    </script>
+</body>
+</html>
