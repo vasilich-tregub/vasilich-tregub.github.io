@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Distance Field</title>
+    <script src="sdf.js"></script>
+    <script src="grid.js"></script>
+</head>
+<body>
+    <div class="toolbar">
+        JS Performance (ms): <input id="idPerf" />
+        <!--<label for="canvasbkgColor">Canvas Bkg Color:</label>
+    <input type="color" id="canvasbkgColor" value=#6a5acd onchange="colorBackground(this.value)">-->
+        <button onclick="drawGrid()">draw grid</button>
+        <button onclick="drawDistanceField()">draw distance field</button>
+    </div>
+    <div id="idCanvasbkg" style="width: 1280px; height: 640px; outline: thin solid blue;">
+        <canvas id="idCanvas" width="1280" height="640" style="outline: thin solid blue;"></canvas>
+    </div>
+    </div>
+</body>
+</html>
