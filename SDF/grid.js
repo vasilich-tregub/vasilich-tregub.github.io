@@ -1,15 +1,15 @@
 // JavaScript source code
-const width = 1280;
-const height = 640;
+const width = 1180;
+const height = 320;
 var binaryimage;
 
 function drawGrid() {
     const ctx = document.getElementById("idCanvas").getContext("2d", { willReadFrequently: true });
-    ctx.font = "144px serif";
+    ctx.font = "144px bold serif";
     //ctx.strokeText(textRun, xpos, ypos);
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "white";
-    ctx.fillText("Distance Field", 100, 200);
+    ctx.fillText("Distance Field", 150, 200);
     /*binaryimage = [
         +0, +0, +0, +0, +0, +0, +0, +0,
         +0, +0, +0, +9, +9, +0, +0, +0,
@@ -39,15 +39,15 @@ function drawGrid() {
     console.log(onescount);;
     for (let i = 0; i < width * height; ++i) {
         if (binaryimage[i] == 1 << 31) {
-            imageData.data[4 * i + 0] = 0;
-            imageData.data[4 * i + 1] = 224;
-            imageData.data[4 * i + 2] = 224;
+            imageData.data[4 * i + 0] = 64;
+            imageData.data[4 * i + 1] = 196;
+            imageData.data[4 * i + 2] = 196;
             imageData.data[4 * i + 3] = 255;
         }
         else {
-            imageData.data[4 * i + 0] = 160;
-            imageData.data[4 * i + 1] = 32;
-            imageData.data[4 * i + 2] = 128;
+            imageData.data[4 * i + 0] = 72;
+            imageData.data[4 * i + 1] = 72;
+            imageData.data[4 * i + 2] = 8;
             imageData.data[4 * i + 3] = 255;
         }
     }
