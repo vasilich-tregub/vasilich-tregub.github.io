@@ -22,6 +22,8 @@ function setMargin() {
 }
 function setSpeed() {
     speed = Number(idSpeed.value);
+    clearInterval(intervalId);
+    intervalId = setInterval(drawText, speed);
 }
 function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
