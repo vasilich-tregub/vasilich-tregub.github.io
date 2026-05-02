@@ -12,6 +12,9 @@ window.onload = () => {
     text1 = idText1.value;
     text2 = idText2.value;
     speed = Number(idSpeed.value);
+    
+    const stream = canvas.captureStream();
+    video.srcObject = stream;
 }
 function setTexts() {
     text1 = idText1.value;
@@ -46,7 +49,6 @@ function drawText() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let fontsz = document.getElementById("fontsize").value;
     ctx.font = fontsz + "px serif";
-    //const text1 = "Dynamic column width text layout demo";
     const words = text1.split(/\s/);    
     let xpos = marginX;
     let ypos = 100;
