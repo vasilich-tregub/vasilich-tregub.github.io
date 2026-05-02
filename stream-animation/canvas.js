@@ -6,6 +6,9 @@ const deltaW = 0.9;
 var changeSign = -1;
 var intervalId = 0;
 var animInProgress = false;
+var bkgcolor = "#6a5acd";
+var bkgimage = new Image();
+var background = "color";
 window.onload = () => {
     colorBackground("#6a5acd");
     marginX = Number(margin.value);
@@ -15,6 +18,7 @@ window.onload = () => {
     
     const stream = canvas.captureStream();
     video.srcObject = stream;
+    bkgimage.src = "./image.jpg";
 }
 function setTexts() {
     text1 = idText1.value;
@@ -46,7 +50,15 @@ function animateColumnWidth() {
 }
 function drawText() {
     const ctx = document.getElementById("canvas").getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    if (background == "color") {
+        ctx.fillStyle = bkgcolor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+    }
+    else {
+        ctx.drawImage(bkgimage, 0, 0, canvas.width, canvas.height)
+    }
     let fontsz = document.getElementById("fontsize").value;
     ctx.font = fontsz + "px serif";
     const words = text1.split(/\s/);    
@@ -92,10 +104,13 @@ function drawTextRun(textRun, xpos, ypos) {
 function imageBackground() {
     document.getElementById("canvasbackground").style.backgroundImage = "url('image.jpg')";
     document.getElementById("canvasbackground").style.backgroundRepeat = "repeat";
+    background = "image";
 }
 function colorBackground(color) {
     document.getElementById("canvasbackground").style.backgroundImage = "none";
     document.getElementById("canvasbackground").style.backgroundColor = color;
+    bckcolor = color;
+    background = "color";
 }
 function downloadCanvasContent() {
     var link = document.createElement("a");
