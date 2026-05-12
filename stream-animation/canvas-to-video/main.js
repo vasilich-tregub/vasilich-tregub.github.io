@@ -51,9 +51,9 @@ function animateColumnWidth() {
 
 }
 function drawText() {
-    const ctx = document.getElementById("canvas").getContext("2d");
+    let enterTimestamp = performance.now();
     let prevTimestamp = frameTimestamp;
-    frameTimestamp = performance.now();
+    const ctx = document.getElementById("canvas").getContext("2d");
     if (background == "color") {
         ctx.save();
         ctx.fillStyle = bkgcolor;
@@ -63,15 +63,6 @@ function drawText() {
     else {
         ctx.drawImage(bkgimage, 0, 0, canvas.width, canvas.height)
     }
-    ctx.save();
-    ctx.font = "64px sans-serif";
-    ctx.fillStyle = "MidnightBlue";
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "Gold";
-    let tsStr = (frameTimestamp - prevTimestamp).toFixed(2);
-    ctx.strokeText(tsStr, 16, 464);
-    ctx.fillText(tsStr, 16, 464);
-    ctx.restore();
     let fontsz = document.getElementById("fontsize").value;
     ctx.font = fontsz + "px serif";
     const words = text1.split(/\s/);    
@@ -102,6 +93,19 @@ function drawText() {
     marginX += changeSign * deltaW;
     if (marginX >= 320) {changeSign = -1};
     if (marginX <= 5) {changeSign = +1};
+    frameTimestamp = performance.now();
+    ctx.save();
+    ctx.font = "64px sans-serif";
+    ctx.fillStyle = "MidnightBlue";
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "Gold";
+    let frameDuration = (frameTimestamp - prevTimestamp).toFixed(1);
+    let drawTextDuration = (frameTimestamp - enterTimestamp).toFixed(1);
+    ctx.strokeText(frameDuration, 16, 464);
+    ctx.fillText(frameDuration, 16, 464);
+    ctx.strokeText(drawTextDuration, 160, 464);
+    ctx.fillText(drawTextDuration, 160, 464);
+    ctx.restore();
 }
 function drawTextRun(textRun, xpos, ypos) {
     const ctx = document.getElementById("canvas").getContext("2d");
