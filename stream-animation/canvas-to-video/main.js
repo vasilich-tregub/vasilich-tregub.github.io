@@ -103,8 +103,8 @@ function drawText() {
     let drawTextDuration = (frameTimestamp - enterTimestamp).toFixed(1);
     ctx.strokeText(frameDuration, 16, 464);
     ctx.fillText(frameDuration, 16, 464);
-    ctx.strokeText(drawTextDuration, 160, 464);
-    ctx.fillText(drawTextDuration, 160, 464);
+    ctx.strokeText(drawTextDuration, 192, 464);
+    ctx.fillText(drawTextDuration, 192, 464);
     ctx.restore();
 }
 function drawTextRun(textRun, xpos, ypos) {
