@@ -1,7 +1,7 @@
 var marginX = 0;
 var text1 = "";
 var text2 = "";
-var speed = 30;
+var framems = 30;
 const deltaW = 0.9;
 var changeSign = -1;
 var intervalId = 0;
@@ -15,7 +15,7 @@ window.onload = () => {
     marginX = Number(margin.value);
     text1 = idText1.value;
     text2 = idText2.value;
-    speed = Number(idSpeed.value);
+    framems = Number(idFramems.value);
     
     const stream = canvas.captureStream();
     video.srcObject = stream;
@@ -28,10 +28,10 @@ function setTexts() {
 function setMargin() {
     marginX = Number(margin.value);
 }
-function setSpeed() {
-    speed = Number(idSpeed.value);
+function setFramems() {
+    framems = Number(idFramems.value);
     clearInterval(intervalId);
-    intervalId = setInterval(drawText, speed);
+    intervalId = setInterval(drawText, framems);
 }
 function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
@@ -41,11 +41,11 @@ function animateColumnWidth() {
     if (animInProgress) {    
         clearInterval(intervalId);
         animInProgress = false;
-        speed = Number(idSpeed.value);
+        framems = Number(idFramems.value);
     }
     else {    
         frameTimestamp = 0;
-        intervalId = setInterval(drawText, speed);
+        intervalId = setInterval(drawText, framems);
         animInProgress = true;
     }
 
