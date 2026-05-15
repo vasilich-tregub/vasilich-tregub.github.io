@@ -1,7 +1,7 @@
 var marginX = 0;
 var text1 = "";
 var text2 = "";
-var speed = 30;
+var framems = 30;
 const deltaW = 0.9;
 var changeSign = -1;
 var intervalId = 0;
@@ -9,15 +9,13 @@ var animInProgress = false;
 var bkgcolor = "#6a5acd";
 var bkgimage = new Image();
 var background = "color";
+var savedFrameTimestamp = 0;
 window.onload = () => {
     colorBackground("#6a5acd");
     marginX = Number(margin.value);
     text1 = idText1.value;
     text2 = idText2.value;
-    speed = Number(idSpeed.value);
-    
-    const stream = canvas.captureStream();
-    video.srcObject = stream;
+    //framems = Number(idFramems.value);
     bkgimage.src = "./image.jpg";
 }
 function setTexts() {
@@ -27,31 +25,33 @@ function setTexts() {
 function setMargin() {
     marginX = Number(margin.value);
 }
-function setSpeed() {
-    speed = Number(idSpeed.value);
+/*function setFramems() {
+    framems = Number(idFramems.value);
     clearInterval(intervalId);
-    intervalId = setInterval(drawText, speed);
-}
+    intervalId = setInterval(drawText, framems);
+}*/
 function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 function animateColumnWidth() {
     if (animInProgress) {    
-        clearInterval(intervalId);
+        //clearInterval(intervalId);
         animInProgress = false;
-        speed = Number(idSpeed.value);
+        //framems = Number(idFramems.value);
     }
     else {    
-        intervalId = setInterval(drawText, speed);
+        frameTimestamp = 0;
+        //intervalId = setInterval(drawText, framems);
         animInProgress = true;
+        drawText();
     }
-
 }
-function drawText() {
+function drawText(callbackTimestamp) {
+    let enterTimestamp = performance.now();
     const ctx = document.getElementById("canvas").getContext("2d");
-    ctx.save();
     if (background == "color") {
+        ctx.save();
         ctx.fillStyle = bkgcolor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
@@ -89,6 +89,22 @@ function drawText() {
     marginX += changeSign * deltaW;
     if (marginX >= 320) {changeSign = -1};
     if (marginX <= 5) {changeSign = +1};
+    ctx.save();
+    ctx.font = "64px sans-serif";
+    ctx.fillStyle = "MidnightBlue";
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "Gold";
+    exitTimestamp = performance.now();
+    let frameDuration = (callbackTimestamp - savedFrameTimestamp).toFixed(1);
+    savedFrameTimestamp = callbackTimestamp;
+    let drawTextDuration = (exitTimestamp - enterTimestamp).toFixed(1);
+    ctx.strokeText(frameDuration, 16, 464);
+    ctx.fillText(frameDuration, 16, 464);
+    ctx.strokeText(drawTextDuration, 192, 464);
+    ctx.fillText(drawTextDuration, 192, 464);
+    ctx.restore();
+    if(animInProgress)
+    requestAnimationFrame(drawText);
 }
 function drawTextRun(textRun, xpos, ypos) {
     const ctx = document.getElementById("canvas").getContext("2d");

@@ -22,11 +22,10 @@
         <input type="color" id="canvasbkgColor" value=#6a5acd onchange="colorBackground(this.value)">
         <!--<button onclick="downloadCanvasContent()">Download</button>-->
         <button onclick="animateColumnWidth()">Animation</button>
-        <label for="speed">Speed:</label><input type="number" step="5" min="5" max="300" value="30" id="idSpeed" onchange="setSpeed()" />
+        <label for="framems">Frame(ms):</label>Refresh Rate
     </div>
     <div id="canvasbackground" style="width: 1280px; height: 480px; outline: thin solid blue;">
         <canvas id="canvas" width="1280" height="480" style="outline: thin solid blue;"></canvas>
-        <video id="video" width="1280" height="480" style="outline: thin solid blue;" controls autoplay></video>
     </div>
     <script src="main.js">
     </script>

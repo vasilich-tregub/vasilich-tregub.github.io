@@ -32,12 +32,15 @@
         <ul>
             <li>
                 <a href="./canvas-to-video/index.html">Streaming from a canvas to a video element</a>. Just assign video.srcObject <br />
-                to the stream returned by canvas.streamCapture().
+                to the stream returned by canvas.streamCapture(). Frame rate is set with <br />
+                the `setInterval` call in the `animateColumnWith()` function (`Animation` <br />
+                button click event handler)
             </li>
-            <!--<li>
-                <a href="./canvas-to-peer/index.html">Streaming from a canvas to a peer connection</a>: sort of loopback for <br />
-                browser streaming experiments.
-            </li>-->
+            <li>
+                <a href="./request-animation-frame/index.html">Canvas animation using the `requestAnimationFrame` call</a> Note a steady <br />
+                frame duration figure calculated as the difference between the <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp">timestamps</a> <br />
+                passed to the callback (`drawText()`) in two consecutive frames.
+            </li>
         </ul>
     </div>
 </body>
