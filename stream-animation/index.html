@@ -46,7 +46,8 @@
                 implement 'offline' animation recording, without actual replay, only to <br />
                 render a frame to offscreen canvas and immediately push it to the blob. <br />
                 To limit the API file size, only first 100 animation frames will be written <br />
-                to the blob.
+                to the blob. Still, refresh the page before launching animation, as the blob <br />
+                is defined in the worker and AVIJS is only initialized on the page load.
             </li>
         </ul>
     </div>
