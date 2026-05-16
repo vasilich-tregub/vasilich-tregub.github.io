@@ -1,29 +1,24 @@
 var marginX = 0;
 var text1 = "";
 var text2 = "";
-var framems = 30;
-const deltaW = 0.3;
+var speed = 30;
+const deltaW = 0.9;
 var changeSign = -1;
 var intervalId = 0;
 var animInProgress = false;
 var bkgcolor = "#6a5acd";
 var bkgimage = new Image();
 var background = "color";
-var savedFrameTimestamp = 0;
-var aviBlob;
-var framesToRecord = 0;
-const aviWorker = new Worker("./AVI.js");
 window.onload = () => {
     colorBackground("#6a5acd");
     marginX = Number(margin.value);
     text1 = idText1.value;
     text2 = idText2.value;
-    //framems = Number(idFramems.value);
+    speed = Number(idSpeed.value);
+    
+    const stream = canvas.captureStream();
+    video.srcObject = stream;
     bkgimage.src = "./image.jpg";
-    //AVIJS.settings = { width: 320, height: 240 };
-    //aviStream = new AVIJS.Stream(60, 320, 240);
-    aviWorker.postMessage({ action: 'settings', settings: { width: 320, height: 240 } });
-    aviWorker.postMessage({ action: 'stream', stream: { fps:30, width:320, height:240} });
 }
 function setTexts() {
     text1 = idText1.value;
@@ -32,45 +27,31 @@ function setTexts() {
 function setMargin() {
     marginX = Number(margin.value);
 }
-/*function setFramems() {
-    framems = Number(idFramems.value);
+function setSpeed() {
+    speed = Number(idSpeed.value);
     clearInterval(intervalId);
-    intervalId = setInterval(drawText, framems);
-}*/
+    intervalId = setInterval(drawText, speed);
+}
 function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-aviWorker.addEventListener("message", (msg) => {
-    console.log("msg from aviWorker: ", msg.data);
-    const url = URL.createObjectURL(msg.data);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = `canvas-to-avi-${Date.now()}.avi`;
-    document.body.appendChild(a);
-    a.click();
-});
 function animateColumnWidth() {
     if (animInProgress) {    
-        //clearInterval(intervalId);
+        clearInterval(intervalId);
         animInProgress = false;
-        //framems = Number(idFramems.value);
-        aviWorker.postMessage({ action: 'buffer' });
+        speed = Number(idSpeed.value);
     }
     else {    
-        frameTimestamp = 0;
-        //intervalId = setInterval(drawText, framems);
+        intervalId = setInterval(drawText, speed);
         animInProgress = true;
-        framesToRecord = 0;
-        drawText();
     }
+
 }
-function drawText(callbackTimestamp) {
-    let enterTimestamp = performance.now();
-    const ctx = document.getElementById("canvas").getContext("2d", { willReadFrequently: true });
+function drawText() {
+    const ctx = document.getElementById("canvas").getContext("2d");
+    ctx.save();
     if (background == "color") {
-        ctx.save();
         ctx.fillStyle = bkgcolor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
@@ -82,7 +63,7 @@ function drawText(callbackTimestamp) {
     ctx.font = fontsz + "px serif";
     const words = text1.split(/\s/);    
     let xpos = marginX;
-    let ypos = 40;
+    let ypos = 100;
     for (let ix = 0; ix < words.length; ++ix) {
         let metrics = ctx.measureText(words[ix] + " ");
         if (xpos + metrics.width > canvas.width - marginX) {
@@ -106,27 +87,8 @@ function drawText(callbackTimestamp) {
         xpos -= metrics.width;
     }
     marginX += changeSign * deltaW;
-    if (marginX >= 96) {changeSign = -1};
-    if (marginX <= 2.5) {changeSign = +1};
-    ctx.save();
-    ctx.font = "24px sans-serif";
-    ctx.fillStyle = "MidnightBlue";
-    ctx.lineWidth = 2.5;
-    ctx.strokeStyle = "Gold";
-    exitTimestamp = performance.now();
-    let frameDuration = (callbackTimestamp - savedFrameTimestamp).toFixed(1);
-    savedFrameTimestamp = callbackTimestamp;
-    let drawTextDuration = (exitTimestamp - enterTimestamp).toFixed(1);
-    ctx.strokeText(frameDuration, 2, 224);
-    ctx.fillText(frameDuration, 2, 224);
-    ctx.strokeText(drawTextDuration, 56, 224);
-    ctx.fillText(drawTextDuration, 56, 224);
-    ctx.restore();
-    if (framesToRecord < 100)
-        aviWorker.postMessage({ action: 'frameImageData', stream: 0, frame: ctx.getImageData(0, 0, 320, 240) });
-    framesToRecord++;
-    if(animInProgress)
-    requestAnimationFrame(drawText);
+    if (marginX >= 320) {changeSign = -1};
+    if (marginX <= 5) {changeSign = +1};
 }
 function drawTextRun(textRun, xpos, ypos) {
     const ctx = document.getElementById("canvas").getContext("2d");
