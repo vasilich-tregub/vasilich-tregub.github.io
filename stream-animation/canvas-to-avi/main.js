@@ -39,6 +39,7 @@ function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+var animationStarted;
 function animateColumnWidth() {
     if (animInProgress) {
         //clearInterval(intervalId);
@@ -54,6 +55,7 @@ function animateColumnWidth() {
         aviWorker = new Worker("./AVI.js");
         aviWorker.postMessage({ action: 'settings', settings: { width: 320, height: 240 } });
         aviWorker.postMessage({ action: 'stream', stream: { fps: 30, width: 320, height: 240 } });
+        animationStarted = performance.now();
         drawText();
         aviWorker.addEventListener("message", (msg) => {
             console.log("msg from aviWorker: ", msg.data);
@@ -65,6 +67,7 @@ function animateColumnWidth() {
             document.body.appendChild(a);
             a.click();
             aviWorker.terminate();
+            alert("Animation recorded in " + (performance.now() - animationStarted).toFixed(1) + "ms");
         });
     }
 }
@@ -124,11 +127,34 @@ function drawText(callbackTimestamp) {
     ctx.strokeText(drawTextDuration, 56, 224);
     ctx.fillText(drawTextDuration, 56, 224);
     ctx.restore();
-    if (framesToRecord < 100)
+    if (framesToRecord < 100) {
         aviWorker.postMessage({ action: 'frameImageData', stream: 0, frame: ctx.getImageData(0, 0, 320, 240) });
-    framesToRecord++;
-    if(animInProgress)
-    requestAnimationFrame(drawText);
+        framesToRecord++;
+    }
+    else {
+        animInProgress = false;
+        aviWorker.postMessage({ action: 'buffer' });
+        return;
+        aviWorker.addEventListener("message", (msg) => {
+            console.log("msg from aviWorker: ", msg.data);
+            const url = URL.createObjectURL(msg.data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `canvas-to-avi-${Date.now()}.avi`;
+            document.body.appendChild(a);
+            a.click();
+            aviWorker.terminate();
+            alert("Animation recorded in " + (performance.now() - animationStarted).toFixed(1) + "ms");
+        });
+    }
+    if (idOffline.checked) {
+        drawText(performance.now());
+    }
+    else {
+        if (animInProgress)
+            requestAnimationFrame(drawText);
+    }
 }
 function drawTextRun(textRun, xpos, ypos) {
     const ctx = document.getElementById("canvas").getContext("2d");

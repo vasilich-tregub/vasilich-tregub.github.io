@@ -46,7 +46,10 @@
                 implement 'offline' animation recording, without actual replay -- only to <br />
                 render a frame to an offscreen canvas and immediately push it to the blob. <br />
                 To limit the API file size, only first 100 animation frames will be written <br />
-                to the blob. 
+                to the blob. When the Offline checkbox cleared, the animation is played and <br />
+                recorded real time. When checked, the current frame content is added to the <br />
+                blob but the `requestAnimationFrame(drawText)` is not called -- instead, the <br />
+                program immediately starts render the next frame.
             </li>
         </ul>
     </div>
