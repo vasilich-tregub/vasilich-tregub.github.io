@@ -12,7 +12,7 @@ var background = "color";
 var savedFrameTimestamp = 0;
 var aviBlob;
 var framesToRecord = 0;
-const aviWorker = new Worker("./AVI.js");
+var aviWorker;
 window.onload = () => {
     colorBackground("#6a5acd");
     marginX = Number(margin.value);
@@ -22,8 +22,6 @@ window.onload = () => {
     bkgimage.src = "./image.jpg";
     //AVIJS.settings = { width: 320, height: 240 };
     //aviStream = new AVIJS.Stream(60, 320, 240);
-    aviWorker.postMessage({ action: 'settings', settings: { width: 320, height: 240 } });
-    aviWorker.postMessage({ action: 'stream', stream: { fps:30, width:320, height:240} });
 }
 function setTexts() {
     text1 = idText1.value;
@@ -41,29 +39,33 @@ function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
-aviWorker.addEventListener("message", (msg) => {
-    console.log("msg from aviWorker: ", msg.data);
-    const url = URL.createObjectURL(msg.data);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = `canvas-to-avi-${Date.now()}.avi`;
-    document.body.appendChild(a);
-    a.click();
-});
 function animateColumnWidth() {
-    if (animInProgress) {    
+    if (animInProgress) {
         //clearInterval(intervalId);
         animInProgress = false;
         //framems = Number(idFramems.value);
         aviWorker.postMessage({ action: 'buffer' });
     }
-    else {    
+    else {
         frameTimestamp = 0;
         //intervalId = setInterval(drawText, framems);
         animInProgress = true;
         framesToRecord = 0;
+        aviWorker = new Worker("./AVI.js");
+        aviWorker.postMessage({ action: 'settings', settings: { width: 320, height: 240 } });
+        aviWorker.postMessage({ action: 'stream', stream: { fps: 30, width: 320, height: 240 } });
         drawText();
+        aviWorker.addEventListener("message", (msg) => {
+            console.log("msg from aviWorker: ", msg.data);
+            const url = URL.createObjectURL(msg.data);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `canvas-to-avi-${Date.now()}.avi`;
+            document.body.appendChild(a);
+            a.click();
+            aviWorker.terminate();
+        });
     }
 }
 function drawText(callbackTimestamp) {
