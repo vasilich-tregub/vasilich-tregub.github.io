@@ -13,6 +13,7 @@ var savedFrameTimestamp = 0;
 var aviBlob;
 var framesToRecord = 0;
 var aviWorker;
+var asyncRecording = false;
 window.onload = () => {
     colorBackground("#6a5acd");
     marginX = Number(margin.value);
@@ -38,6 +39,9 @@ function setMargin() {
 function clearCanvas() {
     const ctx = document.getElementById("canvas").getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+function asyncOnOff() {
+    asyncRecording = idAsync.checked;
 }
 var animationStarted;
 function animateColumnWidth() {
@@ -148,7 +152,7 @@ function drawText(callbackTimestamp) {
             alert("Animation recorded in " + (performance.now() - animationStarted).toFixed(1) + "ms");
         });
     }
-    if (idOffline.checked) {
+    if (asyncRecording) {
         drawText(performance.now());
     }
     else {
