@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>requestAnimationFrame exercise</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+</head>
+<body>
+    <div class="toolbar">
+        <div>
+            <input id="idText1" value="Dynamic column width text layout demo" size="50" onchange="setTexts()" />
+            <input id="idText2" value="عرض تخطيط النص بعرض أعمدة ديناميكي" size="50" onchange="setTexts()" />
+        </div>
+        <button title="Draw Text" onclick="drawText()">Draw text</button>
+        <label for="fontzise">Font Size:</label><input type="number" step="8" min=48 max=144 value="80" id="fontsize" />
+        <label for="margin">Margin:</label><input type="number" step="5" min="5" max="320" value="10" id="margin" onchange="setMargin()" />
+        <!--<button onclick="clearCanvas()">Clear Canvas</button>-->
+        <label for="gAlpha">gAlpha:</label><input type="number" step="0.1" min="0" max="1" value="0.9" id="gAlpha" />
+        <label for="strokeLineWidth">Stroke Width:</label><input type="number" step="0.5" min="0" max="12" value="4" id="strokeLineWidth" />
+        <button onclick="imageBackground()">Bkg Image</button>
+        <label for="canvasbkgColor">Bkg Color:</label>
+        <input type="color" id="canvasbkgColor" value=#6a5acd onchange="colorBackground(this.value)">
+        <!--<button onclick="downloadCanvasContent()">Download</button>-->
+        <button onclick="animateColumnWidth()">Animation</button>
+        <label for="Frame No">Frame No:</label><input type="number" onchange="displayFrame(this.value)"/>
+    </div>
+    <div id="canvasbackground" style="width: 1280px; height: 480px; outline: thin solid blue;">
+        <canvas id="canvas" width="1280" height="480" style="outline: thin solid blue;"></canvas>
+        <img id="idFrame" width="1280" height="480" style="outline: thin solid blue;"/>
+    </div>
+    <script src="main.js">
+    </script>
+</body>
+</html>
