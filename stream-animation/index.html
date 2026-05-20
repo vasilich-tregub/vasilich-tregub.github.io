@@ -42,18 +42,14 @@
                 passed to the callback (`drawText()`) in two consecutive frames.
             </li>
             <li>
-                <a href="./canvas-to-avi/index.html">Write animation to an AVI file</a>: project started with the purpose to finally <br />
-                implement 'offline' animation recording, without actual replay -- only to <br />
-                render a frame to an offscreen canvas and immediately push it to the blob. <br />
-                To limit the API file size, only first 100 animation frames will be written <br />
-                to the blob. When the Offline checkbox cleared, the animation is played and <br />
-                recorded real time. When checked, the current frame content is added to the <br />
-                blob but the `requestAnimationFrame(drawText)` is not called -- instead, the <br />
-                program immediately starts render the next frame.
-            </li>
-            <li>
-                <a href="./record-animation-frames/index.html">It is a copy the request-animation-frame page</a> with the animation recording <br />
-                feature added. 
+                <a href="./push-animation-frames/index.html">Push frames to an array for later retrieval</a>. Animation frames are pushed <br />
+                into the array without waiting for the source canvas updates, and we see <br />
+                only the final frame when recording is complete. When we select the <br />
+                frame number (`Display frame #`) in the UI, the saved frame is drawn <br />
+                to the canvas `storedFrame` (if there are any). The exersize is authored <br />
+                to appease the other people's curiosity, with canvas image data being <br />
+                saved without compression, so the `Frames to record` value set too high <br />
+                may crash this script (e.g., 'Out of memory at ImageData creation').
             </li>
         </ul>
     </div>

@@ -1,2 +1,0 @@
-https://stackoverflow.com/questions/75254135/how-do-i-return-a-value-from-a-worker-for-a-function-in-javascript
-
