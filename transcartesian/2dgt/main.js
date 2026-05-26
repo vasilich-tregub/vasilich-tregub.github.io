@@ -75,19 +75,19 @@ function solve() {
     console.log(u[1]);
     console.log(u[2]);
     console.log(u[3]);
-    results.innerHTML = "<pre>u[0] = " + u[0] + "; " + "u[1] = " + u[1] + "; " + "u[2] = " + u[2] + "; " + "u[3] = " + u[3] + ";\n" +
+    results.innerHTML = "<pre>u[0..0] = " + u[0] + "; " + "u[0..1] = " + u[1] + "; " + "u[0..2] = " + u[2] + "; " + "u[0..3] = " + u[3] + ";\n" +
         "u[1..0] = " + u[4] + "; " + "u[1..1] = " + u[5] + "; " + "u[1..3] = " + u[7] + "; " + "u[1..2] = " + u[6] + ";\n" +
         "u[2..0] = " + u[8] + "; " + "u[2..1] = " + u[9] + "; " + "u[2..3] = " + u[0xB] + "; " + "u[2..2] = " + u[0xA] + ";\n" +
         "u[3..0] = " + u[0xC] + "; " + "u[3..1] = " + u[0xD] + "; " + "u[3..3] = " + u[0xF] + "; " + "u[3..2] = " + u[0xE] + ";\n</pre>";
 }
 function seedData() {
-    boundary11.value = 3;
+    boundary11.value = 9;
     boundary13.value = 6;
-    boundary23.value = 9;
-    boundary22.value = 12;
-    boundary21.value = 9;
+    boundary23.value = 3;
+    boundary22.value = 0;
+    boundary21.value = 3;
     boundary31.value = 6;
-    boundary33.value = 3;
-    boundary32.value = 3;
-    boundary12.value = 3;
+    boundary33.value = 9;
+    boundary32.value = 9;
+    boundary12.value = 9;
 }
