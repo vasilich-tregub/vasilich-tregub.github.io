@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>16-node Mesh</title>
+</head>
+<body>
+    <button onclick="seedData()">Seed Sample Data</button>
+    <button onclick="solve()">Solve</button>
+    <table id="boundary">
+        <tr><td><label for-"boundary11">Boundary 11</label><input type="number" id="boundary11" value="0" /></td></tr>
+        <tr><td><label for-"boundary13">Boundary 13</label><input type="number" id="boundary13" value="0" /></td></tr>
+        <tr><td><label for-"boundary23">Boundary 23</label><input type="number" id="boundary23" value="0" /></td></tr>
+        <tr><td><label for-"boundary22">Boundary 22</label><input type="number" id="boundary22" value="0" /></td></tr>
+        <tr><td><label for-"boundary21">Boundary 21</label><input type="number" id="boundary21" value="0" /></td></tr>
+        <tr><td><label for-"boundary31">Boundary 31</label><input type="number" id="boundary31" value="0" /></td></tr>
+        <tr><td><label for-"boundary33">Boundary 33</label><input type="number" id="boundary33" value="0" /></td></tr>
+        <tr><td><label for-"boundary32">Boundary 32</label><input type="number" id="boundary32" value="0" /></td></tr>
+        <tr><td><label for-"boundary12">Boundary 12</label><input type="number" id="boundary12" value="0" /></td></tr>
+    </table>
+    <div id="results">RESULTS</div>
+    <script src="main.js"></script>
+    <script src="gausselimination.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Four-node Mesh</title>
+</head>
+<body>
+    <button onclick="solve()">Solve</button>
+    <table id="boundary">
+        <tr><td><label for-"boundary1">Boundary 1</label><input type="number" id="boundary1" value="-1" /></td></tr>
+        <tr><td><label for-"boundary2">Boundary 2</label><input type="number" id="boundary2" value="1" /></td></tr>
+        <tr><td><label for-"boundary3">Boundary 3</label><input type="number" id="boundary3" value="2" /></td></tr>
+    </table>
+    <div id="results">RESULTS</div>
+    <script src="main.js"></script>
+    <script src="gausselimination.js"></script>
+</body>
+</html>
