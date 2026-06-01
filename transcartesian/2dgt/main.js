@@ -21,23 +21,23 @@ function solve() {
 
     a[1][1]   = -3.0;
     a[1][0]   = +1.0;
-    a[1][0xD] = +1.0;
-    a[1][9]   = +1.0;
+    a[1][0xB] = +1.0;
+    a[1][0xE]   = +1.0;
 
     a[2][2]   = -3.0;
     a[2][0]   = +1.0;
-    a[2][0xE] = +1.0;
-    a[2][6]   = +1.0;
+    a[2][0xD] = +1.0;
+    a[2][7]   = +1.0;
 
     a[3][3]   = -3.0;
     a[3][0]   = +1.0;
-    a[3][7]   = +1.0;
-    a[3][0xB] = +1.0;
+    a[3][6]   = +1.0;
+    a[3][9] = +1.0;
 
     a[4][4] = -3.0;
     a[4][5] = +1.0;
-    a[4][7] = +1.0;
     a[4][6] = +1.0;
+    a[4][7] = +1.0;
 
     a[5][5] = +1.0;
     a[5][rank] = Number(boundary11.value);
@@ -47,8 +47,8 @@ function solve() {
     a[7][rank] = Number(boundary13.value);
 
     a[8][8]   = -3.0;
-    a[8][9]   = +1.0;
     a[8][0xB] = +1.0;
+    a[8][9]   = +1.0;
     a[8][0xA] = +1.0;
 
     a[9][9] = +1.0;
@@ -60,8 +60,8 @@ function solve() {
 
     a[0xC][0xC] = -3.0;
     a[0xC][0xD] = +1.0;
-    a[0xC][0xF] = +1.0;
     a[0xC][0xE] = +1.0;
+    a[0xC][0xF] = +1.0;
 
     a[0xD][0xD] = +1.0;
     a[0xD][rank] = Number(boundary31.value);
@@ -82,12 +82,12 @@ function solve() {
 }
 function seedData() {
     boundary11.value = 9;
-    boundary13.value = 6;
-    boundary23.value = 3;
-    boundary22.value = 0;
-    boundary21.value = 3;
-    boundary31.value = 6;
-    boundary33.value = 9;
-    boundary32.value = 9;
-    boundary12.value = 9;
+    boundary12.value = 6;
+    boundary21.value = 0;
+    boundary22.value = 3;
+    boundary23.value = 9;
+    boundary32.value = 3;
+    boundary33.value = 6;
+    boundary31.value = 9;
+    boundary13.value = 9;
 }
