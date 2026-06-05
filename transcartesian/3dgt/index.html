@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>64-node Mesh</title>
+</head>
+<body>
+    <button onclick="seedData()">Seed Sample Data</button>
+    <button onclick="solve()">Solve</button>
+    <table id="boundary">
+        <tr><td><label for-"boundary111">Boundary 111</label><input type="number" id="boundary111" value="0" /></td></tr>
+        <tr><td><label for-"boundary112">Boundary 112</label><input type="number" id="boundary112" value="0" /></td></tr>
+        <tr><td><label for-"boundary121">Boundary 121</label><input type="number" id="boundary121" value="0" /></td></tr>
+        <tr><td><label for-"boundary122">Boundary 122</label><input type="number" id="boundary122" value="0" /></td></tr>
+        <tr><td><label for-"boundary211">Boundary 211</label><input type="number" id="boundary211" value="0" /></td></tr>
+        <tr><td><label for-"boundary212">Boundary 212</label><input type="number" id="boundary212" value="0" /></td></tr>
+        <tr><td><label for-"boundary221">Boundary 221</label><input type="number" id="boundary221" value="0" /></td></tr>
+        <tr><td><label for-"boundary222">Boundary 222</label><input type="number" id="boundary222" value="0" /></td></tr>
+        <tr><td><label for-"boundary223">Boundary 223</label><input type="number" id="boundary223" value="0" /></td></tr>
+        <tr><td><label for-"boundary232">Boundary 232</label><input type="number" id="boundary232" value="0" /></td></tr>
+        <tr><td><label for-"boundary233">Boundary 233</label><input type="number" id="boundary233" value="0" /></td></tr>
+        <tr><td><label for-"boundary322">Boundary 322</label><input type="number" id="boundary322" value="0" /></td></tr>
+        <tr><td><label for-"boundary323">Boundary 323</label><input type="number" id="boundary323" value="0" /></td></tr>
+        <tr><td><label for-"boundary332">Boundary 332</label><input type="number" id="boundary332" value="0" /></td></tr>
+        <tr><td><label for-"boundary333">Boundary 333</label><input type="number" id="boundary333" value="0" /></td></tr>
+        <tr><td><label for-"boundary331">Boundary 331</label><input type="number" id="boundary331" value="0" /></td></tr>
+        <tr><td><label for-"boundary313">Boundary 313</label><input type="number" id="boundary313" value="0" /></td></tr>
+        <tr><td><label for-"boundary311">Boundary 311</label><input type="number" id="boundary311" value="0" /></td></tr>
+        <tr><td><label for-"boundary133">Boundary 133</label><input type="number" id="boundary133" value="0" /></td></tr>
+        <tr><td><label for-"boundary131">Boundary 131</label><input type="number" id="boundary131" value="0" /></td></tr>
+        <tr><td><label for-"boundary113">Boundary 113</label><input type="number" id="boundary113" value="0" /></td></tr>
+    </table>
+    <div id="results">RESULTS</div>
+    <script src="main.js"></script>
+    <script src="gausselimination.js"></script>
+</body>
+</html>
