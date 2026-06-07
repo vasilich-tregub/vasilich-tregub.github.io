@@ -2,26 +2,29 @@
  * This source code is subject to the terms of the MIT License. 
  * Copyright(c) 2026 Vladimir Vasilich Tregub
 */
+function r4(string) {
+    return parseInt(string, 4);
+}
 var rank = 16;
 var a;
 var mesh = []; // array of node neighbors; 3 neighbors or empty
 window.onload = (event) => {
     mesh[0] = [1, 2, 3];
-    mesh[1] = [0, parseInt("23", 4), parseInt("32", 4)];
-    mesh[2] = [0, parseInt("31", 4), parseInt("13", 4)];
-    mesh[3] = [0, parseInt("12", 4), parseInt("21", 4)];
-    mesh[parseInt("10", 4)] = [parseInt("11", 4), parseInt("12", 4), parseInt("13", 4)];
-    mesh[parseInt("11", 4)] = [parseInt("10", 4), parseInt("233", 4), parseInt("322", 4)];
-    mesh[parseInt("12", 4)] = [parseInt("10", 4), parseInt("321", 4), 3];
-    mesh[parseInt("13", 4)] = [parseInt("10", 4), 2, parseInt("231", 4)];
-    mesh[parseInt("20", 4)] = [parseInt("21", 4), parseInt("22", 4), parseInt("23", 4)];
-    mesh[parseInt("21", 4)] = [parseInt("20", 4), 3, parseInt("312", 4)];
-    mesh[parseInt("22", 4)] = [parseInt("20", 4), parseInt("311", 4), 1];
-    mesh[parseInt("23", 4)] = [parseInt("20", 4), parseInt("132", 4), parseInt("231", 4)];
-    mesh[parseInt("30", 4)] = [parseInt("31", 4), parseInt("32", 4), parseInt("33", 4)];
-    mesh[parseInt("31", 4)] = [parseInt("30", 4), parseInt("213", 4), 2];
-    mesh[parseInt("32", 4)] = [parseInt("30", 4), 1, parseInt("123", 4)];
-    mesh[parseInt("33", 4)] = [parseInt("30", 4), parseInt("122", 4), parseInt("211", 4)];
+    mesh[1] = [0, r4("23"), r4("32")];
+    mesh[2] = [0, r4("31"), r4("13")];
+    mesh[3] = [0, r4("12"), r4("21")];
+    mesh[r4("10")] = [r4("11"), r4("12"), r4("13")];
+    mesh[r4("11")] = [r4("10"), r4("233"), r4("322")];
+    mesh[r4("12")] = [r4("10"), r4("321"), 3];
+    mesh[r4("13")] = [r4("10"), 2, r4("231")];
+    mesh[r4("20")] = [r4("21"), r4("22"), r4("23")];
+    mesh[r4("21")] = [r4("20"), 3, r4("312")];
+    mesh[r4("22")] = [r4("20"), r4("311"), 1];
+    mesh[r4("23")] = [r4("20"), r4("132"), r4("231")];
+    mesh[r4("30")] = [r4("31"), r4("32"), r4("33")];
+    mesh[r4("31")] = [r4("30"), r4("213"), 2];
+    mesh[r4("32")] = [r4("30"), 1, r4("123")];
+    mesh[r4("33")] = [r4("30"), r4("122"), r4("211")];
 }
 function solve() {
     return;

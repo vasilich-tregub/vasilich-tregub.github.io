@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<!--
+ *  Copyright (c) 2021 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+
+    <base target="_blank">
+
+    <title>Peer connection minified</title>
+
+</head>
+
+<body>
+
+    <div id="container">
+        <div><canvas id="idCanvas"></canvas></div>
+        <video id="localVideo" playsinline controls autoplay muted></video>
+        <video id="remoteVideo" playsinline controls autoplay></video>
+
+        <div>
+            <button id="startButton">Start</button>
+            <button id="hangupButton">Hang Up</button>
+            <button id="pseudoAnimation">Pseudo Animation</button>
+        </div>
+
+        <div>
+            A minified version of a <a href="https://webrtc.github.io/samples/src/content/peerconnection/channel/">peerconnection channel</a> 
+            sample from <a href="https://webrtc.github.io/samples/">WebRTC samples</a>.<br/>
+            Launch the page in two windows; click the start buttons in both, <br/>to stream contents of canvasses mutually from one window to another.
+        </div>
+    </div>
+
+    <script src="main.js" async></script>
+
+</body>
+</html>
