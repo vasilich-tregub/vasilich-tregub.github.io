@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<!--
+ *  Copyright (c) 2016 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+-->
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+
+    <base target="_blank">
+
+    <title>Canvas to peer connection minified</title>
+
+    <style>
+        canvas {
+            background-color: #ccc;
+            width: 300px;
+            height: 150px;
+        }
+
+        video {
+            width: 300px;
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <canvas></canvas>
+        <video playsinline controls autoplay muted></video>
+
+        <div id="autoplay">Due to autoplay policy the video seems not to be playing. Clicking the left teapot usually resolves this.</div>
+
+    </div>
+
+    <div>
+        The demo launches on page loading; it may only require to click a replay control <br />
+        of a video element. Browse the code paying attention to offer-answer exchanges <br />
+        between peer connection entities pc1, pc2 and ice candidate negotiation. The next <br />
+        exercise in series would demonstrate stream transport via IP network link.<br />
+    </div>
+
+    <script src="main.js" async></script>
+
+</body>
+</html>
