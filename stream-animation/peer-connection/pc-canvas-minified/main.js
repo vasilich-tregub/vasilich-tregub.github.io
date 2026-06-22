@@ -41,7 +41,7 @@ let pc2;
 let startTime;
 
 video.addEventListener('loadedmetadata', function () {
-    document.getElementById('autoplay').style.display = 'none';
+    //document.getElementById('autoplay').style.display = 'none';
     console.log(`Remote video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
 });
 
@@ -108,17 +108,31 @@ function onCreateOfferSuccess(desc) {
     console.log(`Offer from pc1\n${desc.sdp}`);
     console.log('pc1 setLocalDescription start');
     pc1.setLocalDescription(desc, () => onSetLocalSuccess(pc1), onSetSessionDescriptionError);
-    console.log('pc2 setRemoteDescription start');
+    /*console.log('pc2 setRemoteDescription start');
     pc2.setRemoteDescription(desc, () => onSetRemoteSuccess(pc2), onSetSessionDescriptionError);
     console.log('pc2 createAnswer start');
     // Since the 'remote' side has no media stream we need
     // to pass in the right constraints in order for it to
     // accept the incoming offer of audio and video.
-    pc2.createAnswer(onCreateAnswerSuccess, onCreateSessionDescriptionError);
+    pc2.createAnswer(onCreateAnswerSuccess, onCreateSessionDescriptionError);*/
 }
+
+offerRcvdBtn.onclick = function () {
+    var offer = localOffer.innerText;
+    var offerDesc = new RTCSessionDescription(JSON.parse(offer))
+    pc2.setRemoteDescription(offerDesc)
+    /*pc2.createAnswer(function (answerDesc) {
+        pc2.setLocalDescription(answerDesc)
+    },
+        function () { },
+        sdpConstraints)
+    */
+    pc2.createAnswer(onCreateAnswerSuccess, onCreateSessionDescriptionError);
+};
 
 function onSetLocalSuccess(pc) {
     console.log(`${getName(pc)} setLocalDescription complete`);
+    localOffer.innerText = JSON.stringify(pc1.localDescription);
 }
 
 function onSetRemoteSuccess(pc) {
@@ -133,9 +147,9 @@ function gotRemoteStream(e) {
     if (video.srcObject !== e.streams[0]) {
         video.srcObject = e.streams[0];
         console.log('pc2 received remote stream');
-        if (video.paused) {
+        /*if (video.paused) {
             document.getElementById('autoplay').style.display = 'block';
-        }
+        }*/
     }
 }
 

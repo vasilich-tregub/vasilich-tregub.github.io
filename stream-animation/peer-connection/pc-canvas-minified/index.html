@@ -31,21 +31,23 @@
 </head>
 
 <body>
+    <div id="localOffer" style="height:fit-content; border: 1px solid"></div>
+    <em style="font-size:larger;">Click this button to complete setting of local/remote description for peer connection:</em> 
+    <button id="offerRcvdBtn">pc2: recv offer</button>
 
     <div id="container">
 
         <canvas></canvas>
         <video playsinline controls autoplay muted></video>
 
-        <div id="autoplay">Due to autoplay policy the video seems not to be playing. Clicking the left teapot usually resolves this.</div>
-
     </div>
 
     <div>
-        The demo launches on page loading; it may only require to click a replay control <br />
-        of a video element. Browse the code paying attention to offer-answer exchanges <br />
-        between peer connection entities pc1, pc2 and ice candidate negotiation. The next <br />
-        exercise in series would demonstrate stream transport via IP network link.<br />
+        The demo launches on clicking 'pc2: recv offer' button; it may only require <br />
+        to click a replay control of a video element. Browse the code paying attention <br />
+        to offer-answer exchanges between peer connection entities pc1, pc2 and ice <br />
+        candidate negotiation. The next exercise in series would demonstrate stream <br />
+        transport via IP network link.
     </div>
 
     <script src="main.js" async></script>
