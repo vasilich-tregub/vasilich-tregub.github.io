@@ -118,8 +118,8 @@ function onCreateOfferSuccess(desc) {
 }
 
 offerRcvdBtn.onclick = function () {
-    var offer = localOffer.innerText;
-    var offerDesc = new RTCSessionDescription(JSON.parse(offer))
+    let offer = pc1Offer.innerText;
+    let offerDesc = new RTCSessionDescription(JSON.parse(offer))
     pc2.setRemoteDescription(offerDesc)
     /*pc2.createAnswer(function (answerDesc) {
         pc2.setLocalDescription(answerDesc)
@@ -132,7 +132,7 @@ offerRcvdBtn.onclick = function () {
 
 function onSetLocalSuccess(pc) {
     console.log(`${getName(pc)} setLocalDescription complete`);
-    localOffer.innerText = JSON.stringify(pc1.localDescription);
+    pc1Offer.innerText = JSON.stringify(pc1.localDescription);
 }
 
 function onSetRemoteSuccess(pc) {
@@ -152,15 +152,27 @@ function gotRemoteStream(e) {
         }*/
     }
 }
-
 function onCreateAnswerSuccess(desc) {
     console.log(`Answer from pc2:\n${desc.sdp}`);
     console.log('pc2 setLocalDescription start');
     pc2.setLocalDescription(desc, () => onSetLocalSuccess(pc2), onSetSessionDescriptionError);
-    console.log('pc1 setRemoteDescription start');
-    pc1.setRemoteDescription(desc, () => onSetRemoteSuccess(pc1), onSetSessionDescriptionError);
+    /*console.log('pc1 setRemoteDescription start');
+    pc1.setRemoteDescription(desc, () => onSetRemoteSuccess(pc1), onSetSessionDescriptionError);*/
+    pc2Answer.innerText = JSON.stringify(desc);
 }
 
+answerRcvdBtn.onclick = function () {
+    let answer = pc2Answer.innerText;
+    let answerDesc = new RTCSessionDescription(JSON.parse(answer));
+    console.log('pc1 setRemoteDescription start');
+    pc1.setRemoteDescription(answerDesc, () => onSetRemoteSuccess(pc1), onSetSessionDescriptionError);
+};
+
+reinstatePc2RemoteConnBtn.onclick = function () {
+    let offer = pc1Offer.innerText;
+    let offerDesc = new RTCSessionDescription(JSON.parse(offer))
+    pc2.setRemoteDescription(offerDesc)
+}
 function onIceCandidate(pc, event) {
     getOtherPc(pc).addIceCandidate(event.candidate)
         .then(

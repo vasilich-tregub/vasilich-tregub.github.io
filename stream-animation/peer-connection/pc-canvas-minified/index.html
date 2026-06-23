@@ -31,8 +31,8 @@
 </head>
 
 <body>
-    <div id="localOffer" style="height:fit-content; border: 1px solid"></div>
-    <em style="font-size:larger;">Click this button to complete setting of local/remote description for peer connection:</em> 
+    <div id="pc1Offer" style="height:fit-content; border: 1px solid"></div>
+    <em style="font-size:larger;">Click this button to send offer for peer connection:</em>
     <button id="offerRcvdBtn">pc2: recv offer</button>
 
     <div id="container">
@@ -41,6 +41,12 @@
         <video playsinline controls autoplay muted></video>
 
     </div>
+
+    <div id="pc2Answer" contenteditable style="height:fit-content; border: 1px solid"></div>
+    <em style="font-size:larger;">Click this button to receive answer for peer connection:</em>
+    <button id="answerRcvdBtn">pc1: recv answer</button><br />
+    <em style="font-size:larger;">Reinstate pc2 remote connection (todo: fix this snag with async):</em>
+    <button id="reinstatePc2RemoteConnBtn">pc2: reinstate remote</button>
 
     <div>
         The demo launches on clicking 'pc2: recv offer' button; it may only require <br />
