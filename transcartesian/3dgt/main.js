@@ -133,16 +133,16 @@ function seedData() {
     b221.value = 3;
     b222.value = 2;
     b223.value = 1;
-    b232.value = 2;
-    b233.value = 3;
-    b322.value = 4;
-    b323.value = 5;
-    b332.value = 6;
-    b333.value = 7;
-    b331.value = 6;
-    b313.value = 5;
-    b311.value = 4;
-    b133.value = 3;
-    b131.value = 2;
+    b232.value = 0;
+    b233.value = -1;
+    b322.value = -2;
+    b323.value = -1;
+    b332.value = -2;
+    b333.value = -3;
+    b331.value = -4;
+    b313.value = -3;
+    b311.value = -2;
+    b133.value = -1;
+    b131.value = 0;
     b113.value = 1;
 }
