@@ -94,57 +94,55 @@ function solve() {
             a[i][i] = 1.0;
         }
     }
-    a[r4("111")][rank] = Number(boundary111.value);
-    a[r4("112")][rank] = Number(boundary112.value);
-    a[r4("121")][rank] = Number(boundary121.value);
-    a[r4("122")][rank] = Number(boundary122.value);
-    a[r4("211")][rank] = Number(boundary211.value);
-    a[r4("212")][rank] = Number(boundary212.value);
-    a[r4("221")][rank] = Number(boundary221.value);
-    a[r4("222")][rank] = Number(boundary222.value);
-    a[r4("223")][rank] = Number(boundary223.value);
-    a[r4("232")][rank] = Number(boundary232.value);
-    a[r4("233")][rank] = Number(boundary233.value);
-    a[r4("322")][rank] = Number(boundary322.value);
-    a[r4("323")][rank] = Number(boundary323.value);
-    a[r4("332")][rank] = Number(boundary332.value);
-    a[r4("333")][rank] = Number(boundary333.value);
-    a[r4("331")][rank] = Number(boundary331.value);
-    a[r4("313")][rank] = Number(boundary313.value);
-    a[r4("311")][rank] = Number(boundary311.value);
-    a[r4("133")][rank] = Number(boundary133.value);
-    a[r4("131")][rank] = Number(boundary131.value);
-    a[r4("113")][rank] = Number(boundary113.value);
+    a[r4("111")][rank] = Number(b111.value);
+    a[r4("112")][rank] = Number(b112.value);
+    a[r4("121")][rank] = Number(b121.value);
+    a[r4("122")][rank] = Number(b122.value);
+    a[r4("211")][rank] = Number(b211.value);
+    a[r4("212")][rank] = Number(b212.value);
+    a[r4("221")][rank] = Number(b221.value);
+    a[r4("222")][rank] = Number(b222.value);
+    a[r4("223")][rank] = Number(b223.value);
+    a[r4("232")][rank] = Number(b232.value);
+    a[r4("233")][rank] = Number(b233.value);
+    a[r4("322")][rank] = Number(b322.value);
+    a[r4("323")][rank] = Number(b323.value);
+    a[r4("332")][rank] = Number(b332.value);
+    a[r4("333")][rank] = Number(b333.value);
+    a[r4("331")][rank] = Number(b331.value);
+    a[r4("313")][rank] = Number(b313.value);
+    a[r4("311")][rank] = Number(b311.value);
+    a[r4("133")][rank] = Number(b133.value);
+    a[r4("131")][rank] = Number(b131.value);
+    a[r4("113")][rank] = Number(b113.value);
+
     solvelinsys(a, rank, rank + 1, u);
-    console.log(u[0]);
-    console.log(u[1]);
-    console.log(u[2]);
-    console.log(u[3]);
-    results.innerHTML = "<pre>u[0..0] = " + u[0] + "; " + "u[0..1] = " + u[1] + "; " + "u[0..2] = " + u[2] + "; " + "u[0..3] = " + u[3] + ";\n" +
-        "u[1..0] = " + u[4] + "; " + "u[1..1] = " + u[5] + "; " + "u[1..3] = " + u[7] + "; " + "u[1..2] = " + u[6] + ";\n" +
-        "u[2..0] = " + u[8] + "; " + "u[2..1] = " + u[9] + "; " + "u[2..3] = " + u[0xB] + "; " + "u[2..2] = " + u[0xA] + ";\n" +
-        "u[3..0] = " + u[0xC] + "; " + "u[3..1] = " + u[0xD] + "; " + "u[3..3] = " + u[0xF] + "; " + "u[3..2] = " + u[0xE] + ";\n</pre>";
+
+    const numinputs = document.querySelectorAll('input[type=number]');
+    for (el of numinputs) {
+        el.value = u[r4(el.title)];
+    }
 }
 function seedData() {
-    boundary111.value = 1;
-    boundary112.value = 2;
-    boundary121.value = 3;
-    boundary122.value = 4;
-    boundary211.value = 5;
-    boundary212.value = 4;
-    boundary221.value = 3;
-    boundary222.value = 2;
-    boundary223.value = 1;
-    boundary232.value = 2;
-    boundary233.value = 3;
-    boundary322.value = 4;
-    boundary323.value = 5;
-    boundary332.value = 6;
-    boundary333.value = 7;
-    boundary331.value = 6;
-    boundary313.value = 5;
-    boundary311.value = 4;
-    boundary133.value = 3;
-    boundary131.value = 2;
-    boundary113.value = 1;
+    b111.value = 1;
+    b112.value = 2;
+    b121.value = 3;
+    b122.value = 4;
+    b211.value = 5;
+    b212.value = 4;
+    b221.value = 3;
+    b222.value = 2;
+    b223.value = 1;
+    b232.value = 2;
+    b233.value = 3;
+    b322.value = 4;
+    b323.value = 5;
+    b332.value = 6;
+    b333.value = 7;
+    b331.value = 6;
+    b313.value = 5;
+    b311.value = 4;
+    b133.value = 3;
+    b131.value = 2;
+    b113.value = 1;
 }
