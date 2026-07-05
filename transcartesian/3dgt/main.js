@@ -5,11 +5,18 @@
 function r4(string) {
     return parseInt(string, 4);
 }
+function s4(int) {
+    return (Math.floor(int)).toString(4);
+}
 var rank = 64;
 var a;
-var mesh = []; // array of node neighbors; 3 neighbors or empty
+var mesh = []; // array of node neighbors; 3 neighbors or less
+function connectNodes(node1, node2) {
+    mesh[node1].push(node2);
+    mesh[node2].push(node1);
+}
 window.onload = (event) => {
-    mesh[0] = [1, 2, 3];
+    /*mesh[0] = [1, 2, 3];
     mesh[1] = [0, r4("23"), r4("32")];
     mesh[2] = [0, r4("31"), r4("13")];
     mesh[3] = [0, r4("12"), r4("21")];
@@ -72,7 +79,48 @@ window.onload = (event) => {
     mesh[r4("330")] = [r4("331"), r4("332"), r4("333")];
     mesh[r4("331")] = [r4("330"), r4("302")];
     mesh[r4("332")] = [r4("330"), r4("301")];
-    mesh[r4("333")] = [r4("330")];
+    mesh[r4("333")] = [r4("330")];*/
+    for (let xlate = 0; xlate <= 3 * 4; xlate += 4) {
+        mesh[xlate + 0] = [];
+        mesh[xlate + 1] = []; connectNodes(xlate + 0, xlate + 1);
+        mesh[xlate + 2] = []; connectNodes(xlate + 0, xlate + 2);
+        mesh[xlate + 3] = []; connectNodes(xlate + 0, xlate + 3);
+    }
+    connectNodes(1, r4("23")); connectNodes(1, r4("32"));
+    connectNodes(2, r4("31")); connectNodes(2, r4("13"));
+    connectNodes(3, r4("12")); connectNodes(3, r4("21"));
+
+    let arrsize = mesh.length;
+    for (let ix = 0; ix < arrsize; ++ix) {
+        mesh[ix + arrsize] = [];
+        for (let neix = 0; neix < mesh[ix].length; ++neix) {
+            mesh[ix + arrsize].push(r4("100") + mesh[ix][neix]);
+        }
+    }
+    for (let ix = 0; ix < arrsize; ++ix) {
+        mesh[ix + 2 * arrsize] = [];
+        for (let neix = 0; neix < mesh[ix].length; ++neix) {
+            mesh[ix + 2 * arrsize].push(r4("200") + mesh[ix][neix]);
+        }
+    }
+    for (let ix = 0; ix < arrsize; ++ix) {
+        mesh[ix + 3 * arrsize] = [];
+        for (let neix = 0; neix < mesh[ix].length; ++neix) {
+            mesh[ix + 3 * arrsize].push(r4("300") + mesh[ix][neix]);
+        }
+    }
+    connectNodes(r4("33"), r4("122"));
+    connectNodes(r4("32"), r4("123"));
+    connectNodes(r4("23"), r4("132"));
+    connectNodes(r4("22"), r4("133"));
+    connectNodes(r4("11"), r4("233"));
+    connectNodes(r4("13"), r4("231"));
+    connectNodes(r4("31"), r4("213"));
+    connectNodes(r4("33"), r4("211"));
+    connectNodes(r4("22"), r4("311"));
+    connectNodes(r4("21"), r4("312"));
+    connectNodes(r4("12"), r4("321"));
+    connectNodes(r4("11"), r4("322"));
 }
 function solve() {
     let u = new Float64Array(rank);
