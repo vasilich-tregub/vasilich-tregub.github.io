@@ -20,7 +20,15 @@ function connectNodes(node1key, node2key) {
 function logMapElements(value, key, map) {
     console.log(`mesh[${key}] = ${value}`);
 }
-function translate(value, shift) {
+function translate(value, msb) {
+    let retval = [];
+    value.forEach((el) => {
+        el = msb + el.substring(1);
+        retval.push(el);
+    });
+    return retval;
+}
+function extend(value, shift) {
     let retval = [];
     value.forEach((el) => { retval.push(shift + el); });
     return retval;
@@ -35,11 +43,22 @@ function translate(value, shift) {
     }
     console.log("mesh 0123");
     mesh.forEach(logMapElements);
+    let mesh0 = new Map();
+    mesh.forEach((value, key) => {
+        mesh0.set('0' + key, extend(value, '0'));
+    });
+    mesh.clear();
+    mesh0.forEach((value, key) => {
+        mesh.set((key).toString(4), value);
+    });
+    console.log("mesh 00,01,02,03");
+    mesh.forEach(logMapElements);
     neighmeshes.clear();
     for (const neigh of ["1", "2", "3"]) {
         let neighmesh = new Map();
         mesh.forEach((value, key) => {
-            neighmesh.set((neigh + key).toString(4), translate(value, neigh));
+            key = neigh + key.substring(1);
+            neighmesh.set((key), translate(value, neigh));
         });
         neighmeshes.add(neighmesh);
     }
@@ -47,16 +66,20 @@ function translate(value, shift) {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     console.log("merged mesh");
     mesh.forEach(logMapElements);
+    mesh0.clear();
+    mesh.forEach((value, key) => {
+        mesh0.set('0' + key, extend(value, '0'));
+    });
+    mesh.clear();
+    mesh0.forEach((value, key) => {
+        mesh.set((key).toString(4), value);
+    });
     neighmeshes.clear();
     for (const neigh of ["1", "2", "3"]) {
         let neighmesh = new Map();
         mesh.forEach((value, key) => {
-            if (key.length < 2) {
-                neighmesh.set((neigh + '0' + key).toString(4), translate(value, neigh + '0'));
-            }
-            else {
-                neighmesh.set((neigh + key).toString(4), translate(value, neigh));
-            }
+            key = neigh + key.substring(1);
+            neighmesh.set((key), translate(value, neigh));
         });
         neighmeshes.add(neighmesh);
     }
@@ -64,18 +87,20 @@ function translate(value, shift) {
     console.log("next-level merged mesh");
     mesh.forEach(logMapElements);
     console.log(mesh.size);
+    mesh0.clear();
+    mesh.forEach((value, key) => {
+        mesh0.set('0' + key, extend(value, '0'));
+    });
+    mesh.clear();
+    mesh0.forEach((value, key) => {
+        mesh.set((key).toString(4), value);
+    });
+    neighmeshes.clear();
     for (const neigh of ["1", "2", "3"]) {
         let neighmesh = new Map();
         mesh.forEach((value, key) => {
-            if (key.length == 1) {
-                neighmesh.set((neigh + '00' + key).toString(4), translate(value, neigh + '00'));
-            }
-            else if (key.length == 2) {
-                neighmesh.set((neigh + '0' + key).toString(4), translate(value, neigh + '0'));
-            }
-            else if (key.length == 3) {
-                neighmesh.set((neigh + key).toString(4), translate(value, neigh));
-            }
+            key = neigh + key.substring(1);
+            neighmesh.set((key), translate(value, neigh));
         });
         neighmeshes.add(neighmesh);
     }
