@@ -13,6 +13,7 @@ var rank = 64;
 var a;
 var mesh = new Map(); // map item: key is index.toString(4); value is an array of node neighbors; 3 neighbors or less
 var neighmeshes = new Set();
+var meshBoundary = new Map();
 function connectNodes(node1key, node2key) { 
     mesh.get(node1key).push(node2key);
     mesh.get(node2key).push(node1key);
@@ -33,8 +34,38 @@ function extend(value, shift) {
     value.forEach((el) => { retval.push(shift + el); });
     return retval;
 }
+function addCornerNeighbors(keylen) {
+    let corners = ["01", "02", "03"]; // MODIFY REFERENCES; NOT their VALUES!!!
+    corners.forEach(function (part, index) { this[index] = this[index].padEnd(keylen, this[index].substring(1, 2)); }, corners);
+    for (const neigh of corners) {
+        if (neigh == "01") {
+            connectNodes(neigh, "23");
+            connectNodes(neigh, "32");
+        }
+        else if (neigh == "02") {
+            connectNodes(neigh, "31");
+            connectNodes(neigh, "13");
+        }
+        else if (neigh == "03") {
+            connectNodes(neigh, "12");
+            connectNodes(neigh, "21");
+        }
+        else if (neigh == "011") {
+            connectNodes(neigh, "233");
+            connectNodes(neigh, "322");
+        }
+        else if (neigh == "022") {
+            connectNodes(neigh, "311");
+            connectNodes(neigh, "133");
+        }
+        else if (neigh == "03") {
+            connectNodes(neigh, "122");
+            connectNodes(neigh, "211");
+        }
+    }
+}
 /*window.onload*/vhdlBuildMesh.onclick = (event) => {
-    mesh.clear();
+    mesh.clear(); // 1-DIGIT KEYS
     mesh.set("0", []);
     mesh.forEach(logMapElements);
     for (const neigh of ["1", "2", "3"]) {
@@ -43,7 +74,7 @@ function extend(value, shift) {
     }
     console.log("mesh 0123");
     mesh.forEach(logMapElements);
-    let mesh0 = new Map();
+    let mesh0 = new Map(); // 2-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
     });
@@ -63,10 +94,14 @@ function extend(value, shift) {
         neighmeshes.add(neighmesh);
     }
     const iter = neighmeshes[Symbol.iterator]();
+    meshBoundary.clear();
+    meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => value.length < 3));
+    //meshBoundary.forEach((value, key) => { mesh.get(key).push("CD"); mesh.get(key).push("DC"); });
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
+    addCornerNeighbors(2);
     console.log("merged mesh");
     mesh.forEach(logMapElements);
-    mesh0.clear();
+    mesh0.clear(); // 3-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
     });
@@ -84,10 +119,11 @@ function extend(value, shift) {
         neighmeshes.add(neighmesh);
     }
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
+    addCornerNeighbors(3);
     console.log("next-level merged mesh");
     mesh.forEach(logMapElements);
     console.log(mesh.size);
-    mesh0.clear();
+    mesh0.clear(); // 4-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
     });
