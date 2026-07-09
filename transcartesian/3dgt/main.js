@@ -5,9 +5,6 @@
 function r4(string) {
     return parseInt(string, 4);
 }
-function s4(int) {
-    return (Math.floor(int)).toString(4);
-}
 var rank = 64;
 var a;
 var mesh = []; // array of node neighbors; 3 neighbors or less
