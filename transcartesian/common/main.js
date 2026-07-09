@@ -58,9 +58,21 @@ function addCornerNeighbors(keylen) {
             connectNodes(neigh, "311");
             connectNodes(neigh, "133");
         }
-        else if (neigh == "03") {
+        else if (neigh == "033") {
             connectNodes(neigh, "122");
             connectNodes(neigh, "211");
+        }
+        else if (neigh == "0111") {
+            connectNodes(neigh, "2333");
+            connectNodes(neigh, "3222");
+        }
+        else if (neigh == "0222") {
+            connectNodes(neigh, "3111");
+            connectNodes(neigh, "1333");
+        }
+        else if (neigh == "0333") {
+            connectNodes(neigh, "1222");
+            connectNodes(neigh, "2111");
         }
     }
 }
@@ -141,6 +153,7 @@ function addCornerNeighbors(keylen) {
         neighmeshes.add(neighmesh);
     }
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
+    addCornerNeighbors(4);
     console.log("next-next-level merged mesh");
     mesh.forEach(logMapElements);
     console.log(mesh.size);
