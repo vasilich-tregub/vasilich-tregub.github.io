@@ -11,7 +11,7 @@ function s4(int) {
 }
 var rank = 64;
 var a;
-var mesh = new Map(); // map item: key is index.toString(4); value is an array of node neighbors; 3 neighbors or less
+var mesh = new Map(); // map item: key is index.toString(4); value is an array of node neighbors, 3 neighbors or less
 var neighmeshes = new Set();
 var meshBoundary = new Map();
 function connectNodes(node1key, node2key) { 
@@ -35,45 +35,18 @@ function extend(value, shift) {
     return retval;
 }
 function addCornerNeighbors(keylen) {
-    let corners = ["01", "02", "03"]; // MODIFY REFERENCES; NOT their VALUES!!!
-    corners.forEach(function (part, index) { this[index] = this[index].padEnd(keylen, this[index].substring(1, 2)); }, corners);
-    for (const neigh of corners) {
-        if (neigh == "01") {
-            connectNodes(neigh, "23");
-            connectNodes(neigh, "32");
-        }
-        else if (neigh == "02") {
-            connectNodes(neigh, "31");
-            connectNodes(neigh, "13");
-        }
-        else if (neigh == "03") {
-            connectNodes(neigh, "12");
-            connectNodes(neigh, "21");
-        }
-        else if (neigh == "011") {
-            connectNodes(neigh, "233");
-            connectNodes(neigh, "322");
-        }
-        else if (neigh == "022") {
-            connectNodes(neigh, "311");
-            connectNodes(neigh, "133");
-        }
-        else if (neigh == "033") {
-            connectNodes(neigh, "122");
-            connectNodes(neigh, "211");
-        }
-        else if (neigh == "0111") {
-            connectNodes(neigh, "2333");
-            connectNodes(neigh, "3222");
-        }
-        else if (neigh == "0222") {
-            connectNodes(neigh, "3111");
-            connectNodes(neigh, "1333");
-        }
-        else if (neigh == "0333") {
-            connectNodes(neigh, "1222");
-            connectNodes(neigh, "2111");
-        }
+    let corners = new Set(["1", "2", "3"]);
+    for (let corner of corners) {
+        let cornernode = "0" + corner.padEnd(keylen - 1, corner);
+        let neighcorners = new Set([...corners]);
+        neighcorners.delete(corner);
+        let neighIter = neighcorners[Symbol.iterator]();
+        let neigh = neighIter.next().value;
+        let anotherneigh = neighIter.next().value;
+        let neighnode = neigh + anotherneigh.padEnd(keylen - 1, neigh);
+        mesh.get(cornernode).push(neighnode);
+        neighnode = anotherneigh + neigh.padEnd(keylen - 1, neigh);
+        mesh.get(cornernode).push(neighnode);
     }
 }
 /*window.onload*/vhdlBuildMesh.onclick = (event) => {
@@ -108,7 +81,6 @@ function addCornerNeighbors(keylen) {
     const iter = neighmeshes[Symbol.iterator]();
     meshBoundary.clear();
     meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => value.length < 3));
-    //meshBoundary.forEach((value, key) => { mesh.get(key).push("CD"); mesh.get(key).push("DC"); });
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(2);
     console.log("merged mesh");
@@ -153,7 +125,6 @@ function addCornerNeighbors(keylen) {
         neighmeshes.add(neighmesh);
     }
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
-    addCornerNeighbors(4);
     console.log("next-next-level merged mesh");
     mesh.forEach(logMapElements);
     console.log(mesh.size);
