@@ -44,10 +44,46 @@ function addCornerNeighbors(keylen) {
         let neigh = neighIter.next().value;
         let anotherneigh = neighIter.next().value;
         let neighnode = neigh + anotherneigh.padEnd(keylen - 1, neigh);
-        mesh.get(cornernode).push(neighnode);
+        //mesh.get(cornernode).push(neighnode);
+        connectNodes(cornernode, neighnode);
         neighnode = anotherneigh + neigh.padEnd(keylen - 1, neigh);
-        mesh.get(cornernode).push(neighnode);
+        //mesh.get(cornernode).push(neighnode);
+        connectNodes(cornernode, neighnode);
     }
+}
+function connectAcrossBorders(value, key) {
+    let digits = new Set([...key]);
+    if (digits.has("1") && digits.has("2")) {
+        let oppositeborderkey = key.replace(/[012]/g, char => {
+            const map = { 0 : "3", 1: "2", 2: "1" };
+            return map[char];
+        });
+        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        connectNodes(key, oppositeborderkey);
+    }
+    else if (digits.has("2") && digits.has("3")) {
+        let oppositeborderkey = key.replace(/[023]/g, char => {
+            const map = { 0: "1", 2: "3", 3: "2" };
+            return map[char];
+        });
+        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        connectNodes(key, oppositeborderkey);
+    }
+    else if (digits.has("3") && digits.has("1")) {
+        let oppositeborderkey = key.replace(/[031]/g, char => {
+            const map = { 0: "2", 3: "1", 1: "3" };
+            return map[char];
+        });
+        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        connectNodes(key, oppositeborderkey);
+    }
+}
+function addBorderNeighbors() {
+    console.log("Border Collie");
+    meshBoundary.clear();
+    meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => key.charAt(0) == "0" && value.length == 2));
+    meshBoundary.forEach(connectAcrossBorders);
+    console.log("Border Collie");
 }
 /*window.onload*/vhdlBuildMesh.onclick = (event) => {
     mesh.clear(); // 1-DIGIT KEYS
@@ -79,10 +115,9 @@ function addCornerNeighbors(keylen) {
         neighmeshes.add(neighmesh);
     }
     const iter = neighmeshes[Symbol.iterator]();
-    meshBoundary.clear();
-    meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => value.length < 3));
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(2);
+    //addBorderNeighbors();
     console.log("merged mesh");
     mesh.forEach(logMapElements);
     mesh0.clear(); // 3-DIGIT KEYS
@@ -104,6 +139,7 @@ function addCornerNeighbors(keylen) {
     }
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(3);
+    addBorderNeighbors();
     console.log("next-level merged mesh");
     mesh.forEach(logMapElements);
     console.log(mesh.size);
