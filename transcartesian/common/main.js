@@ -43,11 +43,9 @@ function addCornerNeighbors(keylen) {
         let neighIter = neighcorners[Symbol.iterator]();
         let neigh = neighIter.next().value;
         let anotherneigh = neighIter.next().value;
-        let neighnode = neigh + anotherneigh.padEnd(keylen - 1, neigh);
-        //mesh.get(cornernode).push(neighnode);
+        let neighnode = neigh + anotherneigh.padEnd(keylen - 1, anotherneigh);
         connectNodes(cornernode, neighnode);
         neighnode = anotherneigh + neigh.padEnd(keylen - 1, neigh);
-        //mesh.get(cornernode).push(neighnode);
         connectNodes(cornernode, neighnode);
     }
 }
@@ -58,7 +56,7 @@ function connectAcrossBorders(value, key) {
             const map = { 0 : "3", 1: "2", 2: "1" };
             return map[char];
         });
-        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
     else if (digits.has("2") && digits.has("3")) {
@@ -66,7 +64,7 @@ function connectAcrossBorders(value, key) {
             const map = { 0: "1", 2: "3", 3: "2" };
             return map[char];
         });
-        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
     else if (digits.has("3") && digits.has("1")) {
@@ -74,16 +72,16 @@ function connectAcrossBorders(value, key) {
             const map = { 0: "2", 3: "1", 1: "3" };
             return map[char];
         });
-        console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
+        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
 }
 function addBorderNeighbors() {
-    console.log("Border Collie");
+    //console.log("Border Collie");
     meshBoundary.clear();
-    meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => key.charAt(0) == "0" && value.length == 2));
+    meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => key.charAt(0) == "0" && value.length < 3));
     meshBoundary.forEach(connectAcrossBorders);
-    console.log("Border Collie");
+    //console.log("Border Collie");
 }
 /*window.onload*/vhdlBuildMesh.onclick = (event) => {
     mesh.clear(); // 1-DIGIT KEYS
@@ -117,9 +115,10 @@ function addBorderNeighbors() {
     const iter = neighmeshes[Symbol.iterator]();
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(2);
-    //addBorderNeighbors();
-    console.log("merged mesh");
+    addBorderNeighbors();
+    console.log("merged '2-digit-key' mesh of " + mesh.size + " nodes; 2-digit-key gives (parseInt('33', 4) + 1) nodes");
     mesh.forEach(logMapElements);
+    console.log("Total " + mesh.size + " nodes");
     mesh0.clear(); // 3-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -140,9 +139,9 @@ function addBorderNeighbors() {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(3);
     addBorderNeighbors();
-    console.log("next-level merged mesh");
+    console.log("merged '3-digit-key' mesh of " + mesh.size + " nodes; 3-digit-key gives (parseInt('333', 4) + 1) nodes");
     mesh.forEach(logMapElements);
-    console.log(mesh.size);
+    console.log("Total " + mesh.size + " nodes");
     mesh0.clear(); // 4-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -161,9 +160,11 @@ function addBorderNeighbors() {
         neighmeshes.add(neighmesh);
     }
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
-    console.log("next-next-level merged mesh");
+    addCornerNeighbors(4);
+    addBorderNeighbors();
+    console.log("merged '4-digit-key' mesh of " + mesh.size + " nodes; 4-digit-key gives (parseInt('3333', 4) + 1) nodes");
     mesh.forEach(logMapElements);
-    console.log(mesh.size);
+    console.log("Total " + mesh.size + " nodes");
 }
 function solve() {
     let u = new Float64Array(rank);
