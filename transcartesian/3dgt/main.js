@@ -8,12 +8,8 @@ function r4(string) {
 var rank = 64;
 var a;
 var mesh = []; // array of node neighbors; 3 neighbors or less
-function connectNodes(node1, node2) {
-    mesh[node1].push(node2);
-    mesh[node2].push(node1);
-}
 window.onload = (event) => {
-    /*mesh[0] = [1, 2, 3];
+    mesh[0] = [1, 2, 3];
     mesh[1] = [0, r4("23"), r4("32")];
     mesh[2] = [0, r4("31"), r4("13")];
     mesh[3] = [0, r4("12"), r4("21")];
@@ -76,48 +72,7 @@ window.onload = (event) => {
     mesh[r4("330")] = [r4("331"), r4("332"), r4("333")];
     mesh[r4("331")] = [r4("330"), r4("302")];
     mesh[r4("332")] = [r4("330"), r4("301")];
-    mesh[r4("333")] = [r4("330")];*/
-    for (let xlate = 0; xlate <= 3 * 4; xlate += 4) {
-        mesh[xlate + 0] = [];
-        mesh[xlate + 1] = []; connectNodes(xlate + 0, xlate + 1);
-        mesh[xlate + 2] = []; connectNodes(xlate + 0, xlate + 2);
-        mesh[xlate + 3] = []; connectNodes(xlate + 0, xlate + 3);
-    }
-    connectNodes(1, r4("23")); connectNodes(1, r4("32"));
-    connectNodes(2, r4("31")); connectNodes(2, r4("13"));
-    connectNodes(3, r4("12")); connectNodes(3, r4("21"));
-
-    let arrsize = mesh.length;
-    for (let ix = 0; ix < arrsize; ++ix) {
-        mesh[ix + arrsize] = [];
-        for (let neix = 0; neix < mesh[ix].length; ++neix) {
-            mesh[ix + arrsize].push(r4("100") + mesh[ix][neix]);
-        }
-    }
-    for (let ix = 0; ix < arrsize; ++ix) {
-        mesh[ix + 2 * arrsize] = [];
-        for (let neix = 0; neix < mesh[ix].length; ++neix) {
-            mesh[ix + 2 * arrsize].push(r4("200") + mesh[ix][neix]);
-        }
-    }
-    for (let ix = 0; ix < arrsize; ++ix) {
-        mesh[ix + 3 * arrsize] = [];
-        for (let neix = 0; neix < mesh[ix].length; ++neix) {
-            mesh[ix + 3 * arrsize].push(r4("300") + mesh[ix][neix]);
-        }
-    }
-    connectNodes(r4("33"), r4("122"));
-    connectNodes(r4("32"), r4("123"));
-    connectNodes(r4("23"), r4("132"));
-    connectNodes(r4("22"), r4("133"));
-    connectNodes(r4("11"), r4("233"));
-    connectNodes(r4("13"), r4("231"));
-    connectNodes(r4("31"), r4("213"));
-    connectNodes(r4("33"), r4("211"));
-    connectNodes(r4("22"), r4("311"));
-    connectNodes(r4("21"), r4("312"));
-    connectNodes(r4("12"), r4("321"));
-    connectNodes(r4("11"), r4("322"));
+    mesh[r4("333")] = [r4("330")];
 }
 function solve() {
     let u = new Float64Array(rank);
@@ -139,55 +94,57 @@ function solve() {
             a[i][i] = 1.0;
         }
     }
-    a[r4("111")][rank] = Number(b111.value);
-    a[r4("112")][rank] = Number(b112.value);
-    a[r4("121")][rank] = Number(b121.value);
-    a[r4("122")][rank] = Number(b122.value);
-    a[r4("211")][rank] = Number(b211.value);
-    a[r4("212")][rank] = Number(b212.value);
-    a[r4("221")][rank] = Number(b221.value);
-    a[r4("222")][rank] = Number(b222.value);
-    a[r4("223")][rank] = Number(b223.value);
-    a[r4("232")][rank] = Number(b232.value);
-    a[r4("233")][rank] = Number(b233.value);
-    a[r4("322")][rank] = Number(b322.value);
-    a[r4("323")][rank] = Number(b323.value);
-    a[r4("332")][rank] = Number(b332.value);
-    a[r4("333")][rank] = Number(b333.value);
-    a[r4("331")][rank] = Number(b331.value);
-    a[r4("313")][rank] = Number(b313.value);
-    a[r4("311")][rank] = Number(b311.value);
-    a[r4("133")][rank] = Number(b133.value);
-    a[r4("131")][rank] = Number(b131.value);
-    a[r4("113")][rank] = Number(b113.value);
+    a[r4("111")][rank] = Number(b111.innerText);
+    a[r4("112")][rank] = Number(b112.innerText);
+    a[r4("121")][rank] = Number(b121.innerText);
+    a[r4("122")][rank] = Number(b122.innerText);
+    a[r4("211")][rank] = Number(b211.innerText);
+    a[r4("212")][rank] = Number(b212.innerText);
+    a[r4("221")][rank] = Number(b221.innerText);
+    a[r4("222")][rank] = Number(b222.innerText);
+    a[r4("223")][rank] = Number(b223.innerText);
+    a[r4("232")][rank] = Number(b232.innerText);
+    a[r4("233")][rank] = Number(b233.innerText);
+    a[r4("322")][rank] = Number(b322.innerText);
+    a[r4("323")][rank] = Number(b323.innerText);
+    a[r4("332")][rank] = Number(b332.innerText);
+    a[r4("333")][rank] = Number(b333.innerText);
+    a[r4("331")][rank] = Number(b331.innerText);
+    a[r4("313")][rank] = Number(b313.innerText);
+    a[r4("311")][rank] = Number(b311.innerText);
+    a[r4("133")][rank] = Number(b133.innerText);
+    a[r4("131")][rank] = Number(b131.innerText);
+    a[r4("113")][rank] = Number(b113.innerText);
 
     solvelinsys(a, rank, rank + 1, u);
 
-    const numinputs = document.querySelectorAll('input[type=number]');
-    for (el of numinputs) {
-        el.value = u[r4(el.title)];
+    const simplexdivs = document.querySelectorAll('div.simplex');
+    for (el of simplexdivs) {
+        if (el.title) {
+            el.innerText = u[r4(el.title)].toFixed(3);
+        }
     }
 }
 function seedData() {
-    b111.value = 1;
-    b112.value = 2;
-    b121.value = 3;
-    b122.value = 4;
-    b211.value = 5;
-    b212.value = 4;
-    b221.value = 3;
-    b222.value = 2;
-    b223.value = 1;
-    b232.value = 0;
-    b233.value = -1;
-    b322.value = -2;
-    b323.value = -1;
-    b332.value = -2;
-    b333.value = -3;
-    b331.value = -4;
-    b313.value = -3;
-    b311.value = -2;
-    b133.value = -1;
-    b131.value = 0;
-    b113.value = 1;
+    b111.innerText = 1;
+    b112.innerText = 2;
+    b121.innerText = 3;
+    b122.innerText = 4;
+    b211.innerText = 5;
+    b212.innerText = 4;
+    b221.innerText = 3;
+    b222.innerText = 2;
+    b223.innerText = 1;
+    b232.innerText = 0;
+    b233.innerText = -1;
+    b322.innerText = -2;
+    b323.innerText = -1;
+    b332.innerText = -2;
+    b333.innerText = -3;
+    b331.innerText = -4;
+    b313.innerText = -3;
+    b311.innerText = -2;
+    b133.innerText = -1;
+    b131.innerText = 0;
+    b113.innerText = 1;
 }

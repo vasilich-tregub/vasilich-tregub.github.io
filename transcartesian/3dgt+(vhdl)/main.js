@@ -191,55 +191,57 @@ function solve() {
             a[i][i] = 1.0;
         }
     }
-    a[r4("111")][rank] = Number(b111.value);
-    a[r4("112")][rank] = Number(b112.value);
-    a[r4("121")][rank] = Number(b121.value);
-    a[r4("122")][rank] = Number(b122.value);
-    a[r4("211")][rank] = Number(b211.value);
-    a[r4("212")][rank] = Number(b212.value);
-    a[r4("221")][rank] = Number(b221.value);
-    a[r4("222")][rank] = Number(b222.value);
-    a[r4("223")][rank] = Number(b223.value);
-    a[r4("232")][rank] = Number(b232.value);
-    a[r4("233")][rank] = Number(b233.value);
-    a[r4("322")][rank] = Number(b322.value);
-    a[r4("323")][rank] = Number(b323.value);
-    a[r4("332")][rank] = Number(b332.value);
-    a[r4("333")][rank] = Number(b333.value);
-    a[r4("331")][rank] = Number(b331.value);
-    a[r4("313")][rank] = Number(b313.value);
-    a[r4("311")][rank] = Number(b311.value);
-    a[r4("133")][rank] = Number(b133.value);
-    a[r4("131")][rank] = Number(b131.value);
-    a[r4("113")][rank] = Number(b113.value);
+    a[r4("111")][rank] = Number(b111.innerText);
+    a[r4("112")][rank] = Number(b112.innerText);
+    a[r4("121")][rank] = Number(b121.innerText);
+    a[r4("122")][rank] = Number(b122.innerText);
+    a[r4("211")][rank] = Number(b211.innerText);
+    a[r4("212")][rank] = Number(b212.innerText);
+    a[r4("221")][rank] = Number(b221.innerText);
+    a[r4("222")][rank] = Number(b222.innerText);
+    a[r4("223")][rank] = Number(b223.innerText);
+    a[r4("232")][rank] = Number(b232.innerText);
+    a[r4("233")][rank] = Number(b233.innerText);
+    a[r4("322")][rank] = Number(b322.innerText);
+    a[r4("323")][rank] = Number(b323.innerText);
+    a[r4("332")][rank] = Number(b332.innerText);
+    a[r4("333")][rank] = Number(b333.innerText);
+    a[r4("331")][rank] = Number(b331.innerText);
+    a[r4("313")][rank] = Number(b313.innerText);
+    a[r4("311")][rank] = Number(b311.innerText);
+    a[r4("133")][rank] = Number(b133.innerText);
+    a[r4("131")][rank] = Number(b131.innerText);
+    a[r4("113")][rank] = Number(b113.innerText);
 
     solvelinsys(a, rank, rank + 1, u);
 
-    const numinputs = document.querySelectorAll('input[type=number]');
-    for (el of numinputs) {
-        el.value = u[r4(el.title)];
+    const simplexdivs = document.querySelectorAll('div.simplex');
+    for (el of simplexdivs) {
+        if (el.title) {
+            el.innerText = u[r4(el.title)].toFixed(3);
+        }
     }
 }
 function seedData() {
-    b111.value = 1;
-    b112.value = 2;
-    b121.value = 3;
-    b122.value = 4;
-    b211.value = 5;
-    b212.value = 4;
-    b221.value = 3;
-    b222.value = 2;
-    b223.value = 1;
-    b232.value = 0;
-    b233.value = -1;
-    b322.value = -2;
-    b323.value = -1;
-    b332.value = -2;
-    b333.value = -3;
-    b331.value = -4;
-    b313.value = -3;
-    b311.value = -2;
-    b133.value = -1;
-    b131.value = 0;
-    b113.value = 1;
+    b111.innerText = 1;
+    b112.innerText = 2;
+    b121.innerText = 3;
+    b122.innerText = 4;
+    b211.innerText = 5;
+    b212.innerText = 4;
+    b221.innerText = 3;
+    b222.innerText = 2;
+    b223.innerText = 1;
+    b232.innerText = 0;
+    b233.innerText = -1;
+    b322.innerText = -2;
+    b323.innerText = -1;
+    b332.innerText = -2;
+    b333.innerText = -3;
+    b331.innerText = -4;
+    b313.innerText = -3;
+    b311.innerText = -2;
+    b133.innerText = -1;
+    b131.innerText = 0;
+    b113.innerText = 1;
 }
