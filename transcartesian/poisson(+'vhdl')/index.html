@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Poisson Equation, generated mesh</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <style>
+        div.centered {
+            margin: auto;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        div.break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        .simplex[title] {
+            width: 3em;
+            height: 1.5em;
+            margin: 1px;
+            background-color: azure;
+            text-align: center;
+        }
+        .simplex:not([title]) {
+            width: 3em;
+            margin: 1px;
+            background-color: lavender;
+            text-align: center;
+        }
+        .simplexpad {
+            width: 1.5em;
+            margin: 1px;
+            background-color: lavender;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    The grid below is used both to input source data (outer nodes contain boundary values, inner nodes contain charge distribution)<br />
+    and to output a Poisson equation solution.<br />
+    Type in boundary values and charge distribution respectively and save the data with 'Save boundary values and charge distribution'.<br />
+    Alternatively, you can enter hardware-coded source data with the 'Seed Sample Data' button, edit if needed, and also save this data. <br />
+    You can view the content of source data buffer by pressing the button 'Show boundary values and charge distribution'.<br />
+    To solve the Poisson equation, click the 'Solve' button, the mesh is filled with the solution data.<br />
+    This workflow does not result in an idempotent process, and saving the solution results as a new source data followed by subsequent <br />
+    solving of the equation gives the results that have no easily seen useful interpretation.<br />
+    <button onclick="zeroData()">Zero Data</button>
+    <button onclick="seedData()">Seed Sample Data</button>
+    <button onclick="saveSourceData()">Save boundary values and charge distribution</button>
+    <button onclick="showSourceData()">Show boundary values and charge distribution</button>
+    <button onclick="solve()">Solve</button>
+    <hr />
+    <div class="centered">
+        <div class="simplex" title="111">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="110">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="112">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="113">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="103">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="102">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="121">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="100">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="131">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="120">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="101">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="130">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="122">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="123">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="132">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="133">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="033">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="032">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="023">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="022">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="211">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="030">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="001">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="020">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="311">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="210">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="031">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="000">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="021">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="310">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="212">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="213">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="002">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="003">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="312">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="313">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="203">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="202">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="013">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="012">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="303">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="302">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="221">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="200">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="231">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="010">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="321">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="300">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="331">0</div>
+        <div class="break"></div>
+        <div class="simplexpad"></div>
+        <div class="simplex" title="220">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="201">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="230">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="011">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" itle="320">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="301">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="330">0</div>
+        <div class="simplexpad"></div>
+        <div class="break"></div>
+        <div class="simplex" title="222">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="223">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="232">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="233">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="322">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="323">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="332">0</div>
+        <div class="simplex"></div>
+        <div class="simplex" title="333">0</div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="gausselimination.js"></script>
+    <script>
+        const titledSimplices = document.querySelectorAll("div.simplex[title]");
+        titledSimplices.forEach((titledSimplexDiv) => titledSimplexDiv.setAttribute("contenteditable", "plaintext-only"));
+    </script>
+</body>
+</html>

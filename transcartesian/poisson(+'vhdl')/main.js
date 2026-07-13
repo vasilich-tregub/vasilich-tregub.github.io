@@ -2,12 +2,8 @@
  * This source code is subject to the terms of the MIT License. 
  * Copyright(c) 2026 Vladimir Vasilich Tregub
 */
-const vhdlBuildMesh = document.getElementById("buildMesh");
 function r4(string) {
     return parseInt(string, 4);
-}
-function s4(int) {
-    return (Math.floor(int)).toString(4);
 }
 var rank = 64;
 var a;
@@ -17,9 +13,6 @@ var meshBoundary = new Map();
 function connectNodes(node1key, node2key) { 
     mesh.get(node1key).push(node2key);
     mesh.get(node2key).push(node1key);
-}
-function logMapElements(value, key, map) {
-    console.log(`mesh[${key}] = ${value}`);
 }
 function translate(value, msb) {
     let retval = [];
@@ -56,7 +49,6 @@ function connectAcrossBorders(value, key) {
             const map = { 0 : "3", 1: "2", 2: "1" };
             return map[char];
         });
-        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
     else if (digits.has("2") && digits.has("3")) {
@@ -64,7 +56,6 @@ function connectAcrossBorders(value, key) {
             const map = { 0: "1", 2: "3", 3: "2" };
             return map[char];
         });
-        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
     else if (digits.has("3") && digits.has("1")) {
@@ -72,27 +63,21 @@ function connectAcrossBorders(value, key) {
             const map = { 0: "2", 3: "1", 1: "3" };
             return map[char];
         });
-        //console.log("borderkey = " + key + "; opposite key = " + oppositeborderkey);
         connectNodes(key, oppositeborderkey);
     }
 }
 function addBorderNeighbors() {
-    //console.log("Border Collie");
     meshBoundary.clear();
     meshBoundary = new Map([...mesh.entries()].filter(([key, value]) => key.charAt(0) == "0" && value.length < 3));
     meshBoundary.forEach(connectAcrossBorders);
-    //console.log("Border Collie");
 }
 window.onload = (event) => {
     mesh.clear(); // 1-DIGIT KEYS
     mesh.set("0", []);
-    mesh.forEach(logMapElements);
     for (const neigh of ["1", "2", "3"]) {
         mesh.set(neigh, []);
         connectNodes("0", neigh);
     }
-    console.log("mesh 0123");
-    mesh.forEach(logMapElements);
     let mesh0 = new Map(); // 2-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -101,8 +86,6 @@ window.onload = (event) => {
     mesh0.forEach((value, key) => {
         mesh.set((key).toString(4), value);
     });
-    console.log("mesh 00,01,02,03");
-    mesh.forEach(logMapElements);
     neighmeshes.clear();
     for (const neigh of ["1", "2", "3"]) {
         let neighmesh = new Map();
@@ -116,9 +99,6 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(2);
     addBorderNeighbors();
-    console.log("merged '2-digit-key' mesh of " + mesh.size + " nodes; 2-digit-key gives (parseInt('33', 4) + 1) nodes");
-    mesh.forEach(logMapElements);
-    console.log("Total " + mesh.size + " nodes");
     mesh0.clear(); // 3-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -139,9 +119,6 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(3);
     addBorderNeighbors();
-    console.log("merged '3-digit-key' mesh of " + mesh.size + " nodes; 3-digit-key gives (parseInt('333', 4) + 1) nodes");
-    mesh.forEach(logMapElements);
-    console.log("Total " + mesh.size + " nodes");
     return;
     mesh0.clear(); // 4-DIGIT KEYS
     mesh.forEach((value, key) => {
@@ -163,10 +140,9 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(4);
     addBorderNeighbors();
-    console.log("merged '4-digit-key' mesh of " + mesh.size + " nodes; 4-digit-key gives (parseInt('3333', 4) + 1) nodes");
-    mesh.forEach(logMapElements);
-    console.log("Total " + mesh.size + " nodes");
 }
+var u = new Float64Array(rank);
+var f = new Float64Array(rank); // for inner nodes, f = h^2*4*pi*ro (ro is a charge density), for boundary nodes f = boundary potential
 function solve() {
     let amesh = [];
     mesh.forEach((value, key) => {
@@ -181,67 +157,75 @@ function solve() {
         }
     }
     for (let i = 0; i < rank; ++i) {
-        if (amesh[i].length == 3) { //!!!!!!!!!!
-            a[i][i] = -3.0;
-            a[i][r4(amesh[i][0])] = 1.0;
-            a[i][r4(amesh[i][1])] = 1.0;
-            a[i][r4(amesh[i][2])] = 1.0;
+        if (amesh[i].length == 3) {
+            a[i][i] = 3.0;
+            a[i][r4(amesh[i][0])] = -1.0;
+            a[i][r4(amesh[i][1])] = -1.0;
+            a[i][r4(amesh[i][2])] = -1.0;
         }
         else {
             a[i][i] = 1.0;
         }
     }
-    a[r4("111")][rank] = Number(b111.innerText);
-    a[r4("112")][rank] = Number(b112.innerText);
-    a[r4("121")][rank] = Number(b121.innerText);
-    a[r4("122")][rank] = Number(b122.innerText);
-    a[r4("211")][rank] = Number(b211.innerText);
-    a[r4("212")][rank] = Number(b212.innerText);
-    a[r4("221")][rank] = Number(b221.innerText);
-    a[r4("222")][rank] = Number(b222.innerText);
-    a[r4("223")][rank] = Number(b223.innerText);
-    a[r4("232")][rank] = Number(b232.innerText);
-    a[r4("233")][rank] = Number(b233.innerText);
-    a[r4("322")][rank] = Number(b322.innerText);
-    a[r4("323")][rank] = Number(b323.innerText);
-    a[r4("332")][rank] = Number(b332.innerText);
-    a[r4("333")][rank] = Number(b333.innerText);
-    a[r4("331")][rank] = Number(b331.innerText);
-    a[r4("313")][rank] = Number(b313.innerText);
-    a[r4("311")][rank] = Number(b311.innerText);
-    a[r4("133")][rank] = Number(b133.innerText);
-    a[r4("131")][rank] = Number(b131.innerText);
-    a[r4("113")][rank] = Number(b113.innerText);
+    const simplexdivs = document.querySelectorAll('div.simplex');
+    for (el of simplexdivs) {
+        if (el.title) {
+            a[r4(el.title)][rank] = f[r4(el.title)];
+        }
+    }
 
     solvelinsys(a, rank, rank + 1, u);
 
-    const simplexdivs = document.querySelectorAll('div.simplex');
     for (el of simplexdivs) {
         if (el.title) {
             el.innerText = u[r4(el.title)].toFixed(3);
         }
     }
 }
+function saveSourceData() {
+    const simplexdivs = document.querySelectorAll('div.simplex');
+    for (el of simplexdivs) {
+        if (el.title) {
+            f[r4(el.title)] = (isNaN(Number(el.innerText)) ? 0 : Number(el.innerText));
+        }
+    }
+}
+function showSourceData() {
+    const simplexdivs = document.querySelectorAll('div.simplex');
+    for (el of simplexdivs) {
+        if (el.title) {
+            el.innerText = f[r4(el.title)].toFixed(3);
+        }
+    }
+}
 function seedData() {
-    b111.innerText = 1;
-    b112.innerText = 2;
-    b121.innerText = 3;
-    b122.innerText = 4;
-    b211.innerText = 5;
-    b212.innerText = 4;
-    b221.innerText = 3;
-    b222.innerText = 2;
-    b223.innerText = 1;
-    b232.innerText = 0;
-    b233.innerText = -1;
-    b322.innerText = -2;
-    b323.innerText = -1;
-    b332.innerText = -2;
-    b333.innerText = -3;
-    b331.innerText = -4;
-    b313.innerText = -3;
-    b311.innerText = -2;
-    b133.innerText = -1;
-    b131.innerText = 0;
-    b113.innerText = 1;
+    document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
+    document.querySelector("div.simplex[title='000']").innerText = 12;
+    document.querySelector("div.simplex[title='001']").innerText = 5;
+    document.querySelector("div.simplex[title='002']").innerText = 5;
+    document.querySelector("div.simplex[title='003']").innerText = 5;
+    document.querySelector("div.simplex[title='111']").innerText = 9;
+    document.querySelector("div.simplex[title='112']").innerText = 8;
+    document.querySelector("div.simplex[title='121']").innerText = 6;
+    document.querySelector("div.simplex[title='122']").innerText = 3;
+    document.querySelector("div.simplex[title='211']").innerText = 0;
+    document.querySelector("div.simplex[title='212']").innerText = -3;
+    document.querySelector("div.simplex[title='221']").innerText = -6;
+    document.querySelector("div.simplex[title='222']").innerText = -7;
+    document.querySelector("div.simplex[title='223']").innerText = -3;
+    document.querySelector("div.simplex[title='232']").innerText = 0;
+    document.querySelector("div.simplex[title='233']").innerText = 2;
+    document.querySelector("div.simplex[title='322']").innerText = 2;
+    document.querySelector("div.simplex[title='323']").innerText = -3;
+    document.querySelector("div.simplex[title='332']").innerText = -7;
+    document.querySelector("div.simplex[title='333']").innerText = -6;
+    document.querySelector("div.simplex[title='331']").innerText = -3;
+    document.querySelector("div.simplex[title='313']").innerText = 0;
+    document.querySelector("div.simplex[title='311']").innerText = 3;
+    document.querySelector("div.simplex[title='133']").innerText = 6;
+    document.querySelector("div.simplex[title='131']").innerText = 8;
+    document.querySelector("div.simplex[title='113']").innerText = 9;
+}
+function zeroData() {
+    document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
 }

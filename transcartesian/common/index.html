@@ -26,11 +26,18 @@
     </style>
 </head>
 <body>
-    (Printout to devtools' console)<button id="buildMesh">Build Mesh (vhdl)</button>
-    <button onclick="seedData()" disabled>Seed Sample Data</button>
-    <button onclick="solve()" disabled>Solve</button>
-
+    A mesh enumerating the discretized plane points with one variable is built. <br />
+    The mesh is a map with the key enumerating the mesh nodes and the value <br />
+    which is an array of the node's closest neighbors. <br />
+    A 256-node mesh is generated with a sort of 'lifting' scheme: the process <br />
+    starts with a four-node mesh, which is quadruplated into a 16-node mesh, <br />
+    then to a 64-node mesh, and finally to a 256-node mesh.<br />
+    Press the button, and see printout in devtools' console.<br />
+    <hr />
+    <button id="buildMesh">Build Mesh (vhdl)</button>
+    <hr />
+    The generator of an arbitrary size mesh can be implemented as either <br />
+    iteration or a recurrent function.
     <script src="main.js"></script>
-    <script src="gausselimination.js"></script>
 </body>
 </html>
