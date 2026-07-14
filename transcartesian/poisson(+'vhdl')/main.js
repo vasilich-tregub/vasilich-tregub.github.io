@@ -216,15 +216,15 @@ function seedData() {
     document.querySelector("div.simplex[title='232']").innerText = 0;
     document.querySelector("div.simplex[title='233']").innerText = 2;
     document.querySelector("div.simplex[title='322']").innerText = 2;
-    document.querySelector("div.simplex[title='323']").innerText = -3;
-    document.querySelector("div.simplex[title='332']").innerText = -7;
-    document.querySelector("div.simplex[title='333']").innerText = -6;
-    document.querySelector("div.simplex[title='331']").innerText = -3;
-    document.querySelector("div.simplex[title='313']").innerText = 0;
-    document.querySelector("div.simplex[title='311']").innerText = 3;
-    document.querySelector("div.simplex[title='133']").innerText = 6;
-    document.querySelector("div.simplex[title='131']").innerText = 8;
-    document.querySelector("div.simplex[title='113']").innerText = 9;
+    document.querySelector("div.simplex[title='323']").innerText = 0;
+    document.querySelector("div.simplex[title='332']").innerText = -3;
+    document.querySelector("div.simplex[title='333']").innerText = -7;
+    document.querySelector("div.simplex[title='331']").innerText = -6;
+    document.querySelector("div.simplex[title='313']").innerText = -3;
+    document.querySelector("div.simplex[title='311']").innerText = 0;
+    document.querySelector("div.simplex[title='133']").innerText = 3;
+    document.querySelector("div.simplex[title='131']").innerText = 6;
+    document.querySelector("div.simplex[title='113']").innerText = 8;
 }
 function zeroData() {
     document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
