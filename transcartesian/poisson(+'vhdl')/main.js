@@ -181,6 +181,14 @@ function solve() {
             el.innerText = u[r4(el.title)].toFixed(3);
         }
     }
+
+    const trixels = document.querySelectorAll('polygon');
+    let maxval = Math.max(...u)
+    for (trixel of trixels) {
+        if (trixel.textContent) {
+            trixel.style.filter = "brightness(" + u[r4(trixel.textContent)] / maxval + ")";
+        }
+    }
 }
 function saveSourceData() {
     const simplexdivs = document.querySelectorAll('div.simplex');
@@ -200,31 +208,31 @@ function showSourceData() {
 }
 function seedData() {
     document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
-    document.querySelector("div.simplex[title='000']").innerText = 12;
-    document.querySelector("div.simplex[title='001']").innerText = 5;
-    document.querySelector("div.simplex[title='002']").innerText = 5;
-    document.querySelector("div.simplex[title='003']").innerText = 5;
-    document.querySelector("div.simplex[title='111']").innerText = 9;
-    document.querySelector("div.simplex[title='112']").innerText = 8;
-    document.querySelector("div.simplex[title='121']").innerText = 6;
-    document.querySelector("div.simplex[title='122']").innerText = 3;
-    document.querySelector("div.simplex[title='211']").innerText = 0;
-    document.querySelector("div.simplex[title='212']").innerText = -3;
-    document.querySelector("div.simplex[title='221']").innerText = -6;
-    document.querySelector("div.simplex[title='222']").innerText = -7;
-    document.querySelector("div.simplex[title='223']").innerText = -3;
-    document.querySelector("div.simplex[title='232']").innerText = 0;
-    document.querySelector("div.simplex[title='233']").innerText = 2;
-    document.querySelector("div.simplex[title='322']").innerText = 2;
-    document.querySelector("div.simplex[title='323']").innerText = 0;
-    document.querySelector("div.simplex[title='332']").innerText = -3;
-    document.querySelector("div.simplex[title='333']").innerText = -7;
-    document.querySelector("div.simplex[title='331']").innerText = -6;
-    document.querySelector("div.simplex[title='313']").innerText = -3;
-    document.querySelector("div.simplex[title='311']").innerText = 0;
-    document.querySelector("div.simplex[title='133']").innerText = 3;
-    document.querySelector("div.simplex[title='131']").innerText = 6;
-    document.querySelector("div.simplex[title='113']").innerText = 8;
+    document.querySelector("div.simplex[title='000']").innerText = 19;
+    document.querySelector("div.simplex[title='001']").innerText = 12;
+    document.querySelector("div.simplex[title='002']").innerText = 12;
+    document.querySelector("div.simplex[title='003']").innerText = 12;
+    document.querySelector("div.simplex[title='111']").innerText = 21;
+    document.querySelector("div.simplex[title='112']").innerText = 18;
+    document.querySelector("div.simplex[title='121']").innerText = 13;
+    document.querySelector("div.simplex[title='122']").innerText = 10;
+    document.querySelector("div.simplex[title='211']").innerText = 7;
+    document.querySelector("div.simplex[title='212']").innerText = 4;
+    document.querySelector("div.simplex[title='221']").innerText = 1;
+    document.querySelector("div.simplex[title='222']").innerText = 0;
+    document.querySelector("div.simplex[title='223']").innerText = 5;
+    document.querySelector("div.simplex[title='232']").innerText = 9;
+    document.querySelector("div.simplex[title='233']").innerText = 15;
+    document.querySelector("div.simplex[title='322']").innerText = 16;
+    document.querySelector("div.simplex[title='323']").innerText = 13;
+    document.querySelector("div.simplex[title='332']").innerText = 12;
+    document.querySelector("div.simplex[title='333']").innerText = 18;
+    document.querySelector("div.simplex[title='331']").innerText = 10;
+    document.querySelector("div.simplex[title='313']").innerText = 11;
+    document.querySelector("div.simplex[title='311']").innerText = 12;
+    document.querySelector("div.simplex[title='133']").innerText = 13;
+    document.querySelector("div.simplex[title='131']").innerText = 15;
+    document.querySelector("div.simplex[title='113']").innerText = 18;
 }
 function zeroData() {
     document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
