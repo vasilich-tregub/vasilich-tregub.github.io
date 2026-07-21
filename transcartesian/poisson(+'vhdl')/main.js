@@ -5,9 +5,13 @@
 function r4(string) {
     return parseInt(string, 4);
 }
-var rank = 64;
+var rank = 256;
 var a;
 var mesh = new Map(); // map item: key is index.toString(4); value is an array of node neighbors, 3 neighbors or less
+var kernel2d = [];
+var kernel2dr = [];
+var mesh2d = [];
+var mesh2dr = [];
 var neighmeshes = new Set();
 var meshBoundary = new Map();
 function connectNodes(node1key, node2key) { 
@@ -74,10 +78,17 @@ function addBorderNeighbors() {
 window.onload = (event) => {
     mesh.clear(); // 1-DIGIT KEYS
     mesh.set("0", []);
+    //mesh.forEach(logMapElements);
     for (const neigh of ["1", "2", "3"]) {
         mesh.set(neigh, []);
         connectNodes("0", neigh);
     }
+    kernel2d = [[1], [0], [2, 3]];
+    kernel2dr = [[3, 2], [0], [1]];
+    console.log(kernel2d);
+    console.log(kernel2dr);
+    console.log("mesh 0123");
+    //mesh.forEach(logMapElements);
     let mesh0 = new Map(); // 2-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -86,6 +97,8 @@ window.onload = (event) => {
     mesh0.forEach((value, key) => {
         mesh.set((key).toString(4), value);
     });
+    console.log("mesh 00,01,02,03");
+    //mesh.forEach(logMapElements);
     neighmeshes.clear();
     for (const neigh of ["1", "2", "3"]) {
         let neighmesh = new Map();
@@ -99,6 +112,12 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(2);
     addBorderNeighbors();
+    computeMesh2D();
+    console.log(mesh2d);
+    console.log(mesh2dr);
+    console.log("merged '2-digit-key' mesh of " + mesh.size + " nodes; 2-digit-key gives (parseInt('33', 4) + 1) nodes");
+    //mesh.forEach(logMapElements);
+    console.log("Total " + mesh.size + " nodes");
     mesh0.clear(); // 3-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -119,7 +138,12 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(3);
     addBorderNeighbors();
-    return;
+    computeMesh2D();
+    console.log(mesh2d);
+    console.log(mesh2dr);
+    console.log("merged '3-digit-key' mesh of " + mesh.size + " nodes; 3-digit-key gives (parseInt('333', 4) + 1) nodes");
+    //mesh.forEach(logMapElements);
+    console.log("Total " + mesh.size + " nodes");
     mesh0.clear(); // 4-DIGIT KEYS
     mesh.forEach((value, key) => {
         mesh0.set('0' + key, extend(value, '0'));
@@ -140,6 +164,14 @@ window.onload = (event) => {
     mesh = new Map([...mesh, ...iter.next().value, ...iter.next().value, ...iter.next().value]);
     addCornerNeighbors(4);
     addBorderNeighbors();
+    computeMesh2D();
+    console.log(mesh2d);
+    console.log(mesh2dr);
+    console.log("merged '4-digit-key' mesh of " + mesh.size + " nodes; 4-digit-key gives (parseInt('3333', 4) + 1) nodes");
+    //mesh.forEach(logMapElements);
+    console.log("Total " + mesh.size + " nodes");
+    addMesh2dToDOM();
+    return;
 }
 var u = new Float64Array(rank);
 var f = new Float64Array(rank); // for inner nodes, f = h^2*4*pi*ro (ro is a charge density), for boundary nodes f = boundary potential
@@ -178,7 +210,7 @@ function solve() {
 
     for (el of simplexdivs) {
         if (el.title) {
-            el.innerText = u[r4(el.title)].toFixed(3);
+            el.innerText = u[r4(el.title)].toFixed(2);
         }
     }
 
@@ -186,7 +218,7 @@ function solve() {
     let maxval = Math.max(...u)
     for (trixel of trixels) {
         if (trixel.textContent) {
-            trixel.style.filter = "brightness(" + u[r4(trixel.textContent)] / maxval + ")";
+            trixel.style.filter = "brightness(" + u[r4(trixel.textContent)]/maxval + ")";
         }
     }
 }
@@ -202,37 +234,66 @@ function showSourceData() {
     const simplexdivs = document.querySelectorAll('div.simplex');
     for (el of simplexdivs) {
         if (el.title) {
-            el.innerText = f[r4(el.title)].toFixed(3);
+            el.innerText = f[r4(el.title)].toFixed(2);
         }
     }
 }
 function seedData() {
     document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });
-    document.querySelector("div.simplex[title='000']").innerText = 19;
-    document.querySelector("div.simplex[title='001']").innerText = 12;
-    document.querySelector("div.simplex[title='002']").innerText = 12;
-    document.querySelector("div.simplex[title='003']").innerText = 12;
-    document.querySelector("div.simplex[title='111']").innerText = 21;
-    document.querySelector("div.simplex[title='112']").innerText = 18;
-    document.querySelector("div.simplex[title='121']").innerText = 13;
-    document.querySelector("div.simplex[title='122']").innerText = 10;
-    document.querySelector("div.simplex[title='211']").innerText = 7;
-    document.querySelector("div.simplex[title='212']").innerText = 4;
-    document.querySelector("div.simplex[title='221']").innerText = 1;
-    document.querySelector("div.simplex[title='222']").innerText = 0;
-    document.querySelector("div.simplex[title='223']").innerText = 5;
-    document.querySelector("div.simplex[title='232']").innerText = 9;
-    document.querySelector("div.simplex[title='233']").innerText = 15;
-    document.querySelector("div.simplex[title='322']").innerText = 16;
-    document.querySelector("div.simplex[title='323']").innerText = 13;
-    document.querySelector("div.simplex[title='332']").innerText = 12;
-    document.querySelector("div.simplex[title='333']").innerText = 18;
-    document.querySelector("div.simplex[title='331']").innerText = 10;
-    document.querySelector("div.simplex[title='313']").innerText = 11;
-    document.querySelector("div.simplex[title='311']").innerText = 12;
-    document.querySelector("div.simplex[title='133']").innerText = 13;
-    document.querySelector("div.simplex[title='131']").innerText = 15;
-    document.querySelector("div.simplex[title='113']").innerText = 18;
+    document.querySelector("div.simplex[title='0031']").innerText = 19; // charge distribution
+    document.querySelector("div.simplex[title='0030']").innerText = 12;
+    document.querySelector("div.simplex[title='0002']").innerText = 12;
+    document.querySelector("div.simplex[title='0213']").innerText = 12;
+    document.querySelector("div.simplex[title='0231']").innerText = 12;
+    document.querySelector("div.simplex[title='0230']").innerText = 19;
+    document.querySelector("div.simplex[title='0321']").innerText = 12;
+    document.querySelector("div.simplex[title='0320']").innerText = 19;
+    document.querySelector("div.simplex[title='1011']").innerText = 15;
+    document.querySelector("div.simplex[title='1111']").innerText = 5; // boundary
+    document.querySelector("div.simplex[title='1112']").innerText = 10;
+    document.querySelector("div.simplex[title='1121']").innerText = 20;
+    document.querySelector("div.simplex[title='1122']").innerText = 40;
+    document.querySelector("div.simplex[title='1211']").innerText = 60;
+    document.querySelector("div.simplex[title='1212']").innerText = 60;
+    document.querySelector("div.simplex[title='1221']").innerText = 40;
+    document.querySelector("div.simplex[title='1222']").innerText = 20;
+    document.querySelector("div.simplex[title='2111']").innerText = 10;
+    document.querySelector("div.simplex[title='2112']").innerText = 20;
+    document.querySelector("div.simplex[title='2121']").innerText = 40;
+    document.querySelector("div.simplex[title='2122']").innerText = 60;
+    document.querySelector("div.simplex[title='2211']").innerText = 60;
+    document.querySelector("div.simplex[title='2212']").innerText = 40;
+    document.querySelector("div.simplex[title='2221']").innerText = 20;
+    document.querySelector("div.simplex[title='2222']").innerText = 10;
+    document.querySelector("div.simplex[title='2223']").innerText = 20;
+    document.querySelector("div.simplex[title='2232']").innerText = 30;
+    document.querySelector("div.simplex[title='2233']").innerText = 35;
+    document.querySelector("div.simplex[title='2322']").innerText = 30;
+    document.querySelector("div.simplex[title='2323']").innerText = 20;
+    document.querySelector("div.simplex[title='2332']").innerText = 10;
+    document.querySelector("div.simplex[title='2333']").innerText = 10;
+    document.querySelector("div.simplex[title='3222']").innerText = 10;
+    document.querySelector("div.simplex[title='3223']").innerText = 15;
+    document.querySelector("div.simplex[title='3232']").innerText = 20;
+    document.querySelector("div.simplex[title='3233']").innerText = 25;
+    document.querySelector("div.simplex[title='3322']").innerText = 30;
+    document.querySelector("div.simplex[title='3323']").innerText = 40;
+    document.querySelector("div.simplex[title='3332']").innerText = 50;
+    document.querySelector("div.simplex[title='3333']").innerText = 60;
+    document.querySelector("div.simplex[title='3331']").innerText = 50;
+    document.querySelector("div.simplex[title='3313']").innerText = 40;
+    document.querySelector("div.simplex[title='3311']").innerText = 30;
+    document.querySelector("div.simplex[title='3133']").innerText = 25;
+    document.querySelector("div.simplex[title='3131']").innerText = 20;
+    document.querySelector("div.simplex[title='3113']").innerText = 15;
+    document.querySelector("div.simplex[title='3111']").innerText = 10;
+    document.querySelector("div.simplex[title='1333']").innerText = 5;
+    document.querySelector("div.simplex[title='1331']").innerText = 10;
+    document.querySelector("div.simplex[title='1313']").innerText = 15;
+    document.querySelector("div.simplex[title='1311']").innerText = 20;
+    document.querySelector("div.simplex[title='1133']").innerText = 25;
+    document.querySelector("div.simplex[title='1131']").innerText = 25;
+    document.querySelector("div.simplex[title='1113']").innerText = 20;
 }
 function zeroData() {
     document.querySelectorAll("div.simplex[title]").forEach((el) => { el.innerText = 0; });

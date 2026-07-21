@@ -34,7 +34,7 @@
     then to a 64-node mesh, and finally to a 256-node mesh.<br />
     Press the button, and see printout in devtools' console.<br />
     <hr />
-    <button id="buildMesh">Build Mesh (what 'vhdl'-like tool is expected to do)</button>
+    <button id="vhdlBuildMesh">Build 64-node Mesh (what 'vhdl'-like tool is expected to do)</button>
     <hr />
     The generator of an arbitrary size mesh can be implemented programmatically <br />
     as either iteration or a recurrent function. <br />
@@ -42,8 +42,8 @@
     a min-neighborhood mesh to its 2D representation.<br />
     <br />
     2D visual generated for a 64-node min-neighborhood mesh:<br />
-    <div contenteditable="plaintext-only">
-        <svg viewBox="-475 0 1000 500">
+    <div>
+        <svg viewBox="-475 0 1000 400">
             <style>
                 text {
                     stroke: magenta;
@@ -321,6 +321,24 @@
             </g>
         </svg>
     </div>
+    <button onclick="addMesh2dToDOM()">Visualize mesh in 2D</button>
+    <div class="centered" contenteditable="plaintext-only">
+        <svg viewBox="-475 0 1000 600">
+            <style>
+                text {
+                    stroke: magenta;
+                    text-anchor: middle;
+                }
+
+                polygon {
+                    fill: lavender;
+                    stroke: lime;
+                }
+            </style>
+        </svg>
+    </div>
+
     <script src="main.js"></script>
+    <script src="htmlgenerator.js"></script>
 </body>
 </html>

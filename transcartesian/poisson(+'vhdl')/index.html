@@ -14,26 +14,36 @@
             justify-content: center;
         }
 
+        div.generatedmesh {
+            margin: auto;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
         div.break {
             flex-basis: 100%;
             height: 0;
         }
 
         .simplex[title] {
-            width: 3em;
-            height: 1.5em;
+            width: 2em;
+            height: 1em;
             margin: 1px;
             background-color: azure;
             text-align: center;
         }
+
         .simplex:not([title]) {
-            width: 3em;
+            width: 2em;
             margin: 1px;
             background-color: lavender;
             text-align: center;
         }
+
         .simplexpad {
-            width: 1.5em;
+            width: 1em;
             margin: 1px;
             background-color: lavender;
             text-align: center;
@@ -56,231 +66,20 @@
     <button onclick="solve()">Solve</button>
     <hr />
     <div class="centered">
-        <div class="simplex" title="111">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="110">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="112">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="113">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="103">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="102">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="121">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="100">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="131">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="120">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="101">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="130">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="122">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="123">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="132">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="133">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="033">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="032">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="023">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="022">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="211">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="030">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="001">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="020">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="311">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="210">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="031">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="000">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="021">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="310">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="212">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="213">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="002">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="003">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="312">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="313">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="203">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="202">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="013">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="012">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="303">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="302">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="221">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="200">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="231">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="010">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="321">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="300">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="331">0</div>
-        <div class="break"></div>
-        <div class="simplexpad"></div>
-        <div class="simplex" title="220">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="201">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="230">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="011">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="320">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="301">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="330">0</div>
-        <div class="simplexpad"></div>
-        <div class="break"></div>
-        <div class="simplex" title="222">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="223">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="232">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="233">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="322">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="323">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="332">0</div>
-        <div class="simplex"></div>
-        <div class="simplex" title="333">0</div>
     </div>
-    <div contenteditable="plaintext-only">
-        <svg viewBox="-475 0 1000 500">
+    <div class="generatedmesh">
+        <svg viewBox="-475 0 1000 800">
             <style>
                 polygon {
-                    fill: white;
+                    fill: lavender;
                     stroke: lime;
                 }
             </style>
-            <polygon points="0,43 25,0 50,43" transform="translate(0 0)">111</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-25 43)">112</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(0 43)">110</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(25 43)">113</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-50 86)">121</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-25 86)">103</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(0 86)">100</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(25 86)">102</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(50 86)">131</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-75 129)">122</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-50 129)">120</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-25 129)">123</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(0 129)">101</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(25 129)">132</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(50 129)">130</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(75 129)">133</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-100 172)">211</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-75 172)">33</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-50 172)">30</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-25 172)">32</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(0 172)">01</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(25 172)">23</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(50 172)">20</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(75 172)">22</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(100 172)">311</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-125 215)">212</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-100 215)">210</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-75 215)">213</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-50 215)">31</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-25 215)">02</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(0 215)">00</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(25 215)">03</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(50 215)">21</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(75 215)">312</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(100 215)">310</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(125 215)">313</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-150 258)">221</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-125 258)">203</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-100 258)">200</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-75 258)">202</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-50 258)">231</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-25 258)">13</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(0 258)">10</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(25 258)">12</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(50 258)">321</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(75 258)">303</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(100 258)">300</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(125 258)">302</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(150 258)">331</polygon>
-
-            <polygon points="0,43 25,0 50,43" transform="translate(-175 301)">222</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-150 301)">220</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-125 301)">223</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-100 301)">201</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-75 301)">232</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(-50 301)">230</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(-25 301)">233</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(0 301)">11</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(25 301)">322</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(50 301)">320</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(75 301)">323</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(100 301)">301</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(125 301)">332</polygon>
-            <polygon points="0,0 25,43 50,0" transform="translate(150 301)">330</polygon>
-            <polygon points="0,43 25,0 50,43" transform="translate(175 301)">333</polygon>
         </svg>
     </div>
 
     <script src="main.js"></script>
+    <script src="htmlgenerator.js"></script>
     <script src="gausselimination.js"></script>
     <script>
         const titledSimplices = document.querySelectorAll("div.simplex[title]");
