@@ -1,3 +1,7 @@
+/* TERMS OF USE
+ * This source code is subject to the terms of the MIT License. 
+ * Copyright(c) 2026 Vladimir Vasilich Tregub
+*/
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 function motion_in_CoulombField() {
