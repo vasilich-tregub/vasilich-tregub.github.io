@@ -39,6 +39,11 @@ function motion_in_CoulombField() {
     currtime = 0;
     fintime = Number(idFintime.value);
     dt = timestep = Number(idTimestep.value);
+    if (idSpiral.checked) {
+        px = 1.1; idPx.value = px;
+        fintime = 1.5; idFintime.value = fintime;
+        idTimestep.value = '1E-6'; dt = timestep = Number(idTimestep.value);
+    }
     var E0 = Math.sqrt(m * m + px * px + py * py);
     E = E0;
     xstepCount = ((fintime - currtime) / timestep);
@@ -111,4 +116,14 @@ function motion_in_CoulombField() {
         ctx.lineTo(aq[stau].qx * 500 + 500, aq[stau].qy * 500 + 500);
     }
     ctx.stroke();
+    if (idTUgraph.checked) {
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(0, aTU[0] * 100);
+        for (let stau = 1; stau < aq.length; ++stau) {
+            ctx.lineTo(stau * 1000 / aq.length, aTU[stau] * 100);
+        }
+        ctx.stroke();
+    }
 }
