@@ -75,20 +75,6 @@ function motion_in_CoulombField() {
         px += F * qx_m / q3 * E_m / m * dt;
         py += F * qy_m / q3 * E_m / m * dt;
         E += F * (qx_m * px_m + qy_m * py_m) / q3 / m * dt;
-
-        if (opt_ALD) {
-            jt = (E - E_m - E_m + E_1) / dt;
-            jx = (px - px_m - px_m + px_1) / dt;
-            jy = (py - py_m - py_m + py_1) / dt;
-
-            px += 2.0 / 3 * (jx + px / m * (E / m * jt - px / m * jx - py / m * jy));
-            py += 2.0 / 3 * (jy + py / m * (E / m * jt - px / m * jx - py / m * jy));
-            E += 2.0 / 3 * (jt + E / m * (E / m * jt - px / m * jx - py / m * jy));
-
-            qx += 2.0 / 3 * (jx + px / m * (E / m * jt - px / m * jx - py / m * jy)) * dt / 2;
-            qy += 2.0 / 3 * (jy + py / m * (E / m * jt - px / m * jx - py / m * jy)) * dt / 2;
-            t += 2.0 / 3 * (jt + E / m * (E / m * jt - px / m * jx - py / m * jy)) * dt / 2;
-        }
         if (Math.abs(aq[aq.length - 1].qx - qx) >= 0.001 || Math.abs(aq[aq.length - 1].qy - qy) >= 0.001) {
             atau.push(stau * dt);
             aE.push(E);
