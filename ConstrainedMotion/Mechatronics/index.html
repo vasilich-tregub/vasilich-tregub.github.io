@@ -13,18 +13,21 @@
 </head>
 <body>
     <div>
-        <select id="idNetlistSelect" size="5">
+        <select id="idNetlistSelect" size="8">
             <option value="netlistTriPend">Triple Pendulum</option>
             <option value="netlistChain">Chain</option>
             <option value="netlistSymPiston">Symmetric Piston</option>
             <option value="netlistAsymPiston">Asymmetric Piston</option>
             <option value="netlistSwing">Rubber Swing</option>
+            <option value="netlist2p3bPend">2-pivot 3-bob Pendulum</option>
+            <option value="netlist2p2bPend">2-pivot 2-bob Pendulum</option>
+            <option value="netlistSoliton">Soliton</option>
         </select>
         <textarea id="idNetlist" style="width:360px; height:180px;"></textarea>
         <button onclick="tran()">Start simulation</button>
         <button id="idStop">Stop simulation</button>
     </div>
-    <div style="border: 1px solid grey; background-color: indigo;">
+    <div style="width:1000px; border: 1px solid grey; background-color: indigo;">
         <canvas width="1000" height="1000"></canvas>
     </div>
     <script src="chainlistparser.js"></script>

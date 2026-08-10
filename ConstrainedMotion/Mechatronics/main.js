@@ -6,7 +6,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 var action = false;
 window.onload = () => {
-    idNetlist.innerHTML = netlistTriPend;
+    idNetlist.value = netlistTriPend;
 }
 idStop.addEventListener("click", async () => {
     action = false;
@@ -14,19 +14,34 @@ idStop.addEventListener("click", async () => {
 idNetlistSelect.addEventListener("click", async (event) => {
     switch (event.target.value) {
         case "netlistTriPend":
-            idNetlist.innerHTML = netlistTriPend;
+            idNetlist.value = netlistTriPend;
             break;
         case "netlistChain":
-            idNetlist.innerHTML = netlistChain;
+            idNetlist.value = netlistChain;
             break;
         case "netlistSymPiston":
-            idNetlist.innerHTML = netlistSymPiston;
+            idNetlist.value = netlistSymPiston;
             break;
         case "netlistAsymPiston":
-            idNetlist.innerHTML = netlistAsymPiston;
+            idNetlist.value = netlistAsymPiston;
             break;
         case "netlistSwing":
-            idNetlist.innerHTML = netlistSwing;
+            idNetlist.value = netlistSwing;
+            break;
+        case "netlist2p3bPend":
+            idNetlist.value = netlist2p3bPend;
+            break;
+        case "netlist2p2bPend":
+            idNetlist.value = netlist2p2bPend;
+            break;
+        case "netlistSoliton":
+            idNetlist.value = netlistSoliton;
+            break;
+        case "netlistCrosshair":
+            idNetlist.value = netlistCrosshair;
+            break;
+        case "netlistUnbalanced":
+            idNetlist.value = netlistUnbalanced;
             break;
     }
 });
