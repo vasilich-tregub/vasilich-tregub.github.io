@@ -35,11 +35,11 @@ const netlistAsymPiston = "* Asymmetric Piston\r\nB1 -1 1 1\r\nB2 1 1 2\r\n" +
     "C1 B1 (0,0)\r\nC2 B2 (0,0)\r\n" +
     "C3 B1 B3\r\nC4 B2 B3\r\n" +
     ".tran 0 10 1E-3\r\n.print 1 2 3 4 5";
-const netlistSwing = "* \"Rubber\" Swing\r\nB1 0.2 0 1\r\nB2 0.4 0 1\r\n" +
-    "B3 0.6 0 1\r\nB4 0.8 0 1\r\n" +
-    "B5 0.8 0.2 1\r\nB6 -0.2 0 1\r\n" +
-    "B7 -0.4 0 1\r\nB8 -0.6 0 1\r\n" +
-    "B9 -0.8 0 1\r\nB10 -0.8 0.2 1\r\n" +
+const netlistSwing = "* \"Rubber\" Swing\r\nB1 0.4 0 1\r\nB2 0.8 0 1\r\n" +
+    "B3 1.2 0 1\r\nB4 1.6 0 1\r\n" +
+    "B5 1.6 0.4 1\r\nB6 -0.4 0 1\r\n" +
+    "B7 -0.8 0 1\r\nB8 -1.2 0 1\r\n" +
+    "B9 -1.6 0 1\r\nB10 -1.6 0.4 1\r\n" +
     "C1 B1 (0,0)\r\nC2 B1 B2\r\n" +
     "C3 B2 B3\r\nC4 B3 B4\r\n" +
     "C5 B4 B5\r\nC6 B6 (0,0)\r\n" +
@@ -59,7 +59,7 @@ const netlistSoliton = "* \"Soliton\" \r\n" +
     "C1 B1 (1,1)\r\nC2 B1 B2\r\nC4 B2 (-1,-1)\r\n" +
     ".tran 0 10 1E-3\r\n";
 const netlistCrosshair = "* Crosshair Pendulum\r\n" +
-    "B1 0.001 0 1\r\nB2 0 1 1\r\n" +
+    "B1 0.001 0 1\r\nB2 0 2 1\r\n" +
     "C1 B1 B2\r\nT1 B1 0 1 0\r\nT2 B2 1 0 0\r\n" +
     ".tran 0 10 1E-3\r\n";
 const netlistUnbalanced = "* Unbalanced Rod\r\n" +
