@@ -66,7 +66,7 @@ function dq_dt()
 
     mpitol = mpitol;
     const A = Array(constraints).fill().map(() => Array(2 * bodies).fill(0));
-    const bv = Array(constraints);
+    const bv = Array(constraints).fill(0);
     for (let i = 0; i < constraints; i++)
     {
         switch (CTs[i])

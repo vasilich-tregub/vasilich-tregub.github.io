@@ -65,13 +65,13 @@ function mpinverse(A, m, n)
             for (let k = 0; k < r; k++)
                 P2[i][j] += P[i][k] * P[k][j];
 
-    let P2LT = Array(r).fill().map(() => Array(r).fill(0));
+    let P2LT = Array(r).fill().map(() => Array(m).fill(0));
     for (let i = 0; i < r; i++)
         for (let j = 0; j < m; j++)
             for (let k = 0; k < r; k++)
                 P2LT[i][j] += P2[i][k] * L[j][k];
 
-    let LP2LT = Array(m).fill().map(() => Array(r).fill(0));
+    let LP2LT = Array(m).fill().map(() => Array(m).fill(0));
     for (let i = 0; i < m; i++)
         for (let j = 0; j < m; j++)
             for (let k = 0; k < r; k++)
