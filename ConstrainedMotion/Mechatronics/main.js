@@ -194,6 +194,7 @@ async function drawMachine() {
                 switch (CTs[i]) {
                     case "Link":
                         let C = Cs[i];
+                        ctx.strokeStyle = C.color;
                         if (C.B2 == null) {
                             ctx.beginPath();
                             ctx.moveTo(500 - 160 * C.anchorX, 500 - 160 * C.anchorY);
@@ -235,6 +236,5 @@ function tran() {
     parseNetlist();
     action = true;
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = "yellow";
     drawMachine();
 }

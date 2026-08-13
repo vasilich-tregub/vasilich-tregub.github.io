@@ -27,7 +27,7 @@ const netlistChain = "* 12 Link Chain\r\n" +
     ".tran 0 10 1E-3\r\n.print 1 2 3 4 5";
 const netlistSymPiston = "* Symmetric Piston\r\nB1 -1 1 1\r\nB2 1 1 1\r\n" +
     "B3 0 2 1\r\n" +
-    "C1 B1 (0,0)\r\nC2 B2 (0,0)\r\n" +
+    "C1 B1 (0,0) orange\r\nC2 B2 (0,0)\r\n" +
     "C3 B1 B3\r\nC4 B2 B3\r\n" +
     ".tran 0 10 1E-3\r\n.print 1 2 3 4 5";
 const netlistAsymPiston = "* Asymmetric Piston\r\nB1 -1 1 1\r\nB2 1 1 2\r\n" +
@@ -90,7 +90,7 @@ class Link
     anchorX;
     anchorY;
     length2;
-    constructor(lN, b1, b2 = null, x = 0, y = 0, len2)
+    constructor(lN, b1, b2 = null, x = 0, y = 0, len2, color = "")
     {
         this.LinkName = lN;
         this.B1 = b1;
@@ -98,6 +98,7 @@ class Link
         this.anchorX = x;
         this.anchorY = y;
         this.length2 = len2;
+        this.color = color;
     }
 }
 class Track
@@ -143,7 +144,7 @@ function parseNetlist()
                                   case ".print":
                                     nodeset = new ArrayList();
                                     for (int i = 1; i < chips.Length; i++)
-                                      nodeset.Add( Convert.ToInt32(chips[i]) <= nodes ? Convert.ToInt32(chips[i]) - 1 : 0 );
+                                      nodeset.push( Number(chips[i]) <= nodes ? Number(chips[i]) - 1 : 0 );
                                     break;
                     */
                 }
@@ -164,6 +165,10 @@ function parseNetlist()
                     }
                     if (B1 == null)
                         break;
+                    if (chips[3] === undefined)
+                        color = "yellow";
+                    else
+                        color = chips[3];
                     if (chips[2][0] == '(') {
                         str = chips[2];
                         str = str.replaceAll("(", "");
@@ -173,7 +178,7 @@ function parseNetlist()
                         ancX = Number(str.split(',')[0]);
                         ancY = Number(str.split(',')[1]);
                         Cs.push(new Link(chips[0], B1, B2, ancX, ancY, 
-                            (B1.x - ancX) * (B1.x - ancX) + (B1.y - ancY) * (B1.y - ancY)));
+                            (B1.x - ancX) * (B1.x - ancX) + (B1.y - ancY) * (B1.y - ancY), color));
                     }
                     else {
                         for(B of Bs)
@@ -184,7 +189,7 @@ function parseNetlist()
                         if (B2 == null)
                             break;
                         Cs.push(new Link(chips[0], B1, B2, 0, 0, 
-                            (B1.x - B2.x) * (B1.x - B2.x) + (B1.y - B2.y) * (B1.y - B2.y)));
+                            (B1.x - B2.x) * (B1.x - B2.x) + (B1.y - B2.y) * (B1.y - B2.y), color));
                     }
                     CTs.push("Link");
                     break;
