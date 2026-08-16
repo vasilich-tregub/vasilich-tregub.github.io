@@ -1,0 +1,44 @@
+﻿<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Barrier Crossing</title>
+    <style>
+    </style>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+</head>
+<body>
+    <input type=button onclick="plotWavefunction()" value="&psi;(x)" title="Start Wavefunction" />
+    Particle Momentum:
+    <input type=text id="ctl_momentum" size=6 value="10" title="Particle Momentum" />
+    Time steps:
+    <input type=text id="ctl_timesteps" size=6 value="1000" title="" />
+    <input type=button onclick="advanceInTime()" value="&psi;(x,t)" title="&psi;(x,t += timestep)" />
+    <BR />
+    <DIV ID=_params>
+        <HR />
+        <input type=button onclick="redrawPotential()" value="Draw Potential Graph" title="Eval Potential Script" />
+        <span id="span_potential_sel"></span>
+        <div>
+            <textarea ID="ctl_potentialdefinition" style="field-sizing: content;"></textarea>
+        </div>
+        <TABLE>
+            <TR>
+                <TD VALIGN=TOP><DIV style="margin:0;"><span id="ctl_eigenvalues"></span></DIV></TD>
+                <TD>
+
+                    <div id='potentialDIV' style="position:relative;background:transparent;" title="Potential Graph">
+                        <canvas id="_potential" width="1000" height="500"></canvas>
+                    </div>
+
+                    <div id=wfDIV style="position:relative;background:transparent;" title="Wavefunction Amplitude">
+                        <canvas id="_wavefunction" width="1000" height="500"></canvas>
+                    </div>
+
+                </TD>
+            </TR>
+        </TABLE>
+        <script src="plotter.js"></script>
+        <script src="barriers.js"></script>
+        <script src="main.js"></script>
+</body>
+</html>
