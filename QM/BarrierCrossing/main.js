@@ -1,3 +1,7 @@
+/* TERMS OF USE
+ * This source code is subject to the terms of the MIT License. 
+ * Copyright(c) 2026 Vladimir Vasilich Tregub
+*/
 var U_arr;
 var well_left;
 var well_right;

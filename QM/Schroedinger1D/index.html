@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Shroedinger 1D solution</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+</head>
+<body onload="init()">
+    <TABLE WIDTH=100%>
+        <TR>
+            <TD><b><i>&psi;</i>''(<i>x</i>) + 2<i>m</i>(<i>E</i>-<i>U</i>(<i>x</i>))<i>&psi;</i>(<i>x</i>) = 0 ; <i>h</i>/2<i>&pi;</i> = 1; <i>m</i> = 1.</b></TD>
+            <TD ALIGN=RIGHT>
+                <INPUT TYPE=button VALUE=&Delta; onclick="
+    if (_params.style.display != 'none') { _params.style.display = 'none'; this.value = '&nabla;' }
+    else { _params.style.display = ''; this.value = '&Delta;'}"
+                       title="press to hide/show parameter area" />
+            </TD>
+        </TR>
+    </TABLE>
+    <DIV ID=_params>
+        <HR />
+        <input type=button onclick="redrawPotential()" value="Run script" title="Run script to set potential" />
+        <span id="span_potential_sel"></span>
+        <div>
+            <textarea ID="ctl_potentialdefinition" style="field-sizing: content;"></textarea>
+        </div>
+        <HR />
+        <input type=button onclick="plotWavefunction()" value="Wavefunction" title="Plot real part of wavefunction for energy E" />
+        E: <input id="ctl_E" type=text value="0" title="Energy for which pressing the button 'Wavefunction' builds wavefunction plot" /><BR />
+        <b> discrepancy of logarithmic derivative at joint: </b>
+        <span id="ctl_wf_joint">&nbsp;</span>
+        <HR />
+    </DIV>
+    <input type=button onclick="showEigenvalues()" value="Eigenvalues" title="Eigenvalues between Emin and Emax" />
+    Emin: <input id="ctl_Emin" type=text title="" />
+    Emax: <input id="ctl_Emax" type=text title="" />
+    Zoom = 1 :
+    <input type=text id="ctl_plot_scale" size=6 onchange="rescalePlots()" value="1" title="100 >= value <= 0.1; zoomout max, 100; zoomin max, 10" />
+    Vertical scale: <input type=text id="ctl_vert_plot_scale" size=6 value="1" title="To better discern 'fine structure' of energy levels" />
+    <BR />
+    <TABLE>
+        <TR>
+            <TD VALIGN=TOP><DIV style="margin:0;"><span id="ctl_eigenvalues"></span></DIV></TD>
+            <TD>
+                <DIV>
+                    <div ID='potentialDIV' style="position:relative;background:transparent;" title="Potential Graph">
+                        <canvas id="_potential" width="1000" height="250"></canvas>
+                        <DIV id="evLinesDIV" style="background:transparent;position:absolute;top:1px;left:1px;width:1000px;height:1px;z-index:-1"></DIV>
+                    </div>
+                    <div ID=wfDIV style="position:relative;background:transparent;" title="real part of wavefunction for energy E">
+                        <canvas id="_wavefunction" width="1000" height="500"></canvas>
+                        <DIV id="zeroLineDIV" style="background:transparent;position:absolute;top:1px;left:1px;width:1000px;height:1px;"></DIV>
+                    </div>
+                </DIV>
+            </TD>
+        </TR>
+    </TABLE>
+    <script src="potentials.js"></script>
+    <script src="numericode.js"></script>
+    <script src="plotter.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
