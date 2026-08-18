@@ -90,11 +90,11 @@ function findEigenvalues(emin, emax, U_range, U_arr) {
   var eigenvalues = new Array();
   var evindex = 0;
   var dE = egap/250;
-  var discrepancy_1 = num_Schroedinger_joint(0.01, U_range, emin, U_arr);
+  var discrepancy_1 = num_Schroedinger_joint(dx, U_range, emin, U_arr);
   var discrepancy_1_1 = discrepancy_1;
   var discrepancy;
   for (var E = emin + egap/250; E <= emax; E += dE) {
-    discrepancy = num_Schroedinger_joint(0.01, U_range, E, U_arr);
+    discrepancy = num_Schroedinger_joint(dx, U_range, E, U_arr);
     if ( ( (discrepancy < 0 && discrepancy_1 > 0) || (discrepancy > 0 && discrepancy_1 < 0) ) && 
          ( (discrepancy <= discrepancy_1 && discrepancy_1 <= discrepancy_1_1) || 
            (discrepancy >= discrepancy_1 && discrepancy_1 >= discrepancy_1_1) ) ) {
@@ -105,7 +105,7 @@ function findEigenvalues(emin, emax, U_range, U_arr) {
       var Efine = E;
       for (var ihalf = 1; ihalf <= 36; ihalf++) {
         eSect *= 2;
-        discrepancy_ = num_Schroedinger_joint(0.01, U_range, Efine - dE/eSect, U_arr);
+        discrepancy_ = num_Schroedinger_joint(dx, U_range, Efine - dE/eSect, U_arr);
         if ( (discrepancy_ < 0 && discrepancy_1_ > 0) || (discrepancy_ > 0 && discrepancy_1_ < 0) ) { 
           Efine -= dE/eSect;
         }
