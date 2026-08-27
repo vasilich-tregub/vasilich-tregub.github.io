@@ -67,7 +67,7 @@ function motion_in_CoulombField() {
         let t_m = t_1 + E_1 / m * dt / 2;
         let px_m = px_1 + F * qx_1 / q3 * E / m * dt / 2;
         let py_m = py_1 + F * qy_1 / q3 * E / m * dt / 2;
-        let E_m = E_1 + F * (qx_1 * px_1 + qy_1 * py_1) / q3 / m * dt;
+        let E_m = E_1 + F * (qx_1 * px_1 + qy_1 * py_1) / q3 / m * dt / 2;
         q3 = (qx_m * qx_m + qy_m * qy_m) * Math.sqrt(qx_m * qx_m + qy_m * qy_m);
         qx += px_m / m * dt;
         qy += py_m / m * dt;
