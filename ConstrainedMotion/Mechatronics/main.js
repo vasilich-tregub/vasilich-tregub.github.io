@@ -181,7 +181,10 @@ async function drawMachine() {
     while (action) {
         simulate();
         if (Math.abs(T + U - E) > Ethresh) {
-            break;
+            console.log("T+U-E " + (T + U - E) + "; T " + T + "; U " + U + "; E = " + E);
+            //break;
+            action = false;
+            return;
         }
         if (isNaN(T + U)) {
             console.log("T+U " + (T + U) + "; T " + T + "; U " + U);

@@ -103,6 +103,14 @@ function motion_in_CoulombField() {
     }
     ctx.stroke();
     if (idTUgraph.checked) {
+        ctx.strokeStyle = "green";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(0, aTU[0] * 100);
+        for (let stau = 1; stau < aq.length; ++stau) {
+            ctx.lineTo(stau * 1000 / aq.length, am[stau] * 100);
+        }
+        ctx.stroke();
         ctx.strokeStyle = "white";
         ctx.lineWidth = 1.5;
         ctx.beginPath();
