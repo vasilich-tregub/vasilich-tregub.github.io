@@ -43,6 +43,9 @@ idNetlistSelect.addEventListener("click", async (event) => {
         case "netlistUnbalanced":
             idNetlist.value = netlistUnbalanced;
             break;
+        case "netlistInvertedPendulum":
+            idNetlist.value = netlistInvertedPendulum;
+            break;
     }
 });
 var bodies = 0;
@@ -231,7 +234,7 @@ function tran() {
     x0 = 0.0;
     //let deltat = 0.000001;
     mpitol = 1.0E-9;
-    Ethresh = 1;
+    Ethresh = 3;
     deltat = 0.001;
     U = 0;
     T = 0;

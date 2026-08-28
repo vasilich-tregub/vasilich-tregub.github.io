@@ -26,9 +26,9 @@ const netlistChain = "* 12 Link Chain\r\n" +
     "C15 B14 B15\r\nC16 B15 B16\r\n" +
     ".tran 0 10 1E-3\r\n.print 1 2 3 4 5";
 const netlistSymPiston = "* Symmetric Piston\r\nB1 -1 1 1\r\nB2 1 1 1\r\n" +
-    "B3 0 2 1\r\n" +
+    "B3 0 1.9999 1\r\n" +
     "C1 B1 (0,0) orange\r\nC2 B2 (0,0)\r\n" +
-    "C3 B1 B3\r\nC4 B2 B3\r\n" +
+    "C3 B1 B3\r\nC4 B2 B3 magenta\r\n" +
     ".tran 0 10 1E-3\r\n.print 1 2 3 4 5";
 const netlistAsymPiston = "* Asymmetric Piston\r\nB1 -1 1 1\r\nB2 1 1 2\r\n" +
     "B3 0 2 1\r\n" +
@@ -66,6 +66,10 @@ const netlistUnbalanced = "* Unbalanced Rod\r\n" +
     "B1 1 0 1\r\nB2 -1 0 2\r\n" +
     "C1 B1 (0,0)\r\nC2 B2 (0,0)\r\nC3 B1 B2\r\n" +
     ".tran 0 10 1E-3\r\n";
+const netlistInvertedPendulum = "* Inverted pendulum\r\n" +
+    "B1 0 0 1 10 0\r\nB2 0 .25 1\r\nB3 .5 2 .1\r\n" +
+    "C1 B1 B2\r\nC2 B2 B3\r\nT1 B1 0 1 0\r\nT2 B2 1 0 0\r\n" +
+    ".tran 0 10 1E-3\r\n";
 class Body {
     bodyName;
     m;
@@ -73,13 +77,13 @@ class Body {
     y;
     vx;
     vy;
-    constructor (bN, X, Y, M) {
+    constructor (bN, X, Y, M, Vx = 0, Vy = 0) {
         this.bodyName = bN;
         this.m = Math.sqrt(M);
         this.x = X;
         this.y = Y;
-        this.vx = 0;
-        this.vy = 0;
+        this.vx = Vx;
+        this.vy = Vy;
     }
 }
 class Link
@@ -153,7 +157,12 @@ function parseNetlist()
 
             switch (currLine[0]) {
                 case 'B':
-                    Bs.push(new Body(chips[0], Number(chips[1]), Number(chips[2]), Number(chips[3])));
+                    if (chips.length == 4) {
+                        Bs.push(new Body(chips[0], Number(chips[1]), Number(chips[2]), Number(chips[3])));
+                    }
+                    else if (chips.length == 6) {
+                        Bs.push(new Body(chips[0], Number(chips[1]), Number(chips[2]), Number(chips[3]), Number(chips[4]), Number(chips[5])));
+                    }
                     break;
                 case 'C':
                     B1 = null;
