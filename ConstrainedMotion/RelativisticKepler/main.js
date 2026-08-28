@@ -2,6 +2,16 @@
  * This source code is subject to the terms of the MIT License. 
  * Copyright(c) 2026 Vladimir Vasilich Tregub
 */
+function preset1() {
+    px = 1.115; idPx.value = px;
+    fintime = 10; idFintime.value = fintime;
+    idTimestep.value = '1E-6'; dt = timestep = Number(idTimestep.value);
+}
+function preset2() {
+    px = 1.112; idPx.value = px;
+    fintime = 2; idFintime.value = fintime;
+    idTimestep.value = '1E-7'; dt = timestep = Number(idTimestep.value);
+}
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 function motion_in_CoulombField() {
@@ -39,11 +49,6 @@ function motion_in_CoulombField() {
     currtime = 0;
     fintime = Number(idFintime.value);
     dt = timestep = Number(idTimestep.value);
-    if (idSpiral.checked) {
-        px = 1.1; idPx.value = px;
-        fintime = 1.5; idFintime.value = fintime;
-        idTimestep.value = '1E-6'; dt = timestep = Number(idTimestep.value);
-    }
     var E0 = Math.sqrt(m * m + px * px + py * py);
     E = E0;
     xstepCount = ((fintime - currtime) / timestep);

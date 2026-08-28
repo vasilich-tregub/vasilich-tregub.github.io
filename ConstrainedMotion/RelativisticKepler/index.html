@@ -11,15 +11,16 @@
     </style>
 </head>
 <body>
-    <button onclick="motion_in_CoulombField()">draw trajectory</button>
-    <label>Px</label><input type="number" id="idPx" value="1.2" step="0.1" />
+    <button onclick="motion_in_CoulombField()" title="click to draw trajectory">trajectory</button>
+    <label>Px</label><input type="number" id="idPx" value="1.21" step="0.1" />
     <label>Py</label><input type="number" id="idPy" value="0" step="0.1" />
     <label>Qx</label><input type="number" id="idQx" value="0" step="0.1" />
     <label>Qy</label><input type="number" id="idQy" value="0.9" step="0.1" />
-    <label>Finish time</label><input type="number" id="idFintime" value="50" />
-    <label>Timestep</label><input type="number" id="idTimestep" value="1E-4" step="1E-5" />
-    <label>Spiral trajectory</label><input id="idSpiral" type="checkbox" />
-    <label>Draw T+U</label><input id="idTUgraph" type="checkbox" />
+    <label>Finish time</label><input type="number" id="idFintime" value="78.08" />
+    <label>Timestep</label><input type="number" id="idTimestep" value="1E-5" step="1E-5" />
+    <label>T+U,m</label><input id="idTUgraph" checked type="checkbox" title="draws T+U, m graphs when checked"/>
+    <button onclick="preset1()" title="param preset #1, click 'trajectory' when done">Preset 1</button>
+    <button onclick="preset2()" title="param preset #2, click 'trajectory' when done">Preset 2</button>
     <div class="trajectory">
         <canvas width="1000" height="1000"></canvas>
     </div>
