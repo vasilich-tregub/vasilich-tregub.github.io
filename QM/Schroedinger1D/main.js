@@ -45,28 +45,18 @@ var deltaE = 0.004;
 //var potentialsXML = new ActiveXObject("Msxml2.DOMDocument");
 var EV_arr;
 var vscale = 2.0;
-var potentialSelectedKey;
 function loadPotential(el) {
     ctl_potentialdefinition.value = potentials.get(el.innerText);
-    potentialSelectedKey = el.innerText;
     redrawPotential();
 }
 /* initialize a potential selection element */
 window.onload = () => {
-    potentialSelectedKey = "Hooke";
     ctl_potentialdefinition.value = potentials.get("Hooke");
     var strPotentials = "&nbsp;";
     for (const iter of potentials.keys()) {
         strPotentials += "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>" + iter + "</span> ";
     }
-    //span_potential_sel.innerHTML = strPotentials;
-    span_potential_sel.innerHTML = "&nbsp;" +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>square_well</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Hooke</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>five_square_wells</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>saw</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Coulomb</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Coulomb_l_1</span> ";
+    span_potential_sel.innerHTML = strPotentials;
     redrawPotential();
 }
 /* redraw a potential function */
@@ -76,92 +66,12 @@ function redrawPotential() {
     ctl_eigenvalues.innerHTML = '';
     U_arr = new Array();
     var strPotentialDefiningCode = ctl_potentialdefinition.value;
-    if (potentialSelectedKey == "square_well") {
-        U_range = 10.0;
-        dx = 0.01;
-        for (let i = 0; i <= U_range / dx; i++) {
-            var x = i * dx;
-            var depth = 2.0;
-            if (x <= 0) {
-                U_arr[i] = 0;
-                continue;
-            }
-            if (x < 10) {
-                U_arr[i] = -depth;
-                continue;
-            }
-            if (x <= 10) {
-                U_arr[i] = 0;
-                continue;
-            }
-        }
+    try {
+        eval(strPotentialDefiningCode);
     }
-    else if (potentialSelectedKey == "Hooke") {
-        U_range = 10.5;
-        dx = 0.01;
-        for (let cm = 0; cm <= Math.round(U_range / dx); cm++) {
-            U_arr[cm] = (cm * dx - U_range / 2) * (cm * dx - U_range / 2) / 2;
-        }
-    }
-    else if (potentialSelectedKey == "five_square_wells") {
-        U_range = 10.0;
-        var depth = 10.0;
-        dx = 0.01;
-        for (let i = 0; i <= U_range / dx; i++) {
-            var x = i * dx;
-            if (x <= 0) { U_arr[i] = 0; continue; }
-            if (x <= 1) { U_arr[i] = -depth; continue; }
-            if (x <= 2) { U_arr[i] = 0; continue; }
-            if (x <= 3) { U_arr[i] = -depth; continue; }
-            if (x <= 4) { U_arr[i] = 0; continue; }
-            if (x <= 5) { U_arr[i] = -depth; continue; }
-            if (x <= 6) { U_arr[i] = 0; continue; }
-            if (x <= 7) { U_arr[i] = -depth; continue; }
-            if (x <= 8) { U_arr[i] = 0; continue; }
-            if (x <= 9) { U_arr[i] = -depth; continue; }
-            if (x <= 10) { U_arr[i] = 0; continue; }
-        }
-    }
-    else if (potentialSelectedKey == "saw") {
-        U_range = 10.0;
-        var depth = 10.0;
-        dx = 0.01;
-        for (let i = 0; i <= U_range / dx; i++) {
-            var x = i * dx;
-            if (x <= 0) { U_arr[i] = 0; continue; }
-            if (x <= 1.25) { U_arr[i] = -x / 1.25 * depth; continue; }
-            if (x <= 2.5) { U_arr[i] = (x - 2.5) / 1.25 * depth; continue; }
-            if (x <= 3.75) { U_arr[i] = -(x - 2.5) / 1.25 * depth; continue; }
-            if (x <= 5) { U_arr[i] = (x - 5) / 1.25 * depth; continue; }
-            if (x <= 6.25) { U_arr[i] = -(x - 5) / 1.25 * depth; continue; }
-            if (x <= 7.5) { U_arr[i] = (x - 7.5) / 1.25 * depth; continue; }
-            if (x <= 8.75) { U_arr[i] = -(x - 7.5) / 1.25 * depth; continue; }
-            if (x <= 10) { U_arr[i] = (x - 10) / 1.25 * depth; continue; }
-        }
-    }
-    else if (potentialSelectedKey == "Coulomb") {
-        U_range = 40.0;
-        dx = 0.01;
-        l = 0; // angular momentum 
-        for (let i = 0; i <= U_range / dx; i++) {
-            let x = i * dx;
-            if (x <= 0) { U_arr[i] = 1E9; continue; }
-            else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }
-        }
-        // with Coulomb, U(0) is excluded from plot, see hack in code
-        ctl_Emin.value = -1; ctl_Emax.value = -0;
-    }
-    else if (potentialSelectedKey == "Coulomb_l_1") {
-        U_range = 40.0;
-        dx = 0.01;
-        l = 1; // angular momentum 
-        for (let i = 0; i <= U_range / dx; i++) {
-            let x = i * dx;
-            if (x <= 0) { U_arr[i] = 1E9; continue; }
-            else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }
-        }
-        // with Coulomb, U(0) is excluded from plot, see hack in code
-        ctl_Emin.value = -1; ctl_Emax.value = -0;
+    catch (e) {
+        alert("Error of evaluating script of potential\n" + e);
+        return;
     }
     U_arr_plot = [...U_arr];
     if (Math.abs(U_arr_plot[0]) > (1E9 - 1)) {	// hack to accomodate Coulomb potential

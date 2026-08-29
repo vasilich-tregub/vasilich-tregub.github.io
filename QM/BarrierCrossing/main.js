@@ -15,7 +15,6 @@ var dt = 0.00004;
 var psi_arr;
 var psi_o_arr;
 var psi_ampl_arr;
-var potentialSelectedKey;
 class Complex {
     real;
     imag;
@@ -50,7 +49,6 @@ class Complex {
 }
 function loadPotential(el) {
     ctl_potentialdefinition.value = potentials.get(el.innerText);
-    potentialSelectedKey = el.innerText;
     redrawPotential();
 }
 /* initialize a potential selection element */
@@ -60,57 +58,25 @@ window.onload = () => {
     for (const iter of potentials.keys()) {
         strPotentials += "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>" + iter + "</span> ";
     }
-    //span_potential_sel.innerHTML = strPotentials;
-    span_potential_sel.innerHTML = "&nbsp;" +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Fowler-Nordheim</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Well</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Resonant_Tunneling</span>";
-    potentialSelectedKey = "Fowler-Nordheim";
+    span_potential_sel.innerHTML = strPotentials;
     redrawPotential();
 }
 /* redraw a potential function */
 function redrawPotential() {
     U_arr = new Array();
     var strPotentialDefiningCode = ctl_potentialdefinition.value;
-    if (potentialSelectedKey == "Fowler-Nordheim") {
-        U_range = 50.0;
-        dx = 0.04;
-        for (var i = 0; i < U_range / dx; i++) {
-            if (i * dx < 24.0)
-                U_arr[i] = 0;
-            else
-                U_arr[i] = 50.0 * (25.0 - i * dx);
-        }
+    try {
+        eval(strPotentialDefiningCode);
     }
-    else if (potentialSelectedKey == "Well") {
-        U_range = 50.0;
-        dx = 0.04;
-        for (var i = 0; i < U_range / dx; i++) {
-            if (i * dx < 23.0 | i * dx > 27)
-                U_arr[i] = 0;
-            else
-                U_arr[i] = -1200.0;
-        }
-    }
-    else if (potentialSelectedKey == "Resonant_Tunneling") {
-        U_range = 50.0;
-        dx = 0.04;
-        for (var i = 0; i < U_range / dx; i++) {
-            if (i * dx > 23.9 & i * dx < 24 | i * dx > 24.14 & i * dx < 24.24)
-                U_arr[i] = 110.0;
-            else
-                U_arr[i] = 0.0;
-        }
-    }
-    else {
+    catch (e) {
+        alert("Error of evaluating script of potential\n" + e);
         return;
     }
-    var strPotentialDefiningCode = ctl_potentialdefinition.value;
     zoomed_potential(U_arr, 1000, 500);
 }
 function plotWavefunction() {
     p = parseFloat(ctl_momentum.value);
-    aL = U_range / dx;
+    aL = Math.floor(U_range / dx);
     psi_arr = Array(aL).fill(new Complex(0, 0));
     psi_o_arr = Array(aL).fill(new Complex(0, 0));
     psi_ampl_arr = Array(aL).fill(0);
