@@ -65,7 +65,8 @@ window.onload = () => {
         "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Hooke</span> " +
         "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>five_square_wells</span> " +
         "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>saw</span> " +
-        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Coulomb</span> ";
+        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Coulomb</span> " +
+        "<span style='text-decoration:underline;cursor:pointer' onclick='loadPotential(this)'>Coulomb_l_1</span> ";
     redrawPotential();
 }
 /* redraw a potential function */
@@ -147,11 +148,23 @@ function redrawPotential() {
             if (x <= 0) { U_arr[i] = 1E9; continue; }
             else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }
         }
-        // U(0) для Кулона не отображается на графике (см. код)
+        // with Coulomb, U(0) is excluded from plot, see hack in code
+        ctl_Emin.value = -1; ctl_Emax.value = -0;
+    }
+    else if (potentialSelectedKey == "Coulomb_l_1") {
+        U_range = 40.0;
+        dx = 0.01;
+        l = 1; // angular momentum 
+        for (let i = 0; i <= U_range / dx; i++) {
+            let x = i * dx;
+            if (x <= 0) { U_arr[i] = 1E9; continue; }
+            else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }
+        }
+        // with Coulomb, U(0) is excluded from plot, see hack in code
         ctl_Emin.value = -1; ctl_Emax.value = -0;
     }
     U_arr_plot = [...U_arr];
-    if (Math.abs(U_arr_plot[0]) > (1E9 - 1)) {			   // hack to accomodate Coulomb potential
+    if (Math.abs(U_arr_plot[0]) > (1E9 - 1)) {	// hack to accomodate Coulomb potential
         for (i = 0; i < 50; i++) {
             U_arr_plot[i] = U_arr_plot[50]
         }

@@ -32,5 +32,9 @@ var potentials = new Map([
     ["Coulomb",
         "  U_range = 40.0;\n  dx = 0.01;\n  l = 0; // angular momentum \n  for (let i = 0; i <= U_range / dx; i++) {\n    let x = i * dx;\n" +
         "    if (x <= 0) { U_arr[i] = 1E9; continue; }\n    else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }\n  }\n" +
-        "  // U(0) для Кулона не отображается на графике (см. код)\n  ctl_Emin.value = -1; ctl_Emax.value = -0;"   ]
+        "  // with Coulomb, U(0) is excluded from plot, see hack in code\n  ctl_Emin.value = -1; ctl_Emax.value = -0;"],
+    ["Coulomb_l_1",
+    "  U_range = 40.0;\n  dx = 0.01;\n  l = 1; // angular momentum \n  for (let i = 0; i <= U_range / dx; i++) {\n    let x = i * dx;\n" +
+    "    if (x <= 0) { U_arr[i] = 1E9; continue; }\n    else { U_arr[i] = -1 / x + l * (l + 1) / (2 * x * x); }\n  }\n" +
+    "  // with Coulomb, U(0) is excluded from plot, see hack in code\n  ctl_Emin.value = -1; ctl_Emax.value = -0;"]
 ]);
