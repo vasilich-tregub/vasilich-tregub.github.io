@@ -6,7 +6,7 @@ function zoomed_potential(y_arr, plot_width, plot_height) {
     const ctx = document.getElementById("_potential").getContext("2d", { willReadFrequently: true });
     ctx.clearRect(0, 0, document.getElementById("_potential").width, document.getElementById("_potential").height);
     arrLen = y_arr.length;
-    const hpxpi = plot_width / (arrLen - 1);
+    let hpxpi = plot_width / (arrLen - 1);
     let maxY = -Number.MAX_VALUE;
     let minY = Number.MAX_VALUE;
     for (var i = 0; i < arrLen; i++) {
@@ -25,8 +25,8 @@ function zoomed_potential(y_arr, plot_width, plot_height) {
 function zoomed_wavefunction(y_arr, plot_width, plot_height) {
     const ctx = document.getElementById("_wavefunction").getContext("2d", { willReadFrequently: true });
     ctx.clearRect(0, 0, document.getElementById("_wavefunction").width, document.getElementById("_wavefunction").height);
-    arrLen = y_arr.length;
-    const hpxpi = plot_width / (arrLen - 1);
+    let arrLen = y_arr.length;
+    let hpxpi = plot_width / (arrLen - 1);
     let maxY = -Number.MAX_VALUE;
     let minY = Number.MAX_VALUE;
     for (var i = 0; i < arrLen; i++) {

@@ -3,18 +3,17 @@
  * Copyright(c) 2026 Vladimir Vasilich Tregub
 */
 var U_arr;
-var well_left;
-var well_right;
-var Uwell;
-var aL = 1000;
+var U_range;
+var aL;
 var x0 = 20.0;
-var dx = 0.04;
+var dx;
 var gaussW = 0.6;
 var p;
 var dt = 0.00004;
 var psi_arr;
 var psi_o_arr;
 var psi_ampl_arr;
+var epsilon;
 class Complex {
     real;
     imag;
@@ -47,6 +46,8 @@ class Complex {
         return (new Complex(Math.exp(this.real) * Math.cos(this.imag), Math.exp(this.real) * Math.sin(this.imag)));
     }
 }
+var alfa = new Complex(0, 0);
+var beta = new Complex(0, 0);
 function loadPotential(el) {
     ctl_potentialdefinition.value = potentials.get(el.innerText);
     redrawPotential();
@@ -72,6 +73,9 @@ function redrawPotential() {
         alert("Error of evaluating script of potential\n" + e);
         return;
     }
+    epsilon = dt / dx / dx;
+    alfa = (new Complex(1, 0).add((new Complex(0, -epsilon)).exp())).mul(new Complex(0.5, 0));
+    beta = (new Complex(1, 0).sub((new Complex(0, -epsilon)).exp())).mul(new Complex(0.5, 0));
     zoomed_potential(U_arr, 1000, 500);
 }
 function plotWavefunction() {
@@ -86,12 +90,8 @@ function plotWavefunction() {
     }
     zoomed_wavefunction(psi_ampl_arr, 1000, 500);
 }
-var nT = 0;
-const epsilon = dt / dx / dx;
-const alfa = (new Complex(1, 0).add((new Complex(0, -epsilon)).exp())).mul(new Complex(0.5, 0));
-const beta = (new Complex(1, 0).sub((new Complex(0, -epsilon)).exp())).mul(new Complex(0.5, 0));
 function advanceInTime() {
-    nT = parseInt(document.getElementById("ctl_timesteps").value);
+    let nT = parseInt(document.getElementById("ctl_timesteps").value);
     for (let iT = 0; iT < nT; iT++) {
         // apply exponentiated potential
         for (let i = 0; i < aL; i++) {
