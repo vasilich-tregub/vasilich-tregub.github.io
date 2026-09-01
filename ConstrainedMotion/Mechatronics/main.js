@@ -5,11 +5,18 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 var action = false;
+var g;
 window.onload = () => {
     idNetlist.value = netlistTriPend;
 }
 idStop.addEventListener("click", async () => {
     action = false;
+});
+id_g.addEventListener("click", async (event) => {
+    g = Number(id_g.value);
+    action = false;
+    ctx.clearRect(0, 0, 1000, 1000);
+    await scheduler.yield();
 });
 idNetlistSelect.addEventListener("click", async (event) => {
     switch (event.target.value) {
@@ -50,7 +57,6 @@ idNetlistSelect.addEventListener("click", async (event) => {
 });
 var bodies = 0;
 var constraints = 0;
-const g = 0.5;
 var Q = [];
 var Bs = [];
 var Cs = [];
@@ -225,6 +231,7 @@ async function drawMachine() {
     }
 }
 function tran() {
+    g = Number(id_g.value);
     bodies = 0;
     constraints = 0;
     Q = [];

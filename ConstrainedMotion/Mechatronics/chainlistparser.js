@@ -67,7 +67,7 @@ const netlistUnbalanced = "* Unbalanced Rod\r\n" +
     "C1 B1 (0,0)\r\nC2 B2 (0,0)\r\nC3 B1 B2\r\n" +
     ".tran 0 10 1E-3\r\n";
 const netlistInvertedPendulum = "* Inverted pendulum\r\n" +
-    "B1 0 0 1 10 0\r\nB2 0 .25 1\r\nB3 .5 2 .1\r\n" +
+    "B1 0 0 1 2 0\r\nB2 0 .25 1\r\nB3 .5 2 .1\r\n" +
     "C1 B1 B2\r\nC2 B2 B3\r\nT1 B1 0 1 0\r\nT2 B2 1 0 0\r\n" +
     ".tran 0 10 1E-3\r\n";
 class Body {
