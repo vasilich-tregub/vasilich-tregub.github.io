@@ -1,44 +1,32 @@
-<!doctype html>
-<head>
-    <meta charset="utf-8">
-    <title>Assistant Director, caller</title>
-    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
-    <style>
-        canvas {
-            background-color: #ccc;
-            width: 300px;
-            height: 150px;
-        }
+const canvas = document.querySelector('canvas');
+const mktimage = new Image();
+let animParam = 0;
 
-        video {
-            width: 300px;
-            height: 150px;
-        }
-    </style>
-</head>
-<a href="./manual.html" target="_blanc">WebRTC Studio for Video Production, readme</a>
-<h2>Ready room</h2>
-<a href="./cameraman.html" target="_blanc">Open the page 'Cameraman'</a>
-<h3>Role: Assistant Director</h3>
-<button id="createBtn">Generate 'offer' to instruct Cameraman to get ready</button>.
-<button id="copyToClipboard" disabled>Copy 'offer' to clipboard</button>.
-<div id="localOffer" style="height:fit-content; border: 1px solid"></div>
-<em id="idPlacedToClipboard" hidden style="font-size:larger;">The text generated has been placed to your clipboard.</em>
-<h3>=> Go to Cameraman's page and paste generated 'offer' into 'Paste the "offer"...' control</h3>
-<h3 id="answerLabel" hidden>Paste below the "answer" you received on Cameraman's page</h3>
-<div id="remoteAnswer" contenteditable="true" style="min-height:24px; height:fit-content; border: 1px solid"></div>
-<button id="answerRecdBtn" disabled>Done!</button>
-<h3 id="channelOpen" hidden>CONNECTED</h3>
-<h3 id="channelClose">NO OPEN CONNECTION</h3>
-<hr>
-Chat:
-<br>
-<div id="chatlog" style="height:200px; overflow:auto; border:1px solid"></div>
-<br>
-<input type="text" id="messageTextBox" placeholder="Type your message here">
-<button id="sendMessageBtn" onclick="sendMessage()">Send message</button>
-<script>
-    localOffer.innerText = remoteAnswer.innerText = "";
+mktimage.onload = (event) => {
+    animate();
+}
+mktimage.src = "./markets.png";
+
+function animate() {
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    ctx.translate(-1, 0);
+    ctx.drawImage(mktimage, 0, 0);
+    if (animParam < 300) {
+        animParam++;
+    }
+    else {
+        animParam = 0;
+        ctx.resetTransform();
+    }
+    requestAnimationFrame(animate);
+};
+
+const stream = canvas.captureStream();
+console.log('Got stream from canvas');
+
+// ICE negotiations etc.
+
+localOffer.innerText = remoteAnswer.innerText = "";
 
     createBtn.onclick = function () {
         dc1 = pc1.createDataChannel('test', { reliable: true })
@@ -61,6 +49,18 @@ Chat:
                 }
             }
         }
+        stream.getTracks().forEach(
+            track => {
+                if (!pc1.getSenders().some(sender => sender.track === track)) {
+                    pc1.addTrack(
+                        track,
+                        stream
+                    );
+                    console.log(pc1.getSenders());
+                }
+            }
+        );
+        console.log('Added local stream to pc1');
         pc1.createOffer(function (desc) {
             pc1.setLocalDescription(desc, function () { }, function () { })
         }, function () { }, sdpConstraints)
@@ -83,7 +83,7 @@ Chat:
     var cfg = { 'iceServers': [/*{'url': "stun:stunserver2025.stunprotocol.org"}*/] },
         con = { 'optional': [{ 'DtlsSrtpKeyAgreement': true }] }
 
-    var pc1 = new RTCPeerConnection(cfg, con), dc1 = null, tn1 = null, activedc, pc1icedone = false;
+    var pc1 = new RTCPeerConnection(/*cfg, con*/);
 
     var sdpConstraints = {
         optional: [],
@@ -103,5 +103,3 @@ Chat:
             localOffer.innerText = JSON.stringify(pc1.localDescription);
         }
     }
-
-</script>

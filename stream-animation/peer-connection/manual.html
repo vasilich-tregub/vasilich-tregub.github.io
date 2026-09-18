@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>WebRTC for video production studio</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            font-size: 150%;
+        }
+
+        li:not(:first-of-type) {
+            margin-top: 0.5em;
+        }
+
+        li:not(:last-of-type) {
+            margin-bottom: 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        This exercise demonstrates how a browser can use WebRTC for sending video stream <br />
+        to a peer browser, both browsers can be open in two computers connected with a link <br />
+        and not necessarily internet enabled. <br />
+        <br />
+        The page 'Transmitter' (XMIT) initiates connection generating 'offer' (WebRTC <br />
+        concept) that has to be communicated to the peer computer. For the instructional <br />
+        purpose, I do not engage in an http server that should be made available to both <br />
+        computers (typically WebSockets are used to the purpose); instead, I output this <br />
+        'offer' programmatically in a stringified form to the text control. A learner can <br />
+        copy the content of this control to the clipboard, paste it to the text document <br />
+        and send the doc to the other computer via mail, messenger or shared network folder. <br />
+        <br />
+        In the peer computer, the user opens the page 'Receiver' (RCVR) in the browser and <br />
+        paste the offer to a dedicated control. To make the process easier, I provided the <br />
+        buttons "Copy 'offer'/'answer' to clipboard". The browser readily copies to clipboard, <br />
+        but issues a warning when you try to paste a clipboard content to the page <br />
+        programmatically, so I relegated it to the user a job of pasting offers/answers to <br />
+        target controls. The workflow logic is hopefully clear from the webpages' layout and <br />
+        labels, the logic in javascripts can also help: the purpose is to demonstrate WebRTC <br />
+        APIs and tricks, and the user should examine the sources anyway. <br />
+        <br />
+        The clipboard exchange is handy when two browsers are on the same computer. So <br />
+        the user can first examine the-same-host scenario, and then verify that the <br />
+        different-host scenario also works. I tested this scenario with a WSL2-to-Windows <br />
+        host experiment, the clipboard is shared by both browsers in this case. <br />
+        <br />
+        To verify that the connection is established, the user can verify the operation with <br />
+        the 'chat' controls. You can see in the code that the video transmission starts <br />
+        immediately after you copy RCVR's answer to the XMTR ICE input control and <br />
+        press 'Done!'. You may only need click the Play button (&#x25ba;) of the RCVR video <br />
+        control. <br />
+        <br />
+        If physically different, both computers used in this exercise must be in a common <br />
+        local network! <br />
+    </div>
+</body>
+</html>

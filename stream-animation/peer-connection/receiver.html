@@ -1,32 +1,32 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <title>Cameraman, callee</title>
+    <title>Receiver, callee</title>
     <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
     <style>
         canvas {
             background-color: #ccc;
-            width: 300px;
-            height: 150px;
+            width: 320px;
+            height: 180px;
         }
 
         video {
-            width: 300px;
-            height: 150px;
+            width: 320px;
+            height: 180px;
         }
     </style>
 </head>
-<h2>Ready room</h2>
-<h3>Role: Cameraman</h3>
-<h3>Paste the "offer" you generated on Assistant Director (AD) page</h3>
+<h2>Mission control</h2>
+<h3>Role: Receiver</h3>
+<h3>Paste the "offer" you generated on Transmitter (XMIT) page</h3>
 <div id="remoteOffer" contenteditable="true" style="min-height: 24px; height: fit-content; border: 1px solid"></div>
 <button id="offerRecdBtn">Done!</button>
-<h3 id="localAnswerLabel" hidden>=> Paste your local answer into 'Paste the "answer"...' control of AD's page'</h3>
+<h3 id="localAnswerLabel" hidden>=> Paste your local answer into 'Paste the "answer"...' control of XMIT's page'</h3>
 <div id="localAnswer" style="height:fit-content; border: 1px solid"></div>
 <em id="idPlacedToClipboard" hidden style="font-size:larger;">The text generated has been placed to your clipboard.</em>
 <button id="copyToClipboard" disabled>Copy 'answer' to clipboard</button>.
 <hr />
-<canvas></canvas>
+<video playsinline controls autoplay muted></video>
 <hr />
 Chat:
 <br>
@@ -34,4 +34,4 @@ Chat:
 <br>
 <input type="text" id="messageTextBox" placeholder="Type your message here">
 <button id="sendMessageBtn" onclick="sendMessage()">Send message</button>
-<script src="./cameraman.js" async></script>
+<script src="./receiver.js" async></script>

@@ -1,28 +1,17 @@
-const canvas = document.querySelector('canvas');
-const mktimage = new Image();
-let animParam = 0;
-
-mktimage.onload = (event) => {
-    animate();
+const video = document.querySelector('video');
+video.addEventListener('loadedmetadata', function () {
+    //document.getElementById('autoplay').style.display = 'none';
+    console.log(`Remote video videoWidth: ${this.videoWidth}px,  videoHeight: ${this.videoHeight}px`);
+});
+function gotRemoteStream(e) {
+    if (video.srcObject !== e.streams[0]) {
+        video.srcObject = e.streams[0];
+        console.log('pc2 received remote stream');
+        /*if (video.paused) {
+            document.getElementById('autoplay').style.display = 'block';
+        }*/
+    }
 }
-mktimage.src = "./markets.png";
-
-function animate() {
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
-    ctx.translate(-1, 0);
-    ctx.drawImage(mktimage, 0, 0);
-    if (animParam < 300) {
-        animParam++;
-    }
-    else {
-        animParam = 0;
-        ctx.resetTransform();
-    }
-    requestAnimationFrame(animate);
-};
-
-const stream = canvas.captureStream();
-
 // ICE negotiations etc.
 
 remoteOffer.innerText = localAnswer.innerText = "";
@@ -38,6 +27,7 @@ offerRecdBtn.onclick = function () {
         sdpConstraints)
     localAnswerLabel.hidden = false;
     copyToClipboard.disabled = false;
+    pc2.ontrack = gotRemoteStream;
 };
 
 var cfg = { 'iceServers': [/*{'url': "stun:stunserver2025.stunprotocol.org"}*/] },
@@ -61,7 +51,7 @@ function sendMessage() {
     return false
 }
 
-var pc2 = new RTCPeerConnection(cfg, con), dc2 = null, pc2icedone = false;
+var pc2 = new RTCPeerConnection(/*cfg, con*/);
 
 pc2.ondatachannel = function (e) {
     var datachannel = e.channel || e;

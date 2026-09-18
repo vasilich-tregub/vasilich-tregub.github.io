@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Transmitter, caller</title>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <style>
+        canvas {
+            background-color: #ccc;
+            width: 320px;
+            height: 180px;
+        }
+
+        video {
+            width: 320px;
+            height: 180px;
+        }
+    </style>
+</head>
+<body>
+    <a href="./manual.html" target="_blanc">WebRTC Studio for Video Production, readme</a>
+    <h2>XMIT</h2>
+    <a href="./receiver.html" target="_blanc">Open the page 'Receiver'</a>
+    <h3>Role: Transmitter</h3>
+    <button id="createBtn">Generate 'offer' to instruct Receiver to get ready</button>.
+    <button id="copyToClipboard" disabled>Copy 'offer' to clipboard</button>.
+    <div id="localOffer" style="height:fit-content; border: 1px solid"></div>
+    <em id="idPlacedToClipboard" hidden style="font-size:larger;">The text generated has been placed to your clipboard.</em>
+    <h3>=> Go to Receiver (RCVR) page and paste generated 'offer' into 'Paste the "offer"...' control</h3>
+    <h3 id="answerLabel" hidden>Paste below the "answer" you received on RCVR page</h3>
+    <div id="remoteAnswer" contenteditable="true" style="min-height:24px; height:fit-content; border: 1px solid"></div>
+    <button id="answerRecdBtn" disabled>Done!</button>
+    <h3 id="channelOpen" hidden>CONNECTED</h3>
+    <h3 id="channelClose">NO OPEN CONNECTION</h3>
+    <hr />
+    <canvas width="320" height="180"></canvas>
+    <hr />
+    Chat:
+    <br>
+    <div id="chatlog" style="height:200px; overflow:auto; border:1px solid"></div>
+    <br>
+    <input type="text" id="messageTextBox" placeholder="Type your message here">
+    <button id="sendMessageBtn" onclick="sendMessage()">Send message</button>
+    <script src="transmitter.js" async></script>
+</body>
+</html>
