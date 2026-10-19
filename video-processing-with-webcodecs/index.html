@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon128.png">
+    <meta charset="utf-8" />
+    <title>Embedding captions to video</title>
+</head>
+<body>
+    <a href="./starwars.webm" download>Download video file starwars.webm and use it to printout webm ebml</a><br />
+    <label for="inputFile">Select video file starwars.webm to demonstrate demux operation </label><input type="file" id="inputFile" />
+    <div style="font-size: 150%">
+        <div>Start playback in this video preview to watch a demo</div>
+        <video id="idVideo" src="starwars.webm" width="384" height="163" controls></video>
+        <label for="idDownloadRecording">Download Recording</label><input type="checkbox" id="idDownloadRecording" /><div id="idFrameCount">0</div>
+    </div>
+    <div id="webmEbml"></div>
+    <div>
+        <div style="display: none;">
+            <button id="startRecord">Start Recording</button>
+            <button id="stopRecord" disabled>Stop Recording</button>
+        </div>
+        <div id="status" class="status ready" style="font-size: 150%">Ready to record</div>
+        <canvas id="glCanvas" width="1920" height="816"></canvas>
+    </div>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="mkvdemux.js"></script>
+</body>
+</html>
