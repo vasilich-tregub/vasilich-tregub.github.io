@@ -502,11 +502,15 @@ var mkvdemuxjs = (function(mkvdemuxjs) {
             if ((flags & 0x6) !== 0)
                 console.log("ERROR: Lacing is not supported!");
 
+            let msb = (flags & 128) ? 1 : 0;
+            var intrainter = (track == 1) ? ((msb == 1) ? 'key' : 'delta') : '';
+
             // Rest: The actual data
             var frame = {
                 data: new Uint8Array(cont.buffer).slice(4, len).buffer,
                 track: track,
-                timestamp: timestamp
+                timestamp: timestamp,
+                type: intrainter
             };
             ret.frames = [frame];
 
