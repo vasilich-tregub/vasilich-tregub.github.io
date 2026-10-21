@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const blob = new Blob(recordedChunks, { type: 'video/webm;codecs="av1"' });
 
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -55,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startRecording = async () => {
         try {
-            const stream = canvas.captureStream(30);
+            const stream = canvas.captureStream(24);
 
-            mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+            mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs="av1"' });
             recordedChunks = [];
 
             mediaRecorder.addEventListener('dataavailable', (event) => {
@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             mediaRecorder.addEventListener('stop', () => {
-                downloadRecording();
+                if (idDownloadRecording.checked) {
+                    downloadRecording();
+                }
             });
 
             mediaRecorder.start();
@@ -88,12 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     player.addEventListener('playing', (even) => {
-        startRecording();
+        if (idDownloadRecording.checked) {
+            startRecording();
+        }
     });
 
     player.addEventListener('ended', (even) => {
         stopRecording();
-        alert("playback ended. If browser asks, save the recorded clip, otherwise find the clip in Downloads");
+        if (idDownloadRecording.checked) {
+            alert("playback ended. If browser asks, save the recorded clip, otherwise find the clip in Downloads");
+        }
     });
     //buttonStartRecording.addEventListener('click', startRecording);
     //buttonStopRecording.addEventListener('click', stopRecording);
