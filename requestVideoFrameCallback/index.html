@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<!--https://github.com/mdn/content/pull/46314-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Playground(edited) MDN</title>
+    <style>
+        video,
+        canvas {
+            max-width: 49%;
+        }
+
+        div {
+            max-height: 24em;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    Select video source: <select title="videoSource" onchange="reconnect(this.value)">
+        <option value="https://mdn.github.io/shared-assets/videos/flower.mp4">Flower</option>
+        <option value="https://mdn.github.io/shared-assets/videos/learn/bug_video_640.mp4">Bug</option>
+        <option value="https://mdn.github.io/shared-assets/videos/sintel-short.mp4">Sintel</option>
+    </select>
+    <p>
+        Start <button type="button">⏯</button> playing the video. Pause the video to
+        read the metadata. Drawing video frames on the canvas is synced with the
+        actual video framerate.
+    </p>
+    <video playsinline></video>
+    <canvas></canvas>
+    <pre id="metadata-info"></pre>
+    <p>
+        During the first time playback, increments of 'now' and 'metadata.mediaTime'
+        of requestVideoFrame callback in each frame played are recorded and typed
+        in the div below with &Delta;now, frame# and &Delta;mediaTime values
+        {&lt;&Delta;now&gt; &lt;frame#&gt;, &lt;&Delta;mediaTime&gt;}. 
+        Parameter fps can be calculated manually from this data: fps = 1/&Delta;mediaTime.
+        Video controls are hidden in the first run and become displayed after the
+        'ended' event is triggered and processed. When video source is selected, 
+        the fps data list is calculated anew in the first playback with this source.
+    </p>
+    <div id="fps-info"></div>
+    <script src="main.js"></script>
+</body>
+</html>
